@@ -50,7 +50,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			
 			startActivity(intent);
 			
-			Toast.makeText(getApplicationContext(), "Redirecting...", 
+			Toast.makeText(getApplicationContext(), "Successful autentication", 
 					Toast.LENGTH_SHORT).show();
 		}	
 		else{
