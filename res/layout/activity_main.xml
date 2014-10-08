@@ -47,7 +47,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
         android:onClick="login"
-        android:text="@string/Login" />
+        android:text="@string/login" />
 
     <TextView
         android:id="@+id/newAccount"
