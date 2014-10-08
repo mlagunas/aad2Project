@@ -11,11 +11,11 @@
     <string name="create">Create</string>
     <string name="newAccount">You don\'t have an account ? Create a new one !</string>
     <string name="accountCreationFragment">Account creation</string>
-    
     <string name="title_activity_manager">Manager</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
