@@ -6,7 +6,7 @@ public class Plant {
 	private String description;
 	private Weather weather;
  
-	public Plant(){}
+	public Plant(){} 
  
 	
  
