@@ -1,4 +1,4 @@
-package ui;
+package com.example.aad2project.ui;
 
 import java.util.Locale;
 

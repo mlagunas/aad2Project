@@ -1,9 +1,9 @@
-package model;
+package com.example.aad2project.model;
 
 public class Plant {
 
 	private int id;
-	private String description;
+	private String description,name;
 	private Weather weather;
  
 	public Plant(){} 
@@ -12,6 +12,14 @@ public class Plant {
  
 	public int getId() {
 		return id;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String name){
+		this.name=name;
 	}
  
 	public void setId(int id) {
