@@ -10,10 +10,16 @@ import com.example.aad2project.model.Plant;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +47,7 @@ public class PlantManagerFragment extends ListFragment {
 		Plant p4 = new Plant(); p4.setName("garlics");
 		plants.add(p1.getName());plants.add(p2.getName());
 		plants.add(p3.getName());plants.add(p4.getName());
-		return null;
+		return plants;
 	}
 	
 	@Override
@@ -54,7 +60,32 @@ public class PlantManagerFragment extends ListFragment {
 				android.R.layout.simple_list_item_1, getPlants());
 		setListAdapter(lvAdapter);
 		return view;
-		
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedState) {
+	    super.onActivityCreated(savedState);
 
+	    getListView().setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getActivity(), "Short click", Toast.LENGTH_SHORT);
+				
+			}	
+		});
+	    
+	    getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+
+	        @Override
+	        public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+	                int arg2, long arg3) {
+			        	Toast.makeText(getActivity(), "On long click listener", Toast.LENGTH_LONG).show();
+			            return true;
+			            
+	        }
+	    });
+	}
 }
