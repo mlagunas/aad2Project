@@ -1,4 +1,4 @@
-package model;
+package com.example.aad2project.model;
 
 public class Plant {
 
