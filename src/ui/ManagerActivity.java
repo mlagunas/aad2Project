@@ -1,6 +1,8 @@
-package com.example.aad2project;
+package ui;
 
 import java.util.Locale;
+
+import com.example.aad2project.R;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
