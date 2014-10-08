@@ -168,7 +168,7 @@ public class ManagerActivity extends ActionBarActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_manager,
+			View rootView = inflater.inflate(R.layout.fragment_plant_manager,
 					container, false);
 			rootView.setBackgroundResource(R.drawable.testimagegs);
 			return rootView;
