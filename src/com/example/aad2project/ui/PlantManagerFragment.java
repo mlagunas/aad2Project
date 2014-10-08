@@ -33,7 +33,8 @@ public class PlantManagerFragment extends ListFragment {
 	 * @return
 	 */
 	private ArrayList<String> getPlants(){
-		//Need the data from the database to inicialize the Array
+		//Need the data from the database to initialize the Array
+		// So we invent various plant objects and their parameters
 		ArrayList<String> plants = new ArrayList<String>();
 		Plant p1 = new Plant(); p1.setName("potatoes");
 		Plant p2 = new Plant(); p2.setName("tomatoes");
@@ -41,7 +42,7 @@ public class PlantManagerFragment extends ListFragment {
 		Plant p4 = new Plant(); p4.setName("garlics");
 		plants.add(p1.getName());plants.add(p2.getName());
 		plants.add(p3.getName());plants.add(p4.getName());
-		return null;
+		return plants;
 	}
 	
 	@Override
