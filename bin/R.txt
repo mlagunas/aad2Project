@@ -236,7 +236,11 @@ int drawable abc_textfield_searchview_right_holo_dark 0x7f020055
 int drawable abc_textfield_searchview_right_holo_light 0x7f020056
 int drawable ic_launcher 0x7f020057
 int drawable testimagegs 0x7f020058
+<<<<<<< HEAD
 int id accountCreation 0x7f050046
+=======
+int id accountCreation 0x7f050042
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 int id action_bar 0x7f05001c
 int id action_bar_activity_content 0x7f050015
 int id action_bar_container 0x7f05001b
@@ -248,21 +252,33 @@ int id action_context_bar 0x7f05001d
 int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
+<<<<<<< HEAD
 int id action_settings 0x7f05004a
+=======
+int id action_settings 0x7f050046
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
 int id beginning 0x7f050011
 int id button1 0x7f05003f
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
+<<<<<<< HEAD
 int id confimrpasswordCreationAccount 0x7f050049
+=======
+int id confimrpasswordCreationAccount 0x7f050045
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
 int id dropdown 0x7f05000f
 int id edit_query 0x7f050030
 int id email 0x7f05003d
+<<<<<<< HEAD
 int id emailCreationAccount 0x7f050047
+=======
+int id emailCreationAccount 0x7f050043
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 int id end 0x7f050013
 int id expand_activities_button 0x7f050026
 int id expanded_menu 0x7f05002c
@@ -283,7 +299,11 @@ int id none 0x7f050010
 int id normal 0x7f050000
 int id pager 0x7f050041
 int id password 0x7f05003e
+<<<<<<< HEAD
 int id passwordCreationAccount 0x7f050048
+=======
+int id passwordCreationAccount 0x7f050044
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 int id progress_circular 0x7f050018
 int id progress_horizontal 0x7f050019
 int id radio 0x7f05002f
@@ -338,11 +358,18 @@ int layout abc_search_view 0x7f030016
 int layout abc_simple_decor 0x7f030017
 int layout activity_main 0x7f030018
 int layout activity_manager 0x7f030019
+<<<<<<< HEAD
 int layout activity_plant_information 0x7f03001a
 int layout fragment_account_creation 0x7f03001b
 int layout fragment_plant_manager 0x7f03001c
 int layout fragment_task_calendar 0x7f03001d
 int layout support_simple_spinner_dropdown_item 0x7f03001e
+=======
+int layout fragment_account_creation 0x7f03001a
+int layout fragment_plant_manager 0x7f03001b
+int layout fragment_task_calendar 0x7f03001c
+int layout support_simple_spinner_dropdown_item 0x7f03001d
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 int menu main 0x7f0c0000
 int menu manager 0x7f0c0001
 int string abc_action_bar_home_description 0x7f0a0001

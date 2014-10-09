@@ -16,10 +16,21 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name" >
+<<<<<<< HEAD
+=======
+             <!--  -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
         </activity>
         <activity
             android:name=".ui.ManagerActivity"
             android:label="@string/title_activity_manager" >
+<<<<<<< HEAD
 
             <!--  -->
             <intent-filter>
@@ -27,6 +38,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+=======
+            
+           
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
         </activity>
         <activity
             android:name=".PlantInformationActivity"
