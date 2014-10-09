@@ -1082,7 +1082,11 @@ containing a value of this type.
     }
     public static final class id {
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int accountCreation=0x7f050046;
+=======
+        public static final int accountCreation=0x7f050042;
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
         public static final int accountCreation=0x7f050042;
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -1098,7 +1102,11 @@ containing a value of this type.
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int action_settings=0x7f05004a;
+=======
+        public static final int action_settings=0x7f050046;
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
         public static final int action_settings=0x7f050046;
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -1109,7 +1117,11 @@ containing a value of this type.
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int confimrpasswordCreationAccount=0x7f050049;
+=======
+        public static final int confimrpasswordCreationAccount=0x7f050045;
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
         public static final int confimrpasswordCreationAccount=0x7f050045;
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -1120,7 +1132,11 @@ containing a value of this type.
         public static final int edit_query=0x7f050030;
         public static final int email=0x7f05003d;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int emailCreationAccount=0x7f050047;
+=======
+        public static final int emailCreationAccount=0x7f050043;
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
         public static final int emailCreationAccount=0x7f050043;
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -1145,7 +1161,11 @@ containing a value of this type.
         public static final int pager=0x7f050041;
         public static final int password=0x7f05003e;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int passwordCreationAccount=0x7f050048;
+=======
+        public static final int passwordCreationAccount=0x7f050044;
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
         public static final int passwordCreationAccount=0x7f050044;
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -1230,16 +1250,22 @@ containing a value of this type.
         public static final int activity_main=0x7f030018;
         public static final int activity_manager=0x7f030019;
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static final int activity_plant_information=0x7f03001a;
         public static final int fragment_account_creation=0x7f03001b;
         public static final int fragment_plant_manager=0x7f03001c;
         public static final int fragment_task_calendar=0x7f03001d;
         public static final int support_simple_spinner_dropdown_item=0x7f03001e;
 =======
+=======
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
         public static final int fragment_account_creation=0x7f03001a;
         public static final int fragment_plant_manager=0x7f03001b;
         public static final int fragment_task_calendar=0x7f03001c;
         public static final int support_simple_spinner_dropdown_item=0x7f03001d;
+<<<<<<< HEAD
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
+=======
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
     }
     public static final class menu {

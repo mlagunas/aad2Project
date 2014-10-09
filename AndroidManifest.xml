@@ -17,7 +17,10 @@
             android:name=".ui.MainActivity"
             android:label="@string/app_name" >
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
              <!--  -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +33,7 @@
         <activity
             android:name=".ui.ManagerActivity"
             android:label="@string/title_activity_manager" >
+<<<<<<< HEAD
 <<<<<<< HEAD
 
             <!--  -->
@@ -46,6 +50,10 @@
         <activity
             android:name=".PlantInformationActivity"
             android:label="@string/title_activity_plant_information" >
+=======
+            
+           
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
         </activity>
     </application>
 

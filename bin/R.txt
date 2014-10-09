@@ -237,7 +237,11 @@ int drawable abc_textfield_searchview_right_holo_light 0x7f020056
 int drawable ic_launcher 0x7f020057
 int drawable testimagegs 0x7f020058
 <<<<<<< HEAD
+<<<<<<< HEAD
 int id accountCreation 0x7f050046
+=======
+int id accountCreation 0x7f050042
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
 int id accountCreation 0x7f050042
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -253,7 +257,11 @@ int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
 <<<<<<< HEAD
+<<<<<<< HEAD
 int id action_settings 0x7f05004a
+=======
+int id action_settings 0x7f050046
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
 int id action_settings 0x7f050046
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -264,7 +272,11 @@ int id button1 0x7f05003f
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
 <<<<<<< HEAD
+<<<<<<< HEAD
 int id confimrpasswordCreationAccount 0x7f050049
+=======
+int id confimrpasswordCreationAccount 0x7f050045
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
 int id confimrpasswordCreationAccount 0x7f050045
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -275,7 +287,11 @@ int id dropdown 0x7f05000f
 int id edit_query 0x7f050030
 int id email 0x7f05003d
 <<<<<<< HEAD
+<<<<<<< HEAD
 int id emailCreationAccount 0x7f050047
+=======
+int id emailCreationAccount 0x7f050043
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
 int id emailCreationAccount 0x7f050043
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -300,7 +316,11 @@ int id normal 0x7f050000
 int id pager 0x7f050041
 int id password 0x7f05003e
 <<<<<<< HEAD
+<<<<<<< HEAD
 int id passwordCreationAccount 0x7f050048
+=======
+int id passwordCreationAccount 0x7f050044
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 =======
 int id passwordCreationAccount 0x7f050044
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
@@ -359,16 +379,22 @@ int layout abc_simple_decor 0x7f030017
 int layout activity_main 0x7f030018
 int layout activity_manager 0x7f030019
 <<<<<<< HEAD
+<<<<<<< HEAD
 int layout activity_plant_information 0x7f03001a
 int layout fragment_account_creation 0x7f03001b
 int layout fragment_plant_manager 0x7f03001c
 int layout fragment_task_calendar 0x7f03001d
 int layout support_simple_spinner_dropdown_item 0x7f03001e
 =======
+=======
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 int layout fragment_account_creation 0x7f03001a
 int layout fragment_plant_manager 0x7f03001b
 int layout fragment_task_calendar 0x7f03001c
 int layout support_simple_spinner_dropdown_item 0x7f03001d
+<<<<<<< HEAD
+>>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
+=======
 >>>>>>> 99434bdb3286a6148ac1522add89af4652ac0475
 int menu main 0x7f0c0000
 int menu manager 0x7f0c0001
