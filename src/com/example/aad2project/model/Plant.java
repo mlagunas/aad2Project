@@ -6,6 +6,8 @@ public class Plant {
 
 	private String description, name;
 	private Weather weather;
+	
+	private Plant next;
 
 	public Plant() {
 	}
@@ -50,4 +52,38 @@ public class Plant {
 		this.weather = weather;
 	}
 
+	public Plant getNext() {
+		return next;
+	}
+	
+	public void setNext(Plant next) {
+		this.next = next;
+	}
+	
+	public void addPlantToQueue(Plant newPlant) {
+		if (this.next == null) {
+			this.next = newPlant;
+		} else {
+			this.next.addPlantToQueue(newPlant);
+		}
+	}
+	
+	public Plant getPlantNumber(int i) {
+		Plant plant = this;
+		
+		for (int j = 0; j < i; j++) {
+			plant = plant.next;
+		}
+		
+		return plant;
+	}
+	
+	public int size() {
+		int i = 1;
+		Plant plant = this;
+		do {
+			i++;
+		} while(plant.next != null);
+		return i;
+	}
 }

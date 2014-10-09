@@ -2,8 +2,6 @@ package com.example.aad2project.model;
 
 public class Weather {
 
-	
-	
 	private int maxHumi;
 	private int minHumi;
 	private int maxTemp;
