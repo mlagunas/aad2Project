@@ -4,6 +4,7 @@ public class Task {
 	
 	private int id;
 	private String description;
+	private Task next;
 
 	public int getId() {
 		return id;
@@ -18,5 +19,38 @@ public class Task {
 		this.description = description;
 	}
 	
+	public Task getNext() {
+		return next;
+	}
 	
+	public void setNext(Task next) {
+		this.next = next;
+	}
+	
+	public void addtaskToQueue(Task newTask) {
+		if (this.next == null) {
+			this.next = newTask;
+		} else {
+			this.next.addtaskToQueue(newTask);
+		}
+	}
+	
+	public Task getTaskNumber(int i) {
+		Task task = this;
+		
+		for (int j = 0; j < i; j++) {
+			task = task.next;
+		}
+		
+		return task;
+	}
+	
+	public int size() {
+		int j = 1;
+		Task task = this;
+		do {
+			j++;
+		} while(task.next != null);
+		return j;
+	}
 }

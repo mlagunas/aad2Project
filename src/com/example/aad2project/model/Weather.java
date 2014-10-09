@@ -2,12 +2,13 @@ package com.example.aad2project.model;
 
 public class Weather {
 
-	private int maxHumi;
-	private int minHumi;
-	private int maxTemp;
-	private int minTemp;
+	private int maxHumidity;
+	private int minHumidity;
+	private int maxTemperature;
+	private int minTemperature;
 	private int minLightness;
 	private int maxLightnesss;
+	private Weather next;
 	
 	private int id;
 
@@ -24,42 +25,42 @@ public Weather(){}
 	
 	
 	public int getMaxHumi() {
-		return maxHumi;
+		return maxHumidity;
 	}
 
 
-	public void setMaxHumi(int maxHumi) {
-		this.maxHumi = maxHumi;
+	public void setMaxHumi(int maxHumidity) {
+		this.maxHumidity = maxHumidity;
 	}
 
 
 	public int getMinHumi() {
-		return minHumi;
+		return minHumidity;
 	}
 
 
-	public void setMinHumi(int minHumi) {
-		this.minHumi = minHumi;
+	public void setMinHumi(int minHumidity) {
+		this.minHumidity = minHumidity;
 	}
 
 
 	public int getMaxTemp() {
-		return maxTemp;
+		return maxTemperature;
 	}
 
 
-	public void setMaxTemp(int maxTemp) {
-		this.maxTemp = maxTemp;
+	public void setMaxTemp(int maxTemperature) {
+		this.maxTemperature = maxTemperature;
 	}
 
 
 	public int getMinTemp() {
-		return minTemp;
+		return minTemperature;
 	}
 
 
-	public void setMinTemp(int minTemp) {
-		this.minTemp = minTemp;
+	public void setMinTemp(int minTemperature) {
+		this.minTemperature = minTemperature;
 	}
 
 
@@ -83,7 +84,32 @@ public Weather(){}
 	}
 
 
+	public void addweaterToQueue(Weather newWeather) {
+		if (this.next == null) {
+			this.next = newWeather;
+		} else {
+			this.next.addweaterToQueue(newWeather);
+		}
+	}
 	
+	public Weather getWeatherNumber(int i) {
+		Weather weater = this;
+		
+		for (int j = 0; j < i; j++) {
+			weater = weater.next;
+		}
+		
+		return weater;
+	}
+	
+	public int size() {
+		int j = 1;
+		Weather weater = this;
+		do {
+			j++;
+		} while(weater.next != null);
+		return j;
+	}	
  
 	
 

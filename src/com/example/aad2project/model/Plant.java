@@ -79,11 +79,11 @@ public class Plant {
 	}
 	
 	public int size() {
-		int i = 1;
+		int j = 1;
 		Plant plant = this;
 		do {
-			i++;
+			j++;
 		} while(plant.next != null);
-		return i;
+		return j;
 	}
 }
