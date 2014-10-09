@@ -3,6 +3,7 @@ package com.example.aad2project.ui;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -69,7 +70,7 @@ public class PlantManagerFragment extends ListFragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Toast.makeText(getActivity(), "Short click", Toast.LENGTH_SHORT);
+				Toast.makeText(getActivity(), "Short click", Toast.LENGTH_SHORT).show();
 				
 			}	
 		});
@@ -79,6 +80,19 @@ public class PlantManagerFragment extends ListFragment {
 	        @Override
 	        public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 	                int arg2, long arg3) {
+	        			
+	        			// Create dialog
+	        			DialogFragment dialog = new LongClickDialogFragment();
+	        			
+	        			// Put boolean to show Add or Delete
+	        			Bundle bundle = new Bundle();
+	        			bundle.putBoolean("add", true); // TODO Put true or false if the plant is added or not
+	        			dialog.setArguments(bundle);
+	        			
+	        			// Show dialog
+	        			dialog.show(getFragmentManager(), "longClickDialog");
+	        			
+	        			
 			        	Toast.makeText(getActivity(), "On long click listener", Toast.LENGTH_LONG).show();
 			            return true;
 			            

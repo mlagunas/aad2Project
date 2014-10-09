@@ -1,4 +1,7 @@
-package com.example.aad2project;
+package com.example.aad2project.ui;
+
+import com.example.aad2project.R;
+import com.example.aad2project.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
