@@ -29,7 +29,28 @@ public class MainActivity extends Activity implements OnClickListener {
 		usernameView = (EditText) findViewById (R.id.email);
 		passwordView = (EditText) findViewById (R.id.password);
 		login = (Button) findViewById (R.id.button1);
-		login.setOnClickListener(this);
+		login.setOnClickListener(new OnClickListener() {
+
+	        @Override
+	        public void onClick(View arg0) {
+	        	if(usernameView.getText().toString().equals(username) && 
+	    				passwordView.getText().toString().equals(password)){
+	    			
+	    			Intent intent = new Intent (MainActivity.this, ManagerActivity.class);
+	    			intent.putExtra(EXTRA_USERNAME, username);
+	    			
+	    			startActivity(intent);
+	    			
+	    			Toast.makeText(getApplicationContext(), "Successful autentication", 
+	    					Toast.LENGTH_SHORT).show();
+	    		}	
+	    		else{
+	    			Toast.makeText(getApplicationContext(), "Wrong Credentials",
+	    					Toast.LENGTH_SHORT).show();
+	    		}
+	    	}   
+
+	    });
 	}
 
 	@Override
@@ -42,21 +63,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		if(usernameView.getText().toString().equals(username) && 
-				passwordView.getText().toString().equals(password)){
-			
-			Intent intent = new Intent (this, ManagerActivity.class);
-			intent.putExtra(EXTRA_USERNAME, username);
-			
-			startActivity(intent);
-			
-			Toast.makeText(getApplicationContext(), "Successful autentication", 
-					Toast.LENGTH_SHORT).show();
-		}	
-		else{
-			Toast.makeText(getApplicationContext(), "Wrong Credentials",
-					Toast.LENGTH_SHORT).show();
-		}
+
 	}
 
 }
