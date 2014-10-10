@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class PlantManagerFragment extends Fragment {
 
 	ArrayList<String> data;
 	ArrayAdapter<String> lvAdapter;
-	
+
 	private ExpandableListView list;
 
 	public PlantManagerFragment() {
@@ -39,25 +40,6 @@ public class PlantManagerFragment extends Fragment {
 	 * 
 	 * @return
 	 */
-	private ArrayList<String> getStringPlants() {
-		// Need the data from the database to initialize the Array
-		// So we invent various plant objects and their parameters
-		ArrayList<String> plants = new ArrayList<String>();
-		Plant p1 = new Plant();
-		p1.setName("potatoes");
-		Plant p2 = new Plant();
-		p2.setName("tomatoes");
-		Plant p3 = new Plant();
-		p3.setName("onions");
-		Plant p4 = new Plant();
-		p4.setName("garlics");
-		plants.add(p1.getName());
-		plants.add(p2.getName());
-		plants.add(p3.getName());
-		plants.add(p4.getName());
-		return plants;
-	}
-
 	private ArrayList<Plant> getPlants() {
 		// Need the data from the database to initialize the Array
 		// So we invent various plant objects and their parameters
@@ -83,14 +65,12 @@ public class PlantManagerFragment extends Fragment {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_plant_manager,
 				container, false);
-		
+
 		list = (ExpandableListView) view.findViewById(R.id.list);
-		
-		/*lvAdapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, getStringPlants());*/
-		
-		PlantListAdapter adapter = new PlantListAdapter(getActivity(), getPlants(), getPlants());
-		
+
+		PlantListAdapter adapter = new PlantListAdapter(getActivity(),
+				getPlants(), getPlants());
+
 		list.setAdapter(adapter);
 		list.expandGroup(0);
 		return view;
@@ -116,21 +96,21 @@ public class PlantManagerFragment extends Fragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				if (id < 0) {
+					// Create dialog
+					DialogFragment dialog = new LongClickDialogFragment();
 
-				// Create dialog
-				DialogFragment dialog = new LongClickDialogFragment();
+					// Put boolean to show Add or Delete
+					Bundle bundle = new Bundle();
+					bundle.putBoolean("added", (Boolean) view.getTag());
+					dialog.setArguments(bundle);
 
-				// Put boolean to show Add or Delete
-				Bundle bundle = new Bundle();
-				bundle.putBoolean("add", true); // TODO Put true or false if the
-												// plant is added or not
-				dialog.setArguments(bundle);
+					// Show dialog
+					dialog.show(getFragmentManager(), "longClickDialog");
 
-				// Show dialog
-				dialog.show(getFragmentManager(), "longClickDialog");
-
-				Toast.makeText(getActivity(), "On long click listener",
-						Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), "On long click listener",
+							Toast.LENGTH_LONG).show();
+				}
 				return true;
 
 			}

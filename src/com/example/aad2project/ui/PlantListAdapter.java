@@ -3,6 +3,7 @@ package com.example.aad2project.ui;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import com.example.aad2project.R;
 import com.example.aad2project.model.Plant;
 
 public class PlantListAdapter extends BaseExpandableListAdapter {
-
+	
 	private List<Plant> added;
 	private List<Plant> all;
 	private Context context;
@@ -91,7 +92,7 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.group_title);
 
 		groupTitle.setText((String) getGroup(groupPosition));
-
+		convertView.setLongClickable(false);
 		return convertView;
 	}
 
@@ -112,8 +113,12 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 		switch (groupPosition) {
 		case 0:
 			plant = added.get(childPosition);
+			convertView.setTag(true);
+			break;
 		case 1:
 			plant = all.get(childPosition);
+			convertView.setTag(false);
+			break;
 		}
 
 		plantName.setText(plant.getName());
@@ -125,4 +130,5 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
+	
 }

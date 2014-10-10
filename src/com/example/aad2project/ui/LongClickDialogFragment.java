@@ -13,10 +13,10 @@ public class LongClickDialogFragment extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		int id;
-		if (getArguments().getBoolean("add")){
-			id = R.array.long_click_add;
-		} else {
+		if (getArguments().getBoolean("added")){
 			id = R.array.long_click_delete;
+		} else {
+			id = R.array.long_click_add;
 		}
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
