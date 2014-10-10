@@ -1,56 +1,37 @@
 package com.example.aad2project.ui;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
 
-public class MainActivity extends Activity implements OnClickListener {
-	
+public class MainActivity extends ActionBarActivity implements LoginFragment.OnLoginFragmentInteractionListener, AccountCreationFragment.OnAccountCreationFragmentInteractionListener {
+
 	public String EXTRA_USERNAME = "EXTRA_USERNAME";
-	private EditText  usernameView = null;
-	private EditText  passwordView = null;
-	private String username = "admin";
-	private String password = "admin";
-	private Button login;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		usernameView = (EditText) findViewById (R.id.email);
-		passwordView = (EditText) findViewById (R.id.password);
-		login = (Button) findViewById (R.id.button1);
-		login.setOnClickListener(new OnClickListener() {
+		// Creation of the first fragment
+		LoginFragment loginFragment =  new LoginFragment();
+		// Fragment transaction with fragment manager
+		android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();         
+		// Fragment add into the frame_layout
+		fragmentTransaction.add(R.id.frame_content, loginFragment);
+		fragmentTransaction.addToBackStack(null);
+		// Actions displayed
+		fragmentTransaction.commit();
 
-	        @Override
-	        public void onClick(View arg0) {
-	        	if(usernameView.getText().toString().equals(username) && 
-	    				passwordView.getText().toString().equals(password)){
-	    			
-	    			Intent intent = new Intent (MainActivity.this, ManagerActivity.class);
-	    			intent.putExtra(EXTRA_USERNAME, username);
-	    			
-	    			startActivity(intent);
-	    			
-	    			Toast.makeText(getApplicationContext(), "Successful autentication", 
-	    					Toast.LENGTH_SHORT).show();
-	    		}	
-	    		else{
-	    			Toast.makeText(getApplicationContext(), "Wrong Credentials",
-	    					Toast.LENGTH_SHORT).show();
-	    		}
-	    	}   
 
-	    });
+
 	}
 
 	@Override
@@ -60,8 +41,37 @@ public class MainActivity extends Activity implements OnClickListener {
 		return true;
 	}
 
+	public void successfulAutentication(String username){
+
+		Intent intent = new Intent (MainActivity.this, ManagerActivity.class);
+		intent.putExtra(EXTRA_USERNAME, username);
+
+		startActivity(intent);
+
+		Toast.makeText(getApplicationContext(), "Successful autentication", 
+				Toast.LENGTH_SHORT).show();
+	}
+
+	public void wrongCredentials(){
+		Toast.makeText(getApplicationContext(), "Wrong Credentials",
+				Toast.LENGTH_SHORT).show();
+	}
+
+	public void newAccount(){
+		
+		// Creation of the first fragment
+		AccountCreationFragment accountCreationFragment = new AccountCreationFragment();
+		// Fragment transaction with fragment manager
+		android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();         
+		// Fragment add into the frame_layout
+		fragmentTransaction.replace(R.id.frame_content, accountCreationFragment);
+		fragmentTransaction.addToBackStack(null);
+		// Actions displayed
+		fragmentTransaction.commit();
+	}
+
 	@Override
-	public void onClick(View v) {
+	public void onFragmentInteraction(Uri uri) {
 		// TODO Auto-generated method stub
 
 	}
