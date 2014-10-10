@@ -7,6 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.aad2project.R;
 
@@ -29,6 +33,11 @@ public class AccountCreationFragment extends Fragment {
 	private String mParam1;
 	private String mParam2;
 
+	private EditText  usernameView = null;
+	private EditText  passwordView = null;
+	private EditText passwordConfirmView = null;
+	private Button Create;
+	
 	private OnAccountCreationFragmentInteractionListener mListener;
 
 	/**
@@ -68,9 +77,26 @@ public class AccountCreationFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_account_creation, container,
+		View view = inflater.inflate(R.layout.fragment_account_creation, container,
 				false);
+		
+		// Store the different component of the UI
+		usernameView = (EditText) view.findViewById (R.id.emailCreationAccount);
+		passwordView = (EditText) view.findViewById (R.id.passwordCreationAccount);
+		passwordConfirmView = (EditText) view.findViewById (R.id.confirmpasswordCreationAccount);
+		Create = (Button) view.findViewById (R.id.buttonCreate);
+		// Put OnClickListener on the login button
+		Create.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+			
+			}
+		});
+		
+		return view;
 	}
 
 	// TODO: Rename method, update argument and hook method into UI event

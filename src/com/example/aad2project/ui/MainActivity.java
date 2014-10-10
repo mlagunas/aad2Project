@@ -3,8 +3,6 @@ package com.example.aad2project.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.widget.Toast;
@@ -40,25 +38,40 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	/**
+	 * Use this method when the user is successfully authenticated
+	 * 
+	 * @param username
+	 */
+	public void successfulAuthentication(String username){
 
-	public void successfulAutentication(String username){
-
+		// Intent creation, to switch activity
 		Intent intent = new Intent (MainActivity.this, ManagerActivity.class);
+		// Put the username in extra
 		intent.putExtra(EXTRA_USERNAME, username);
-
+		// Start the activity
 		startActivity(intent);
-
-		Toast.makeText(getApplicationContext(), "Successful autentication", 
-				Toast.LENGTH_SHORT).show();
-	}
-
-	public void wrongCredentials(){
-		Toast.makeText(getApplicationContext(), "Wrong Credentials",
-				Toast.LENGTH_SHORT).show();
-	}
-
-	public void newAccount(){
 		
+		// Toast to inform the user that the connection is a success
+		Toast.makeText(getApplicationContext(), getResources().getString(R.string.success_login), 
+				Toast.LENGTH_SHORT).show();
+	}
+
+	/**
+	 * Use this method when the user don't use the correct credentials
+	 */
+	public void wrongCredentials(){
+		// Toast to inform the user that the credentials were wrong
+		Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrong_credentials),
+				Toast.LENGTH_SHORT).show();
+	}
+
+	/**
+	 * Use this method when the user click on the "create a new account" text on the login page
+	 */
+	public void newAccount(){
+
 		// Creation of the first fragment
 		AccountCreationFragment accountCreationFragment = new AccountCreationFragment();
 		// Fragment transaction with fragment manager

@@ -78,33 +78,39 @@ public class LoginFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
+		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_login, container, false);
 		
+		// Store the different component of the UI
 		usernameView = (EditText) view.findViewById (R.id.email);
 		passwordView = (EditText) view.findViewById (R.id.password);
 		login = (Button) view.findViewById (R.id.buttonLogin);
 		newAccount = (TextView) view.findViewById (R.id.newAccount);
+		// Put OnClickListener on the login button
 		login.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
+				// If the user has put correct credentials
 				if(usernameView.getText().toString().equals(username) && 
 						passwordView.getText().toString().equals(password)){
 
-					
-					((MainActivity)getActivity()).successfulAutentication(username);
+					// The successfulAuthentication method from the MainActivity is called
+					((MainActivity)getActivity()).successfulAuthentication(username);
 				}	
 				else{
-					MainActivity mainActivity = new MainActivity();
-					mainActivity.wrongCredentials();
+					// If the credentials were wrong, the wrongCredentials method from MainActivity is called
+					((MainActivity)getActivity()).wrongCredentials();
 				}
 			}   
 
 		});
+		// Put OnClickListener on the textView for the creation of a new account
 		newAccount.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
+				// The newAccount method from MainActivity is called
 				((MainActivity)getActivity()).newAccount();
 			}
 		});
