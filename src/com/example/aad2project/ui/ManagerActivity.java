@@ -118,10 +118,10 @@ public class ManagerActivity extends ActionBarActivity implements
 			// Return a PlaceholderFragment (defined as a static inner class
 			// below).
 			switch (position) {
-			case 0:
-				return new PlantManagerFragment();
-			case 1:
+			case 0:				
 				return new TaskCalendarFragment();
+			case 1:
+				return new PlantManagerFragment();
 			}
 			return null;
 		}
@@ -137,9 +137,9 @@ public class ManagerActivity extends ActionBarActivity implements
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
-			case 1:
 				return getString(R.string.title_section2).toUpperCase(l);
+			case 1:
+				return getString(R.string.title_section1).toUpperCase(l);
 			}
 			return null;
 		}

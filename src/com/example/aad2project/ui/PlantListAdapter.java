@@ -3,18 +3,18 @@ package com.example.aad2project.ui;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
 import com.example.aad2project.model.Plant;
 
 public class PlantListAdapter extends BaseExpandableListAdapter {
-	
+
 	private List<Plant> added;
 	private List<Plant> all;
 	private Context context;
@@ -109,6 +109,10 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 
 		TextView plantName = (TextView) convertView
 				.findViewById(R.id.plant_name);
+		TextView plantReminingTime = (TextView) convertView
+				.findViewById(R.id.plant_remaining_time);
+		ImageView plantImage = (ImageView) convertView
+				.findViewById(R.id.plant_image);
 		Plant plant = null;
 		switch (groupPosition) {
 		case 0:
@@ -122,6 +126,13 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 		}
 
 		plantName.setText(plant.getName());
+		plantReminingTime.setText("2 weeks left"); // TODO - Change text
+													// according to remaining
+													// time
+		plantImage.setImageResource(R.drawable.plant_image); // TODO - Change
+																// image
+																// according to
+																// plant
 
 		return convertView;
 	}
@@ -130,5 +141,5 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
-	
+
 }
