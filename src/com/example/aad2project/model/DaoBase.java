@@ -18,7 +18,7 @@ public abstract class DaoBase {
 		  }
 		    
 		  public SQLiteDatabase open() {
-		    mDb = mHandler.getWritableDatabase();
+		    mDb = mHandler.getReadableDatabase();
 		    return mDb;
 		  }
 		    
