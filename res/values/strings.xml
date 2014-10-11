@@ -11,7 +11,7 @@
     <string name="success_login">Successful authentication</string>
     <string name="wrong_credentials">Login</string>
     <string name="create">Create</string>
-    <string name="new_account">You don\'t have an account ? Create a new one !</string>
+    <string name="new_account">Create new account</string>
     <string name="account_creation_fragment">Account creation</string>
     <string name="title_activity_manager">Manager</string>
     <string name="title_section1">Plant Manager</string>

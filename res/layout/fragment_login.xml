@@ -49,7 +49,7 @@
         android:onClick="login"
         android:text="@string/login" />
 
-    <TextView
+    <Button
         android:id="@+id/newAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 		android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();         
 		// Fragment add into the frame_layout
 		fragmentTransaction.add(R.id.frame_content, loginFragment);
-		fragmentTransaction.addToBackStack(null);
+		
 		// Actions displayed
 		fragmentTransaction.commit();
 
