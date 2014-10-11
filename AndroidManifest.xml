@@ -28,6 +28,11 @@
             android:name="com.example.aad2project.ui.ManagerActivity"
             android:label="@string/title_activity_manager" >
         </activity>
+        
+        <activity
+            android:name="com.example.aad2project.ui.PlantInformationActivity"
+            android:label="@string/plant_description" >
+        </activity>
     </application>
 
 </manifest>

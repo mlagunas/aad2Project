@@ -17,15 +17,16 @@
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:src="@drawable/testimagegs" />
-
+<!--  -->
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name of the plant"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
@@ -35,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout1"
-        android:text="Description about the plant" />
+        android:layout_below="@+id/linearLayout1" />
     
 </RelativeLayout>
