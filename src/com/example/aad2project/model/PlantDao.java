@@ -13,5 +13,5 @@ public class PlantDao extends DaoBase {
 		
 	}
 	
-	protected boolean convertResultToObject(Cursor c) { return true;}
+	protected boolean convertResultToObject() { return true;}
 }

@@ -35,7 +35,7 @@ public class TaskDao extends DaoBase {
 		
 		c 	  = mDb.rawQuery(query, null);
 		
-		if (convertResultToObject(c)) {
+		if (convertResultToObject()) {
 			return task;
 		}
 		
@@ -54,14 +54,14 @@ public class TaskDao extends DaoBase {
 		
 		c = mDb.rawQuery(query, args);
 		
-		if (convertResultToObject(c)) {
+		if (convertResultToObject()) {
 			return task;
 		}
 		
 		return null;
 	}
 	
-	protected boolean convertResultToObject(Cursor c) {
+	protected boolean convertResultToObject() {
 		if (!c.moveToFirst()) {
 			return false;
 		}

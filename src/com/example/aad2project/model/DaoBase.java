@@ -35,5 +35,5 @@ public abstract class DaoBase {
 	    return mDb;
 	  }
      
-	  protected abstract boolean convertResultToObject (Cursor c);
+	  protected abstract boolean convertResultToObject ();
 }

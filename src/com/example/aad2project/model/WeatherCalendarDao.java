@@ -9,5 +9,5 @@ public class WeatherCalendarDao extends DaoBase {
 		super(pContext);
 	}
 	
-	protected boolean convertResultToObject(Cursor c) { return true;}
+	protected boolean convertResultToObject() { return true;}
 }
