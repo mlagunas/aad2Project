@@ -32,11 +32,11 @@ public class TaskPlant {
 		this.next = next;
 	}
 	
-	public void addPlantToQueue(TaskPlant taskPlant) {
+	public void addTaskPlantToQueue(TaskPlant taskPlant) {
 		if (this.next == null) {
 			this.next = taskPlant;
 		} else {
-			this.next.addPlantToQueue(taskPlant);
+			this.next.addTaskPlantToQueue(taskPlant);
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package com.example.aad2project.model;
 
 import android.content.Context;
+import android.database.Cursor;
 
 public class PlantDao extends DaoBase {
 	
@@ -12,4 +13,5 @@ public class PlantDao extends DaoBase {
 		
 	}
 	
+	protected boolean convertResultToObject(Cursor c) { return true;}
 }

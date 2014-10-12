@@ -5,7 +5,12 @@ public class Task {
 	private int id;
 	private String description;
 	private Task next;
-
+	
+	public Task(int id, String description) {
+		this.id 		 = id;
+		this.description = description;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -27,11 +32,11 @@ public class Task {
 		this.next = next;
 	}
 	
-	public void addtaskToQueue(Task newTask) {
+	public void addTaskToQueue(Task newTask) {
 		if (this.next == null) {
 			this.next = newTask;
 		} else {
-			this.next.addtaskToQueue(newTask);
+			this.next.addTaskToQueue(newTask);
 		}
 	}
 	

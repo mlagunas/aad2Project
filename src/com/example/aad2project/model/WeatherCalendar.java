@@ -21,11 +21,11 @@ public class WeatherCalendar {
 		this.weather = weather;
 	}
 	
-	public void addweatherCalendarToQueue(WeatherCalendar newWeatherCalendar) {
+	public void addWeatherCalendarToQueue(WeatherCalendar newWeatherCalendar) {
 		if (this.next == null) {
 			this.next = newWeatherCalendar;
 		} else {
-			this.next.addweatherCalendarToQueue(newWeatherCalendar);
+			this.next.addWeatherCalendarToQueue(newWeatherCalendar);
 		}
 	}
 	

@@ -84,11 +84,11 @@ public Weather(){}
 	}
 
 
-	public void addweaterToQueue(Weather newWeather) {
+	public void addWeaterToQueue(Weather newWeather) {
 		if (this.next == null) {
 			this.next = newWeather;
 		} else {
-			this.next.addweaterToQueue(newWeather);
+			this.next.addWeaterToQueue(newWeather);
 		}
 	}
 	
