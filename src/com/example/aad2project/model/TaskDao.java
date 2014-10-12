@@ -2,7 +2,6 @@ package com.example.aad2project.model;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 
 public class TaskDao extends DaoBase {
 	
