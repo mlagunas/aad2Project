@@ -10,19 +10,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.aad2project.R;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
- * must implement the
- * {@link AccountCreationFragment.OnAccountCreationFragmentInteractionListener} interface to
- * handle interaction events. Use the
- * {@link AccountCreationFragment#newInstance} factory method to create an
- * instance of this fragment.
+ * must implement the {@link LoginFragment.OnLoginFragmentInteractionListener}
+ * interface to handle interaction events.
  *
  */
-public class AccountCreationFragment extends Fragment {
+public class LoginFragment extends Fragment {
+
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
@@ -31,13 +30,15 @@ public class AccountCreationFragment extends Fragment {
 	// TODO: Rename and change types of parameters
 	private String mParam1;
 	private String mParam2;
+	
+	private OnLoginFragmentInteractionListener mListener;
 
 	private EditText  usernameView = null;
 	private EditText  passwordView = null;
-	private EditText passwordConfirmView = null;
-	private Button Create;
-	
-	private OnAccountCreationFragmentInteractionListener mListener;
+	private String username = "admin";
+	private String password = "admin";
+	private TextView newAccount = null;
+	private Button login;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -50,9 +51,9 @@ public class AccountCreationFragment extends Fragment {
 	 * @return A new instance of fragment AccountCreationFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static AccountCreationFragment newInstance(String param1,
+	public static LoginFragment newInstance(String param1,
 			String param2) {
-		AccountCreationFragment fragment = new AccountCreationFragment();
+		LoginFragment fragment = new LoginFragment();
 		Bundle args = new Bundle();
 		args.putString(ARG_PARAM1, param1);
 		args.putString(ARG_PARAM2, param2);
@@ -60,7 +61,7 @@ public class AccountCreationFragment extends Fragment {
 		return fragment;
 	}
 
-	public AccountCreationFragment() {
+	public LoginFragment() {
 		// Required empty public constructor
 	}
 
@@ -72,29 +73,48 @@ public class AccountCreationFragment extends Fragment {
 			mParam2 = getArguments().getString(ARG_PARAM2);
 		}
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_account_creation, container,
-				false);
+		View view = inflater.inflate(R.layout.fragment_login, container, false);
 		
 		// Store the different component of the UI
-		usernameView = (EditText) view.findViewById (R.id.emailCreationAccount);
-		passwordView = (EditText) view.findViewById (R.id.passwordCreationAccount);
-		passwordConfirmView = (EditText) view.findViewById (R.id.confirmpasswordCreationAccount);
-		Create = (Button) view.findViewById (R.id.buttonCreate);
+		usernameView = (EditText) view.findViewById (R.id.email);
+		passwordView = (EditText) view.findViewById (R.id.password);
+		login = (Button) view.findViewById (R.id.buttonLogin);
+		newAccount = (TextView) view.findViewById (R.id.newAccount);
 		// Put OnClickListener on the login button
-		Create.setOnClickListener(new OnClickListener() {
+		login.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-			
+				// If the user has put correct credentials
+				if(usernameView.getText().toString().equals(username) && 
+						passwordView.getText().toString().equals(password)){
+
+					// The successfulAuthentication method from the MainActivity is called
+					((MainActivity)getActivity()).successfulAuthentication(username);
+				}	
+				else{
+					// If the credentials were wrong, the wrongCredentials method from MainActivity is called
+					((MainActivity)getActivity()).wrongCredentials();
+				}
+			}   
+
+		});
+		// Put OnClickListener on the textView for the creation of a new account
+		newAccount.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// The newAccount method from MainActivity is called
+				((MainActivity)getActivity()).newAccount();
 			}
 		});
-		
+
 		return view;
 	}
 
@@ -109,7 +129,7 @@ public class AccountCreationFragment extends Fragment {
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		try {
-			mListener = (OnAccountCreationFragmentInteractionListener) activity;
+			mListener = (OnLoginFragmentInteractionListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnFragmentInteractionListener");
@@ -131,7 +151,7 @@ public class AccountCreationFragment extends Fragment {
 	 * "http://developer.android.com/training/basics/fragments/communicating.html"
 	 * >Communicating with Other Fragments</a> for more information.
 	 */
-	public interface OnAccountCreationFragmentInteractionListener {
+	public interface OnLoginFragmentInteractionListener {
 		// TODO: Update argument type and name
 		public void onFragmentInteraction(Uri uri);
 	}

@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">LoginScreen</string>
+    <string name="app_name">GreenHub</string>
     <string name="action_settings">Settings</string>
-    <string name="emailHint">Type your E-mail</string>
-    <string name="passwordHint">Type your password</string>
-    <string name="confirmPasswordHint">Confirm your password</string>
+    <string name="email_hint">Type your E-mail</string>
+    <string name="password_hint">Type your password</string>
+    <string name="confirm_password_hint">Confirm your password</string>
     <string name="greenhub">GreenHub:</string>
     <string name="login">Login</string>
+    <string name="success_login">Successful authentication</string>
+    <string name="wrong_credentials">Login</string>
     <string name="create">Create</string>
-    <string name="newAccount">You don\'t have an account ? Create a new one !</string>
-    <string name="accountCreationFragment">Account creation</string>
+    <string name="new_account">Create new account</string>
+    <string name="account_creation_fragment">Account creation</string>
     <string name="title_activity_manager">Manager</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
+    <string name="title_section1">Plant Manager</string>
+    <string name="title_section2">Task Calendar</string>
     <string name="title_section3">Section 3</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="plant_description">Plant description</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_plant_information">PlantInformationActivity</string>
-
+    <string name="potatoes">Potatoes</string>
+    <string name="tomatoes">Tomatoes</string>
+    <string name="onions">Onions</string>
+    <string name="garlic">Garlic</string>
+    <string-array name="long_click_add">
+        <item>Add</item>
+        <item>View info</item>
+    </string-array>
+	<string-array name="long_click_delete">
+        <item>Delete</item>
+        <item>View info</item>
+    </string-array>
+    
 </resources>
