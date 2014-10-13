@@ -2,7 +2,7 @@ package com.example.aad2project.model;
 
 public class Plant {
 
-	private int id, timeToGrow;
+	private int id, timeToGrow, number;
 
 	private String description, name;
 	private Weather weather;
@@ -76,6 +76,14 @@ public class Plant {
 		}
 		
 		return plant;
+	}
+	
+	public void setNumber(int number){
+		this.number=number;
+	}
+	
+	public int getNumber(){
+		return number;
 	}
 	
 	public int size() {

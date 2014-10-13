@@ -12,8 +12,20 @@ public class PlantDao extends DaoBase {
 		super.open();
 	}
  	
+	/**
+	 * This method add a plant 
+	 * @param plant
+	 */
 	public void addPlant(Plant plant) {
+		String name,description;
+		int timeToGrow,number;
+		name = plant.getName();
+		description = plant.getDescription();
+		timeToGrow = plant.getTimeToGrow();
+		number = plant.getNumber();
 		
+		super.mDb.execSQL("INSERT INTO  Plant (id,name,description,timeToGrow,number,weatherId)" +
+				"	VALUES ("+getId()+",'"+name+"','"+description+"',"+timeToGrow+","+number+",1);");
 	}
 	
 	/**

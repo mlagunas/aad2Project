@@ -44,7 +44,7 @@ public class PlantManagerFragment extends Fragment {
 	private int id2 = 1 ;
 	private int id3 = 2 ;
 	private int id4 = 3 ;
-	
+	private PlantDao plants;
 
 	public PlantManagerFragment() {
 		// Required empty public constructor
@@ -54,12 +54,9 @@ public class PlantManagerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		PlantDao plants = new PlantDao(getActivity());
+		plants = new PlantDao(getActivity());
 		View view = inflater.inflate(R.layout.fragment_plant_manager,
-				container, false);
-		
-		plants.addPlant("potatoes", "grows underground", 50, 10);
-		
+				container, false);		
 		
 		/*	
 		plants.addPlant("tomatoe", "red plant", 20, 0);
@@ -80,7 +77,8 @@ public class PlantManagerFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedState) {
 		super.onActivityCreated(savedState);
-
+		plants = new PlantDao(getActivity());
+		
 		list.setOnItemClickListener(new OnItemClickListener() {
 
 			// seems like it doesn't get the short click
@@ -93,9 +91,9 @@ public class PlantManagerFragment extends Fragment {
 						.show();
 				
 				// it doesn't start the new activity
-				int listId = position;
 				Intent intent = new Intent(getActivity(),PlantInformationActivity.class);
-				intent.putExtra("id",listId);
+				intent.putExtra("id",position);
+	
 				startActivity(intent);
 
 			}
@@ -113,8 +111,12 @@ public class PlantManagerFragment extends Fragment {
 					// Put boolean to show Add or Delete
 					Bundle bundle = new Bundle();
 					bundle.putBoolean("added", (Boolean) view.getTag());
-					int listId = position;
-					bundle.putInt("id", listId);
+					bundle.putInt("id", position);
+					boolean kind = (Boolean) view.getTag();
+					bundle.putBoolean("type", kind);
+					//bundle.putStringArrayList("add", plants.getAddedPlants());
+					//bundle.put("all",plants.getAllPlants());
+					
 					
 					// bundle.putLong("id", dbId);
 					dialog.setArguments(bundle);
