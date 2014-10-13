@@ -50,62 +50,27 @@ public class PlantManagerFragment extends Fragment {
 		// Required empty public constructor
 	}
 
-	/**
-	 * This method return all the data stored in the Database regarding to the
-	 * user who is using the application
-	 * 
-	 * @return
-	 */
-	private ArrayList<Plant> getPlants() {
-		// Need the data from the database to initialize the Array
-		// So we invent various plant objects and their parameters
-		ArrayList<Plant> plants = new ArrayList<Plant>();
-		/*Plant p1 = new Plant();
-		p1.setName("potatoes");
-		p1.setId(id1);
-		Plant p2 = new Plant();
-		p2.setName("tomatoes");
-		p2.setId(id2);
-		Plant p3 = new Plant();
-		p3.setName("onions");
-		p3.setId(id3);
-		Plant p4 = new Plant();
-		p4.setName("garlics");
-		p4.setId(id4);
-		plants.add(p1);
-		plants.add(p2);
-		plants.add(p3);
-		plants.add(p4);
-		return plants; */
-		
-	
-		DatabaseHandler supp = new DatabaseHandler(getActivity(),"try.db", null, 1);
-		SQLiteDatabase db = supp.getReadableDatabase();
-		Cursor c = db.rawQuery("SELECT * FROM Plant",null);
-		//Nos aseguramos de que existe al menos un registro
-		if (c.moveToFirst()) {
-		     //Recorremos el cursor hasta que no haya más registros
-		     do {
-		         Plant p = new Plant();
-		         p.setName(c.getString(1));
-		    	 plants.add(p);
-		     } while(c.moveToNext());
-		}
-		db.close();
-		return plants;
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
+		PlantDao plants = new PlantDao(getActivity());
 		View view = inflater.inflate(R.layout.fragment_plant_manager,
 				container, false);
-
+		
+		plants.addPlant("potatoes", "grows underground", 50, 10);
+		
+		
+		/*	
+		plants.addPlant("tomatoe", "red plant", 20, 0);
+		plants.addPlant("potatoes", "grows underground", 50, 0);
+		plants.addPlant("letucce", "green and white plant", 15, 0);
+		plants.addPlant("onions", "white plant which grows underground", 25, 0);*/
+		
 		list = (ExpandableListView) view.findViewById(R.id.list);
-
+		
 		PlantListAdapter adapter = new PlantListAdapter(getActivity(),
-				getPlants(), getPlants());
+				plants.getAddedPlants(), plants.getAllPlants());
 
 		list.setAdapter(adapter);
 		list.expandGroup(0);
