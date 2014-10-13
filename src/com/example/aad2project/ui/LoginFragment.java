@@ -1,6 +1,9 @@
 package com.example.aad2project.ui;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
+import com.example.aad2project.model.MyContentProvider;
+import com.example.aad2project.model.SharedInformation.Account;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -91,11 +96,7 @@ public class LoginFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				// If the user has put correct credentials
-				if(usernameView.getText().toString().equals(username) && 
-						passwordView.getText().toString().equals(password)){
-
-					// The successfulAuthentication method from the MainActivity is called
+				if (((MainActivity)getActivity()).login(usernameView.getText().toString(), passwordView.getText().toString()) == 1 ){
 					((MainActivity)getActivity()).successfulAuthentication(username);
 				}	
 				else{
