@@ -47,7 +47,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"weatherId INTEGER NOT NULL,				       " +
 			"FOREIGN KEY (weatherId) REFERENCES Weather(id)    " +
 			");";
-	
+	public static final String ALL_EXISTING_PLANTS =
+			"CREATE TABLE ExistingPlants(" +
+			"id		NUMBER(4) PRIMARY KEY,	" +
+			"name	VARCHAR(100) NOT NULL," +
+			"description VARCHAR(200) NOT NULL," +
+			"timeToGrow NUMBER(3) NOT NULL," +
+			"weatherId   NUMBER(2) NOT NULL," +
+			"FOREIGN KEY (weatherId) REFERENCES WEATHER(id)" +
+			");" ;
+		    
+		
 	public DatabaseHandler(Context context, String name, CursorFactory factory, int version) {
 		    super(context, name, factory, version);
 	}
@@ -58,19 +68,36 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(TASK_CREATE_TABLE);
 		db.execSQL(TASK_PLANT_CREATE_TABLE);
 		db.execSQL(WEATHER_CALENDAR_CREATE_TABLE);
+		db.execSQL(ALL_EXISTING_PLANTS);
 		
-		db.execSQL("INSERT INTO  Plant (id,name,description,timeToGrow,number,weatherId)" +
-				"	VALUES (0,'tomatoes','Red plant which grows in Summer','25 days',0,1);");
+		initializeDB(db);
 		
-		db.execSQL("INSERT INTO  Plant (id,name,description,timeToGrow,number,weatherId)" +
-				"	VALUES (1,'potatoes','This plant grows underground and it has a yellow or red colour depending" +
-				" on the kind of potatoe','60 days',0,1);");
+		}
+	private void initializeDB(SQLiteDatabase db){
+		String[] plants = new String[]{
+				new String("tomatoes"),
+				new String("potatoes"),
+				new String("onions"),
+				new String("lettuce")
+		};
+		String[] description = new String[]{
+				new String("red plant"),
+				new String("grows underground"),
+				new String("white plant, grows underground"),
+				new String("green and white plant")
+		};
 		
-		db.execSQL("INSERT INTO  Plant (id,name,description,timeToGrow,number,weatherId)" +
-				"	VALUES (2,'lettuce','Green plant ','25 days',0,1);");
-
+		for (int i=0; i< plants.length;i++){
+			db.execSQL(add(i,plants[i],description[i],(i+10),1));
+		}
 	}
-
+	
+	private String add(int id, String name, String description, int timeToGrow, int weatherId){
+		return "INSERT INTO ExistingPlants " +
+				"(id,name,description,timeTogrow,weatherId) VALUES (" +
+				id+" ,'"+name+"','"+description+"', "+timeToGrow+","+weatherId+");";
+	}
+	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub

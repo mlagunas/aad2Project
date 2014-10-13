@@ -34,9 +34,16 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 	public int getChildrenCount(int groupPosition) {
 		switch (groupPosition) {
 		case 0:
-			return added.size();
+			if(added.isEmpty())
+				return 0;
+			else
+				return added.size();
 		case 1:
-			return all.size();
+			if(all.equals(null))
+				return 0;
+			else
+				return all.size();
+			
 		}
 		return 0;
 	}
