@@ -1,6 +1,10 @@
 package com.example.aad2project.ui;
 
+import java.util.ArrayList;
+
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -8,6 +12,8 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
+import com.example.aad2project.model.MyContentProvider;
+import com.example.aad2project.model.SharedInformation.Account;
 
 public class MainActivity extends ActionBarActivity implements LoginFragment.OnLoginFragmentInteractionListener, AccountCreationFragment.OnAccountCreationFragmentInteractionListener {
 
@@ -27,7 +33,7 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 		
 		// Actions displayed
 		fragmentTransaction.commit();
-
+		
 
 
 	}
@@ -87,6 +93,38 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 	public void onFragmentInteraction(Uri uri) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public int login(String email, String password) {
+		String columns[] = new String[] { Account.ACCOUNT_ID, Account.ACCOUNT_EMAIL, Account.ACCOUNT_PASSWORD };
+		Uri mContacts = MyContentProvider.CONTENT_URI;
+		Cursor cur = managedQuery(mContacts, columns, null, null, null);
+		int login = 0;
+		ArrayList<Account> listAccount = new ArrayList<Account>();
+		
+		if (cur.moveToFirst()) {
+			
+			do {
+				if (cur.getString(cur.getColumnIndex(Account.ACCOUNT_EMAIL)).equals(email)){
+					if (cur.getString(cur.getColumnIndex(Account.ACCOUNT_PASSWORD)).equals(password)){
+						login = 1;
+					}
+				}
+			} while (cur.moveToNext());
+		}
+		return login;
+
+	}
+	
+	public void addAccount(String email, String password) {
+		ContentValues account = new ContentValues();
+		account.put(Account.ACCOUNT_EMAIL, email);
+		account.put(Account.ACCOUNT_PASSWORD, password);
+		getContentResolver().insert(MyContentProvider.CONTENT_URI, account);
+		
+		// Toast to inform the user that the account has been created
+		Toast.makeText(getApplicationContext(), getResources().getString(R.string.creation_account), 
+						Toast.LENGTH_SHORT).show();
 	}
 
 }

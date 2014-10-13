@@ -36,7 +36,7 @@ public class AccountCreationFragment extends Fragment {
 	private EditText  passwordView = null;
 	private EditText passwordConfirmView = null;
 	private Button Create;
-	
+
 	private OnAccountCreationFragmentInteractionListener mListener;
 
 	/**
@@ -76,11 +76,11 @@ public class AccountCreationFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_account_creation, container,
 				false);
-		
+
 		// Store the different component of the UI
 		usernameView = (EditText) view.findViewById (R.id.emailCreationAccount);
 		passwordView = (EditText) view.findViewById (R.id.passwordCreationAccount);
@@ -91,10 +91,12 @@ public class AccountCreationFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-			
+				if (passwordView.getText().toString().equals(passwordConfirmView.getText().toString())){
+					((MainActivity)getActivity()).addAccount(usernameView.getText().toString(), passwordView.getText().toString());
+				}
 			}
 		});
-		
+
 		return view;
 	}
 
