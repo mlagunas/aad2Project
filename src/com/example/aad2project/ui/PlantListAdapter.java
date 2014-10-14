@@ -1,5 +1,6 @@
 package com.example.aad2project.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -16,13 +17,37 @@ import com.example.aad2project.model.Plant;
 public class PlantListAdapter extends BaseExpandableListAdapter {
 
 	private List<Plant> added;
+	private List<Plant> filteredAdded;
 	private List<Plant> all;
+	private List<Plant> filteredAll;
 	private Context context;
 
 	public PlantListAdapter(Context context, List<Plant> added, List<Plant> all) {
 		this.context = context;
-		this.added = added;
+		this.added = added;		
 		this.all = all;
+		filteredAdded = added;
+		filteredAll = all;
+	}
+
+	public void filter(String s) {
+		if (s == "") {
+			filteredAdded = added;
+			filteredAll = all;
+		} else {
+			filteredAdded = new ArrayList<Plant>();
+			filteredAll = new ArrayList<Plant>();
+			for (Plant p : added) {
+				if (p.getName().toLowerCase().startsWith(s.toLowerCase())){
+					filteredAdded.add(p);
+				}
+			}
+			for (Plant p : all) {
+				if (p.getName().toLowerCase().startsWith(s.toLowerCase())){
+					filteredAll.add(p);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -34,16 +59,16 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 	public int getChildrenCount(int groupPosition) {
 		switch (groupPosition) {
 		case 0:
-			if(added.isEmpty())
+			if (filteredAdded.isEmpty())
 				return 0;
 			else
-				return added.size();
+				return filteredAdded.size();
 		case 1:
-			if(all.equals(null))
+			if (filteredAll.equals(null))
 				return 0;
 			else
-				return all.size();
-			
+				return filteredAll.size();
+
 		}
 		return 0;
 	}
@@ -63,9 +88,9 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 	public Object getChild(int groupPosition, int childPosition) {
 		switch (groupPosition) {
 		case 0:
-			return added.get(childPosition);
+			return filteredAdded.get(childPosition);
 		case 1:
-			return all.get(childPosition);
+			return filteredAll.get(childPosition);
 		}
 		return null;
 	}
@@ -123,11 +148,11 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 		Plant plant = null;
 		switch (groupPosition) {
 		case 0:
-			plant = added.get(childPosition);
+			plant = filteredAdded.get(childPosition);
 			convertView.setTag(true);
 			break;
 		case 1:
-			plant = all.get(childPosition);
+			plant = filteredAll.get(childPosition);
 			convertView.setTag(false);
 			break;
 		}
