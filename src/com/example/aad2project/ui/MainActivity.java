@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 		// Fragment transaction with fragment manager
 		android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();         
 		// Fragment add into the frame_layout
-		fragmentTransaction.add(R.id.frame_content, loginFragment);
+		fragmentTransaction.replace(R.id.frame_content, loginFragment);
 		
 		// Actions displayed
 		fragmentTransaction.commit();
@@ -87,6 +87,7 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 		// Toast to inform the user that the connection is a success
 		Toast.makeText(getApplicationContext(), getResources().getString(R.string.success_login), 
 				Toast.LENGTH_SHORT).show();
+		finish();
 	}
 
 	/**
@@ -97,7 +98,7 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 		Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrong_credentials),
 				Toast.LENGTH_SHORT).show();
 	}
-
+	// TODO Preba
 	/**
 	 * Use this method when the user click on the "create a new account" text on the login page
 	 */
