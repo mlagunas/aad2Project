@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
@@ -44,6 +45,30 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	@Override
+	  public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    // action with ID action_refresh was selected
+	    case R.id.log_out:
+	      Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT)
+	          .show();
+	      break;
+	    // action with ID action_settings was selected
+	    case R.id.action_settings:
+	      Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+	          .show();
+	      
+	      Intent intent = new Intent(getApplicationContext(),SettingsActivity.class);
+	      startActivity(intent);
+	            
+	      break;
+	    default:
+	      break;
+	    }
+
+	    return true;
+	  }
 	
 	/**
 	 * Use this method when the user is successfully authenticated

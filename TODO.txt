@@ -1,0 +1,23 @@
+TODO
+
+Implement the add and delete functions to the plant lists 					- Manu
+
+TaskCalendar 																- Gerard
+
+Implement the settings button	 											- Asier
+	Change hour from 24h to am-pm
+	Change from ºC to ºF or viceversa
+
+Implement the log out 														- Asier
+
+Change the view when working in tablet mode 								- Alex
+
+Add the filter to the plant manager 										- Gerard
+
+Fix errors:
+	We shouldn't be able to come back to log in page after logging in 		- Alexandre
+	[In my (asier) emulator doesn't work the account creation] 				- Alexandre
+	Don't log out when we close the app, so we can continue next time
+	without having to log in every time 									- Alexandre
+	
+Create a logo and put it on the app 										- Toscan

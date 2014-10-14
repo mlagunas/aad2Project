@@ -25,13 +25,19 @@
     <string name="tomatoes">Tomatoes</string>
     <string name="onions">Onions</string>
     <string name="garlic">Garlic</string>
+    <string name="log_out">Log out</string>
+
     <string-array name="long_click_add">
         <item>Add</item>
         <item>View info</item>
     </string-array>
-	<string-array name="long_click_delete">
+    <string-array name="long_click_delete">
         <item>Delete</item>
         <item>View info</item>
     </string-array>
-    
+
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_preference">PreferenceActivity</string>
+
 </resources>

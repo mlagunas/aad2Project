@@ -32,10 +32,24 @@
             android:name=".ui.PlantInformationActivity"
             android:label="@string/plant_description" >
         </activity>
-        <provider 
-            android:name="com.example.aad2project.model.MyContentProvider"
+
+        <provider
+            android:name=".model.MyContentProvider"
             android:authorities="com.example.aad2project.model.MyContentProvider" >
         </provider>
+
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".PreferenceActivity"
+            android:label="@string/title_activity_preference" >
+        </activity>
+        <activity
+            android:name="com.example.aad2project.ui.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>
