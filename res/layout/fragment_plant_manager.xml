@@ -4,12 +4,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.aad2project.ui.PlantManagerFragment" >
-
-    <EditText
-        android:id="@+id/filter"
+    
+    <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text" />
+        android:orientation="horizontal">
+        
+        <ImageView 
+            android:contentDescription="@string/action_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/ic_action_search"/>
+        
+        <EditText
+       		android:id="@+id/filter"
+     		android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:inputType="text" />
+        
+    </LinearLayout>
+    
+    <View
+  	 	 android:layout_width="fill_parent"
+   		 android:layout_height="1dp"
+   		 android:background="?android:attr/listDivider"
+   		 android:layout_marginTop="2dp" />
 
     <ExpandableListView
         android:id="@+id/list"

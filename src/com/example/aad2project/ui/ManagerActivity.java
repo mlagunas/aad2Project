@@ -2,16 +2,22 @@ package com.example.aad2project.ui;
 
 import java.util.Locale;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.aad2project.R;
 
@@ -74,10 +80,24 @@ public class ManagerActivity extends ActionBarActivity implements
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
+		switch (item.getItemId()) {
+	    // action with ID action_refresh was selected
+	    case R.id.log_out:
+	      Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT)
+	          .show();
+	      break;
+	    // action with ID action_settings was selected
+	    case R.id.action_settings:
+	      Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+	          .show();
+	      
+	      Intent intent = new Intent(ManagerActivity.this,SettingsActivity.class);
+	      startActivity(intent);
+	            
+	      break;
+	    default:
+	      break;
+	    }
 		return super.onOptionsItemSelected(item);
 	}
 

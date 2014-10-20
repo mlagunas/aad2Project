@@ -16,8 +16,13 @@ Add the filter to the plant manager 										- Gerard
 
 Fix errors:
 	We shouldn't be able to come back to log in page after logging in 		- Alexandre
-	[In my (asier) emulator doesn't work the account creation] 				- Alexandre
+	[In my (asier) emulator doesn't work the account creation. However
+	in Gerards phone yes]									 				- Alexandre
 	Don't log out when we close the app, so we can continue next time
 	without having to log in every time 									- Alexandre
 	
 Create a logo and put it on the app 										- Toscan
+
+Simulation of the microcontroller data
+	We either create random parameters or we take data
+	from the Internet 														- ??
