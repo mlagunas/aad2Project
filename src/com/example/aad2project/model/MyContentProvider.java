@@ -1,3 +1,9 @@
+/**
+ * Content Provider class, which handle all the content provider stuff
+ * @author Alexandre
+ *
+ */
+
 package com.example.aad2project.model;
 
 import com.example.aad2project.model.SharedInformation.Account;
@@ -28,6 +34,7 @@ public class MyContentProvider extends ContentProvider {
 					MyContentProvider.CONTENT_PROVIDER_DB_VERSION);
 		}
 
+		// Creation of the table where the data will be stored
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL("CREATE TABLE "
@@ -77,25 +84,28 @@ public class MyContentProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		try {
-			long id = db.insertOrThrow(
-					MyContentProvider.CONTENT_PROVIDER_TABLE_NAME, null,
+			// Create a content with the data we want to add, here "values"
+			long id = db.insertOrThrow(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME, null,
 					values);
 
+			// Manage of the non existence of the table
 			if (id == -1) {
 				throw new RuntimeException(String.format(
 						"%s : Failed to insert [%s] for unknown reasons.",
 						"TutosAndroidProvider", values, uri));
 			} else {
+				// Insert the value
 				return ContentUris.withAppendedId(uri, id);
 			}
 
 		} finally {
+			// Close the database
 			db.close();
 		}
 	}
 
 	/**
-	 * update a value
+	 * Update a value
 	 */
 	@Override
 	public int update(Uri uri, ContentValues values, String selection,
@@ -103,46 +113,57 @@ public class MyContentProvider extends ContentProvider {
 		long id = getId(uri);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+		// Update a content with the data we want to switch to, here "values"
 		try {
 			if (id < 0)
-				return db.update(
-						MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
+				// If the table is empty
+				return db.update(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
 						values, selection, selectionArgs);
 			else
-				return db.update(
-						MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
+				// If the table has already been implemented with data
+				return db.update(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
 						values, Account.ACCOUNT_ID + "=" + id, null);
 		} finally {
+			// Close the database
 			db.close();
 		}
 	}
 
+	/**
+	 * Delete a value
+	 */
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		long id = getId(uri);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		
+		// Delete a content at a selected position
 		try {
 			if (id < 0)
-				return db.delete(
-						MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
+				// If the table is empty
+				return db.delete(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
 						selection, selectionArgs);
 			else
-				return db.delete(
-						MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
+				// If the table has already been implemented with data
+				return db.delete(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
 						Account.ACCOUNT_ID + "=" + id, selectionArgs);
 		} finally {
+			// Close the database
 			db.close();
 		}
 	}
 
+	/**
+	 * Position of the cursor
+	 */
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		long id = getId(uri);
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
+		
 		if (id < 0) {
-			return db
-					.query(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
+			return db.query(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
 							projection, selection, selectionArgs, null, null,
 							sortOrder);
 		} else {

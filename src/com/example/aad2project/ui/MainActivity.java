@@ -116,15 +116,23 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 
 	}
 	
+	/**
+	 * Handle the login part (with the content provider)
+	 * 
+	 * @param email : provided by the user
+	 * @param password : provided by the user
+	 * @return login : if it succeed or not
+	 */
 	public int login(String email, String password) {
 		String columns[] = new String[] { Account.ACCOUNT_ID, Account.ACCOUNT_EMAIL, Account.ACCOUNT_PASSWORD };
 		Uri mContacts = MyContentProvider.CONTENT_URI;
+		// Creation of the cursor
 		Cursor cur = managedQuery(mContacts, columns, null, null, null);
+		// Boolean to see if the login succeed or not
 		int login = 0;
-		ArrayList<Account> listAccount = new ArrayList<Account>();
 		
+		// Search trough the database to see if there is an account already created
 		if (cur.moveToFirst()) {
-			
 			do {
 				if (cur.getString(cur.getColumnIndex(Account.ACCOUNT_EMAIL)).equals(email)){
 					if (cur.getString(cur.getColumnIndex(Account.ACCOUNT_PASSWORD)).equals(password)){
@@ -133,14 +141,23 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 				}
 			} while (cur.moveToNext());
 		}
+		// Return the success, or not, of the login (1 == success, 0 == fail)
 		return login;
 
 	}
 	
+	/**
+	 * Add an account in the database
+	 * 
+	 * @param email : provided by the user
+	 * @param password : provided by the user
+	 */
 	public void addAccount(String email, String password) {
 		ContentValues account = new ContentValues();
+		// Add the values
 		account.put(Account.ACCOUNT_EMAIL, email);
 		account.put(Account.ACCOUNT_PASSWORD, password);
+		// Insert them into the database
 		getContentResolver().insert(MyContentProvider.CONTENT_URI, account);
 		
 		// Toast to inform the user that the account has been created

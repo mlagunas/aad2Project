@@ -96,6 +96,7 @@ public class LoginFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
+				// Check is the account provided already exist in the database (using the MainActivity method Login(String, String)
 				if (((MainActivity)getActivity()).login(usernameView.getText().toString(), passwordView.getText().toString()) == 1 ){
 					((MainActivity)getActivity()).successfulAuthentication(username);
 				}	

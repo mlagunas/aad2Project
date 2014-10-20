@@ -89,9 +89,12 @@ public class AccountCreationFragment extends Fragment {
 		// Put OnClickListener on the login button
 		Create.setOnClickListener(new OnClickListener() {
 
+			// Create an account
 			@Override
 			public void onClick(View arg0) {
+				// If both the password and the password confirmation EditText are the same
 				if (passwordView.getText().toString().equals(passwordConfirmView.getText().toString())){
+					// Use the addAccount(String, String) method from MainActivity
 					((MainActivity)getActivity()).addAccount(usernameView.getText().toString(), passwordView.getText().toString());
 				}
 			}
