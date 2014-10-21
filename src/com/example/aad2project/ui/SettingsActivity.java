@@ -15,6 +15,6 @@ public class SettingsActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 		
-		//list = (ListView) findViewById (android.R.id.list);
+		
 	}
 }

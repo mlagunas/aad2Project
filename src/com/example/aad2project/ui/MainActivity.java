@@ -1,9 +1,10 @@
 package com.example.aad2project.ui;
 
-import java.util.ArrayList;
-
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,10 @@ import com.example.aad2project.model.SharedInformation.Account;
 public class MainActivity extends ActionBarActivity implements LoginFragment.OnLoginFragmentInteractionListener, AccountCreationFragment.OnAccountCreationFragmentInteractionListener {
 
 	public String EXTRA_USERNAME = "EXTRA_USERNAME";
+	public static final String MyPREFERENCES = "MyPrefs";
+	public static final String name = "nameKey"; 
+	public static final String pass = "passwordKey"; 
+	private SharedPreferences sharedPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +39,20 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 		
 		// Actions displayed
 		fragmentTransaction.commit();
-		
-
-
 	}
+	
+	@Override
+	   protected void onResume() {
+	      sharedPreferences=getSharedPreferences(MyPREFERENCES, 
+	      Context.MODE_PRIVATE);
+	      if (sharedPreferences.contains(name)) {
+	    	  if(sharedPreferences.contains(pass)) {
+	    		  Intent i = new Intent(this,com.example.aad2project.ui.ManagerActivity.class);
+	    		  startActivity(i);
+	    	  }
+	      }
+	      super.onResume();
+	   }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,7 +85,12 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 	 * 
 	 * @param username
 	 */
-	public void successfulAuthentication(String username){
+	public void successfulAuthentication(String username,String password){
+		// Save the username and the password for latter check
+		Editor editor = sharedPreferences.edit();
+	    editor.putString(name, username);
+	    editor.putString(pass, password);
+	    editor.commit();
 
 		// Intent creation, to switch activity
 		Intent intent = new Intent (MainActivity.this, ManagerActivity.class);
@@ -163,6 +183,15 @@ public class MainActivity extends ActionBarActivity implements LoginFragment.OnL
 		// Toast to inform the user that the account has been created
 		Toast.makeText(getApplicationContext(), getResources().getString(R.string.creation_account), 
 						Toast.LENGTH_SHORT).show();
+		
+		// Creation of the first fragment
+		LoginFragment loginFragment =  new LoginFragment();
+		// Fragment transaction with fragment manager
+		android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();         
+		// Fragment add into the frame_layout
+		fragmentTransaction.replace(R.id.frame_content, loginFragment);
+		// Actions displayed
+		fragmentTransaction.commit();
 	}
 
 }

@@ -98,7 +98,8 @@ public class LoginFragment extends Fragment {
 			public void onClick(View arg0) {
 				// Check is the account provided already exist in the database (using the MainActivity method Login(String, String)
 				if (((MainActivity)getActivity()).login(usernameView.getText().toString(), passwordView.getText().toString()) == 1 ){
-					((MainActivity)getActivity()).successfulAuthentication(username);
+					((MainActivity)getActivity()).successfulAuthentication(usernameView.getText().toString(), 
+							passwordView.getText().toString());
 				}	
 				else{
 					// If the credentials were wrong, the wrongCredentials method from MainActivity is called

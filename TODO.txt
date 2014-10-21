@@ -26,3 +26,10 @@ Create a logo and put it on the app 										- Toscan
 Simulation of the microcontroller data
 	We either create random parameters or we take data
 	from the Internet 														- ??
+	
+General features to be done
+	Notifications
+	Internet, retrieve weather info
+	Localization, maps
+	Background tasking, service, broadcast receiver
+	Asynchronous task
