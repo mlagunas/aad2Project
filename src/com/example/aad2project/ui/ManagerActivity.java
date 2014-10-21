@@ -2,21 +2,21 @@ package com.example.aad2project.ui;
 
 import java.util.Locale;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
@@ -85,6 +85,9 @@ public class ManagerActivity extends ActionBarActivity implements
 	    case R.id.log_out:
 	      Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT)
 	          .show();
+	      
+	      logout();
+	      
 	      break;
 	    // action with ID action_settings was selected
 	    case R.id.action_settings:
@@ -161,5 +164,18 @@ public class ManagerActivity extends ActionBarActivity implements
 			return null;
 		}
 	}
+	
+	public void logout(){
+	      SharedPreferences sharedPreferences = getSharedPreferences
+	      (MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+	      Editor editor = sharedPreferences.edit();
+	      editor.clear();
+	      editor.commit();
+	      moveTaskToBack(true); 
+	      Intent i = new Intent(ManagerActivity.this,MainActivity.class);
+	      startActivity(i);
+	      finish();
+	      
+	   }
 
 }
