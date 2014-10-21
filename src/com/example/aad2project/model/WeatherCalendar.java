@@ -1,7 +1,10 @@
 package com.example.aad2project.model;
 
+import java.util.Date;
+
 public class WeatherCalendar {
 	private int id;
+	private Date date;
 	private Weather weather;
 	private WeatherCalendar next; 
 	
@@ -11,8 +14,16 @@ public class WeatherCalendar {
 	
 	public void setId(int id) {
 		this.id = id;
-	} 
+	} 	
 	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public Weather getWeather() {
 		return weather;
 	}

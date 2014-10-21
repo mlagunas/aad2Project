@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.aad2project.R;
 import com.example.aad2project.model.Plant;
 
-public class PlantListAdapter extends BaseExpandableListAdapter {
+public class PlantManagerAdapter extends BaseExpandableListAdapter {
 
 	private List<Plant> added;
 	private List<Plant> filteredAdded;
@@ -22,7 +22,7 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 	private List<Plant> filteredAll;
 	private Context context;
 
-	public PlantListAdapter(Context context, List<Plant> added, List<Plant> all) {
+	public PlantManagerAdapter(Context context, List<Plant> added, List<Plant> all) {
 		this.context = context;
 		this.added = added;		
 		this.all = all;
