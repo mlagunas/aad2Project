@@ -1,7 +1,11 @@
 package com.example.aad2project.model;
 
+import java.util.Date;
+
 public class TaskPlant {
 	private int id,done;
+	private Date date;
+	private Task task;
 	private Plant plant;
 	private TaskPlant next;
 	
@@ -16,6 +20,18 @@ public class TaskPlant {
 	}
 	public void setDone(int done) {
 		this.done = done;
+	}	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Task getTask() {
+		return task;
+	}
+	public void setTask(Task task) {
+		this.task = task;
 	}
 	public Plant getPlant() {
 		return plant;

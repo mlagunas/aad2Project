@@ -32,13 +32,10 @@ import com.example.aad2project.model.PlantDao;
  */
 public class PlantManagerFragment extends Fragment {
 
-	ArrayList<String> data;
-	ArrayAdapter<String> lvAdapter;
-
 	private ExpandableListView list;
 	private EditText filter;
 
-	private PlantListAdapter adapter;
+	private PlantManagerAdapter adapter;
 
 	// the parameters on the database of the database in the plant
 	private int dbId;
@@ -112,7 +109,7 @@ public class PlantManagerFragment extends Fragment {
 		list = (ExpandableListView) view.findViewById(R.id.list);
 		filter = (EditText) view.findViewById(R.id.filter);
 
-		adapter = new PlantListAdapter(getActivity(), plants.getAddedPlants(),
+		adapter = new PlantManagerAdapter(getActivity(), plants.getAddedPlants(),
 				plants.getAllPlants());
 
 		list.setAdapter(adapter);
