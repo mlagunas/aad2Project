@@ -2,24 +2,22 @@ TODO
 
 Implement the add and delete functions to the plant lists 					- Manu
 
-TaskCalendar 																- Gerard
+TaskCalendar 																- Gerard (GUI), Manu (Adding from database)
 
 Implement the settings button	 											- Asier
 	Change hour from 24h to am-pm
 	Change from ºC to ºF or viceversa
 
-Implement the log out 														- Asier
+Implement the log out 														- Asier ++
 
 Change the view when working in tablet mode 								- Alex
 
-Add the filter to the plant manager 										- Gerard
+Add the filter to the plant manager 										- Gerard ++
 
 Fix errors:
-	We shouldn't be able to come back to log in page after logging in 		- Alexandre
-	[In my (asier) emulator doesn't work the account creation. However
-	in Gerards phone yes]									 				- Alexandre
+	We shouldn't be able to come back to log in page after logging in 		- Alexandre ++
 	Don't log out when we close the app, so we can continue next time
-	without having to log in every time 									- Alexandre
+	without having to log in every time 									- Asier ++
 	
 Create a logo and put it on the app 										- Toscan
 
@@ -28,8 +26,8 @@ Simulation of the microcontroller data
 	from the Internet 														- ??
 	
 General features to be done
-	Notifications
-	Internet, retrieve weather info
-	Localization, maps
-	Background tasking, service, broadcast receiver
-	Asynchronous task
+	Notifications for the tasks												- Alexandre
+	Internet, retrieve weather info 										- Toscan
+	Localization, maps 														- Toscan
+	Background tasking, service, broadcast receiver 						- Toscan, Alexandre
+	Asynchronous task 														- Toscan, Alexandre
