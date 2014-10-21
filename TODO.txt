@@ -2,7 +2,7 @@ TODO
 
 Implement the add and delete functions to the plant lists 					- Manu
 
-TaskCalendar 																- Gerard (GUI), Manu (Adding from database)
+TaskCalendar 																- Gerard (GUI) ++, Manu (Adding from database)
 
 Implement the settings button	 											- Asier
 	Change hour from 24h to am-pm
@@ -24,6 +24,8 @@ Create a logo and put it on the app 										- Toscan
 Simulation of the microcontroller data
 	We either create random parameters or we take data
 	from the Internet 														- ??
+	
+Create tasks when plants are added 											- Gerard
 	
 General features to be done
 	Notifications for the tasks												- Alexandre
