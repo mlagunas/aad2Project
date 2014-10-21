@@ -103,6 +103,14 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
+	public void updatePlantList(List<Plant> newAdd,List<Plant> newAll) {
+	    added.clear(); 
+	    all.clear();
+	    added.addAll(newAdd);
+	    all.addAll(newAll);
+	    this.notifyDataSetChanged();
+	}
+	
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
@@ -140,7 +148,6 @@ public class PlantListAdapter extends BaseExpandableListAdapter {
 																// image
 																// according to
 																// plant
-
 		return convertView;
 	}
 

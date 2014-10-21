@@ -24,8 +24,8 @@ public class PlantDao extends DaoBase {
 		timeToGrow = plant.getTimeToGrow();
 		number = plant.getNumber();
 		
-		super.mDb.execSQL("INSERT INTO  Plant (id,name,description,timeToGrow,number,weatherId)" +
-				"	VALUES ("+getId()+",'"+name+"','"+description+"',"+timeToGrow+","+number+",1);");
+		super.mDb.execSQL("INSERT INTO  Plant (name,description,timeToGrow,number,weatherId)" +
+				"	VALUES ('"+name+"','"+description+"',"+timeToGrow+","+number+",1);");
 	}
 	
 	/**
@@ -47,6 +47,10 @@ public class PlantDao extends DaoBase {
 		return plants;
 	}
 	
+	
+	public void deletePlant(Plant p){
+		
+	}
 	/**
 	 * This method returns an ArrayList with all the plants which the user 
 	 * have added to the garden
@@ -62,6 +66,9 @@ public class PlantDao extends DaoBase {
 		    	 if(c.getInt(4) > 0){
 			         Plant p = new Plant();
 			         p.setName(c.getString(1));
+			         p.setDescription(c.getString(2));
+			         p.setTimeToGrow(c.getInt(3));
+			         p.setId(c.getInt(0));
 			    	 plants.add(p);
 		    	 }
 		     } while(c.moveToNext());
@@ -78,24 +85,16 @@ public class PlantDao extends DaoBase {
 	 * @param number
 	 */
 	public void addPlant(String name, String description,int timeToGrow, int number){
-		super.mDb.execSQL("INSERT INTO  Plant (id,name,description,timeToGrow,number,weatherId)" +
-				"	VALUES ("+getId()+",'"+name+"','"+description+"',"+timeToGrow+","+number+",1);");
+		super.mDb.execSQL("INSERT INTO  Plant (name,description,timeToGrow,number,weatherId)" +
+				"	VALUES ('"+name+"','"+description+"',"+timeToGrow+","+number+",1);");
 	}
 	
-	/**
-	 * This method return the next free id 
-	 * @return
-	 */
-	private int getId(){
-		 Cursor c = super.mDb.rawQuery("SELECT * FROM Plant",null);
-		//Read the result of the Query
-		int result = 0;
-		if (c.moveToFirst()) {
-		     do {
-		    	 result ++;
-		     } while(c.moveToNext());
-		}
-		return result;
-	 }
+	
 	protected boolean convertResultToObject() { return true;}
+
+	public void deletePlant(int id) {
+		super.mDb.execSQL("DELETE FROM Plant " +
+					"WHERE id = "+id+";");
+		
+	}
 }
