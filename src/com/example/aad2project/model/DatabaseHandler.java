@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String WEATHER_CREATE_TABLE = 
 			"CREATE TABLE Weather (                   			        " +
-			"id             NUMBER(4) PRIMARY KEY ," +
+			"id             Integer PRIMARY KEY AUTOINCREMENT," +
 			"temperatureMin NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"temperatureMax NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"humidityMin    NUMBER(3) NOT NULL DEFAULT 0,        			" +
@@ -18,7 +18,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	public static final String PLANT_CREATE_TABLE =
 			"CREATE TABLE Plant (									  " +
-			"id 		 NUMBER(4) PRIMARY KEY, " +
+			"id 		 Integer PRIMARY KEY AUTOINCREMENT, " +
 			"name 		 VARCHAR(50) NOT NULL,								  " +
 			"description VARCHAR(200) NOT NULL,								  " +
 			"timeToGrow  NUMBER(4) NOT NULL DEFAULT 0,				  " +
@@ -29,7 +29,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	public static final String TASK_CREATE_TABLE = 
 			"CREATE TABLE Task (							  			  " +
-			"id 		 NUMBER(4) PRIMARY KEY, " +
+			"id 		 Integer PRIMARY KEY AUTOINCREMENT, " +
 			"description VARCHAR(200) NOT NULL					     		  " +
 			");";
 	
@@ -49,7 +49,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			");";
 	public static final String ALL_EXISTING_PLANTS =
 			"CREATE TABLE ExistingPlants(" +
-			"id		NUMBER(4) PRIMARY KEY,	" +
+			"id		Integer PRIMARY KEY AUTOINCREMENT,	" +
 			"name	VARCHAR(100) NOT NULL," +
 			"description VARCHAR(200) NOT NULL," +
 			"timeToGrow NUMBER(3) NOT NULL," +
