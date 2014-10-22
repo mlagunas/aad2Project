@@ -135,7 +135,7 @@ public class LoginFragment extends Fragment {
 			mListener = (OnLoginFragmentInteractionListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
-					+ " must implement OnFragmentInteractionListener");
+					+ " must implement OnPlantManagerFragmentInteractionListener");
 		}
 	}
 

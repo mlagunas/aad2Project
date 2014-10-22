@@ -21,10 +21,12 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
-import com.example.aad2project.ui.PlantManagerFragment.OnFragmentInteractionListener;
+import com.example.aad2project.ui.PlantManagerFragment.OnPlantManagerFragmentInteractionListener;
+import com.example.aad2project.ui.TaskCalendarFragment.OnTaskCalendarFragmentInteractionListener;
 
 public class ManagerActivity extends ActionBarActivity implements
-		ActionBar.TabListener, OnFragmentInteractionListener {
+		ActionBar.TabListener, OnPlantManagerFragmentInteractionListener,
+		OnTaskCalendarFragmentInteractionListener {
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
@@ -86,26 +88,26 @@ public class ManagerActivity extends ActionBarActivity implements
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
-	    // action with ID action_refresh was selected
-	    case R.id.log_out:
-	      Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT)
-	          .show();
-	      
-	      logout();
-	      
-	      break;
-	    // action with ID action_settings was selected
-	    case R.id.action_settings:
-	      Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-	          .show();
-	      
-	      Intent intent = new Intent(ManagerActivity.this,SettingsActivity.class);
-	      startActivity(intent);
-	            
-	      break;
-	    default:
-	      break;
-	    }
+		// action with ID action_refresh was selected
+		case R.id.log_out:
+			Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT).show();
+
+			logout();
+
+			break;
+		// action with ID action_settings was selected
+		case R.id.action_settings:
+			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+					.show();
+
+			Intent intent = new Intent(ManagerActivity.this,
+					SettingsActivity.class);
+			startActivity(intent);
+
+			break;
+		default:
+			break;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -169,41 +171,54 @@ public class ManagerActivity extends ActionBarActivity implements
 			return null;
 		}
 	}
-	
-	public void logout(){
-	      SharedPreferences sharedPreferences = getSharedPreferences
-	      (MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-	      Editor editor = sharedPreferences.edit();
-	      editor.clear();
-	      editor.commit();
-	      moveTaskToBack(true); 
-	      Intent i = new Intent(ManagerActivity.this,MainActivity.class);
-	      startActivity(i);
-	      finish();
-	      
-	   }
+
+	public void logout() {
+		SharedPreferences sharedPreferences = getSharedPreferences(
+				MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		Editor editor = sharedPreferences.edit();
+		editor.clear();
+		editor.commit();
+		moveTaskToBack(true);
+		Intent i = new Intent(this, MainActivity.class);
+		startActivity(i);
+		finish();
+
+	}
 
 	@Override
-	public void onFragmentInteraction(int id) {
+	public void onPlantManagerFragmentInteraction(int id) {
 		if (container != null) {
-			// Creation of the first fragment
-			PlantInformationFragment loginFragment = new PlantInformationFragment();
-			Bundle args = new Bundle();
-			args.putInt("id", id);
-			loginFragment.setArguments(args);
-			
-			// Fragment transaction with fragment manager
+			// Tablet behavior (Add Fragment to the side of the screen)
+			PlantInformationFragment loginFragment = PlantInformationFragment
+					.newInstance(id);
+
 			FragmentTransaction fragmentTransaction = getSupportFragmentManager()
 					.beginTransaction();
-			// Fragment add into the frame_layout
 			fragmentTransaction.replace(R.id.fragment_container, loginFragment);
-
-			// Actions displayed
 			fragmentTransaction.commit();
 		} else {
+			// Phone behavior (Start new activity)
 			Intent intent = new Intent(this, PlantInformationActivity.class);
 			intent.putExtra("id", id);
+			startActivity(intent);
+		}
+	}
 
+	@Override
+	public void onTaskCalendarFragmentInteraction(int id) {
+		if (container != null) {
+			// Tablet behavior (Add Fragment to the side of the screen)
+			TaskInformationFragment fragment = TaskInformationFragment
+					.newInstance(id);
+
+			FragmentManager manager = getSupportFragmentManager();
+			FragmentTransaction transaction = manager.beginTransaction();
+			transaction.replace(R.id.fragment_container, fragment);
+			transaction.commit();
+		} else {
+			// Phone behavior (Start new activity)
+			Intent intent = new Intent(this, TaskInformationActivity.class);
+			intent.putExtra("TASK_ID", id);
 			startActivity(intent);
 		}
 	}

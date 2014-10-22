@@ -50,7 +50,7 @@ public class PlantManagerFragment extends Fragment {
 	
 	private EditText filter;
 
-	private OnFragmentInteractionListener mListener;
+	private OnPlantManagerFragmentInteractionListener mListener;
 
 	// the parameters on the database of the database in the plant
 	private int dbId;
@@ -166,7 +166,7 @@ public class PlantManagerFragment extends Fragment {
 				Toast.makeText(getActivity(), "Short click", Toast.LENGTH_SHORT)
 						.show();
 
-				onButtonPressed(childPosition);
+				onItemPressed(childPosition);
 
 				return false;
 			}
@@ -281,7 +281,7 @@ public class PlantManagerFragment extends Fragment {
 		            	   case 1:
 		            		   // this one will always be "show info"
 		            		   // so we can implement one function for both
-		            		   onButtonPressed(listId);
+		            		   onItemPressed(listId);
 		            		   break;            		  
 		            	   }
 		           
@@ -291,10 +291,9 @@ public class PlantManagerFragment extends Fragment {
 		}
 	}
 
-	// TODO: Rename method, update argument and hook method into UI event
-	public void onButtonPressed(int id) {
+	public void onItemPressed(int id) {
 		if (mListener != null) {
-			mListener.onFragmentInteraction(id);
+			mListener.onPlantManagerFragmentInteraction(id);
 		}
 	}
 
@@ -302,10 +301,10 @@ public class PlantManagerFragment extends Fragment {
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		try {
-			mListener = (OnFragmentInteractionListener) activity;
+			mListener = (OnPlantManagerFragmentInteractionListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
-					+ " must implement OnFragmentInteractionListener");
+					+ " must implement OnPlantManagerFragmentInteractionListener");
 		}
 	}
 
@@ -324,8 +323,7 @@ public class PlantManagerFragment extends Fragment {
 	 * "http://developer.android.com/training/basics/fragments/communicating.html"
 	 * >Communicating with Other Fragments</a> for more information.
 	 */
-	public interface OnFragmentInteractionListener {
-		// TODO: Update argument type and name
-		public void onFragmentInteraction(int id);
+	public interface OnPlantManagerFragmentInteractionListener {
+		public void onPlantManagerFragmentInteraction(int id);
 	}
 }

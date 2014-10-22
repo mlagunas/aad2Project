@@ -117,7 +117,7 @@ public class AccountCreationFragment extends Fragment {
 			mListener = (OnAccountCreationFragmentInteractionListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
-					+ " must implement OnFragmentInteractionListener");
+					+ " must implement OnPlantManagerFragmentInteractionListener");
 		}
 	}
 

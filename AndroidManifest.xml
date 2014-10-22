@@ -16,28 +16,25 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name" >
-            
+
             <!--  -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
         </activity>
         <activity
             android:name=".ui.ManagerActivity"
             android:label="@string/title_activity_manager" >
-            
         </activity>
-        
         <activity
             android:name=".ui.PlantInformationActivity"
             android:label="@string/plant_description" >
         </activity>
 
         <provider
-            android:name="com.example.aad2project.model.MyContentProvider"
+            android:name=".model.MyContentProvider"
             android:authorities="com.example.aad2project.model.MyContentProvider" >
         </provider>
 
@@ -49,7 +46,10 @@
             android:name=".PreferenceActivity"
             android:label="@string/title_activity_preference" >
         </activity>
-
+        <activity
+            android:name="com.example.aad2project.ui.TaskInformationActivity"
+            android:label="@string/title_activity_task_information" >
+        </activity>
     </application>
 
 </manifest>

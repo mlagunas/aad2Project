@@ -29,10 +29,10 @@
     <string name="action_search">Search</string>
     <string name="pref_temp">Temperature</string>
     <string name="pref_time">Time</string>
-	<string name="pref_choose_one">Choose one</string>
-	<string name="pref_temp_summary">Change the scale of temperature</string>
-	<string name="pref_time_summary">Change the time format</string>
-	
+    <string name="pref_choose_one">Choose one</string>
+    <string name="pref_temp_summary">Change the scale of temperature</string>
+    <string name="pref_time_summary">Change the time format</string>
+
     <string-array name="long_click_add">
         <item>Add</item>
         <item>View info</item>
@@ -45,25 +45,24 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_preference">PreferenceActivity</string>
-    
+
     <string-array name="pref_temp_entries">
         <item>Celsius</item>
         <item>Farenheit</item>
     </string-array>
-    
     <string-array name="pref_temp_entry_values">
         <item>0</item>
         <item>1</item>
     </string-array>
-    
     <string-array name="pref_time_entries">
         <item>24h</item>
         <item>12h</item>
     </string-array>
-    
     <string-array name="pref_time_entry_values">
         <item>0</item>
         <item>1</item>
-    </string-array>   
+    </string-array>
+
+    <string name="title_activity_task_information">TaskInformationActivity</string>
 
 </resources>
