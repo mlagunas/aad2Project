@@ -37,7 +37,7 @@
         </activity>
 
         <provider
-            android:name=".model.MyContentProvider"
+            android:name="com.example.aad2project.model.MyContentProvider"
             android:authorities="com.example.aad2project.model.MyContentProvider" >
         </provider>
 
@@ -48,10 +48,6 @@
         <activity
             android:name=".PreferenceActivity"
             android:label="@string/title_activity_preference" >
-        </activity>
-        <activity
-            android:name="com.example.aad2project.ui.SettingsActivity"
-            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 
