@@ -281,9 +281,7 @@ public class PlantManagerFragment extends Fragment {
 		            	   case 1:
 		            		   // this one will always be "show info"
 		            		   // so we can implement one function for both
-		            		   Intent intent = new Intent(getActivity(),PlantInformationActivity.class);
-		            		   intent.putExtra("id",listId);
-		            		   startActivity(intent);
+		            		   onButtonPressed(listId);
 		            		   break;            		  
 		            	   }
 		           
