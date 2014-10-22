@@ -1,26 +1,37 @@
 package com.example.aad2project.ui;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
+import com.example.aad2project.model.MyReceiver;
 import com.example.aad2project.ui.PlantManagerFragment.OnPlantManagerFragmentInteractionListener;
 import com.example.aad2project.ui.TaskCalendarFragment.OnTaskCalendarFragmentInteractionListener;
 
@@ -32,11 +43,15 @@ public class ManagerActivity extends ActionBarActivity implements
 	ViewPager mViewPager;
 	private FrameLayout container;
 
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manager);
-
+		
+		startAlarm();
+		
 		container = (FrameLayout) findViewById(R.id.fragment_container);
 
 		// Set up the action bar.
@@ -73,6 +88,8 @@ public class ManagerActivity extends ActionBarActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+		
+		registerReceiver(broadcastReceiver, new IntentFilter("TEST"));
 	}
 
 	@Override
@@ -223,4 +240,83 @@ public class ManagerActivity extends ActionBarActivity implements
 		}
 	}
 
+	/**
+	 * Display the notification with the informations provided
+	 * @param title : title of the notification
+	 * @param text : text of the notification
+	 * @param mId : id of the notification (can handle more than one notification)
+	 */
+	public void notifications(String title, String text, int mId){
+		
+		NotificationCompat.Builder mBuilder =
+		        new NotificationCompat.Builder(this)
+		        .setSmallIcon(R.drawable.notification_icon)
+		        .setContentTitle(title)
+		        .setContentText(text);
+		// Creates an explicit intent for an Activity in your app
+		Intent resultIntent = new Intent(this, ManagerActivity.class);
+
+		// The stack builder object will contain an artificial back stack for the
+		// started Activity.
+		// This ensures that navigating backward from the Activity leads out of
+		// your application to the Home screen.
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		// Adds the back stack for the Intent (but not the Intent itself)
+		stackBuilder.addParentStack(ManagerActivity.class);
+		// Adds the Intent that starts the Activity to the top of the stack
+		stackBuilder.addNextIntent(resultIntent);
+		PendingIntent resultPendingIntent =
+		        stackBuilder.getPendingIntent(
+		            0,
+		            PendingIntent.FLAG_UPDATE_CURRENT
+		        );
+		mBuilder.setContentIntent(resultPendingIntent);
+		NotificationManager mNotificationManager =
+		    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		// mId allows you to update the notification later on.
+		mNotificationManager.notify(mId, mBuilder.build());
+		
+		Log.i("TAG", "notification");
+	}
+	
+	public void startAlarm() {
+	    // Prepare intent to launch notification
+	    Intent intent = new Intent(this, MyReceiver.class);
+	    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+	    Date dat  = new Date();//initializes to now
+	    Calendar cal_alarm = Calendar.getInstance();
+	    Calendar cal_now = Calendar.getInstance();
+	    cal_now.setTime(dat);
+	    cal_alarm.setTime(dat);
+	    cal_alarm.set(Calendar.HOUR_OF_DAY,18);//set the alarm time
+	    cal_alarm.set(Calendar.MINUTE, 0);
+	    cal_alarm.set(Calendar.SECOND,0);
+	    if(cal_alarm.before(cal_now)){//if its in the past increment
+	        cal_alarm.add(Calendar.DATE,1);
+	    }
+	    
+	    // The alarm manager is an android system service
+	    AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+	    am.set(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(), pendingIntent);
+	    
+	    Log.i("TAG", "Start timer...");
+	}
+	
+	BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+	    @Override
+	    public void onReceive(Context context, Intent intent) {
+	    	String title = "Put a title";
+	    	String text = "Put a text";
+	        notifications(title, text, 0);
+	        Log.i("TAG", "Receive");
+	    }
+	};
+
+	@Override
+	protected void onDestroy() {
+	    super.onDestroy();
+	    unregisterReceiver(broadcastReceiver);
+	}
 }
+
