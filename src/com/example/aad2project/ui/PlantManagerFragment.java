@@ -2,6 +2,7 @@ package com.example.aad2project.ui;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -37,8 +38,6 @@ import com.example.aad2project.model.PlantDao;
  */
 public class PlantManagerFragment extends Fragment {
 
-	private EditText filter;
-
 	ArrayList<String> data;
 	ArrayAdapter<String> lvAdapter;
 	PlantDao plants;
@@ -49,8 +48,61 @@ public class PlantManagerFragment extends Fragment {
 	private Boolean lastExpandedTop = false;
 	private Boolean lastExpandedBot = false;
 	
+	private EditText filter;
+
+	private OnFragmentInteractionListener mListener;
+
+	// the parameters on the database of the database in the plant
+	private int dbId;
+
+	// these are trial ids
+	/*
+	 * private int id1 = 0 ; private int id2 = 1 ; private int id3 = 2 ; <<<<<<<
+	 * HEAD private int id4 = 3 ; private PlantDao plants; ======= private int
+	 * id4 = 3 ;
+	 */
+
 	public PlantManagerFragment() {
 		// Required empty public constructor
+	}
+
+	/**
+	 * This method return all the data stored in the Database regarding to the
+	 * user who is using the application
+	 * 
+	 * @return
+	 */
+	private ArrayList<Plant> getPlants() {
+		// Need the data from the database to initialize the Array
+		// So we invent various plant objects and their parameters
+		ArrayList<Plant> plants = new ArrayList<Plant>();
+		/*
+		 * Plant p1 = new Plant(); p1.setName("potatoes"); p1.setId(id1); Plant
+		 * p2 = new Plant(); p2.setName("tomatoes"); p2.setId(id2); Plant p3 =
+		 * new Plant(); p3.setName("onions"); p3.setId(id3); Plant p4 = new
+		 * Plant(); p4.setName("garlics"); p4.setId(id4); plants.add(p1);
+		 * plants.add(p2); plants.add(p3); plants.add(p4); return plants;
+		 */
+
+		DatabaseHandler supp = new DatabaseHandler(getActivity(), "try.db",
+				null, 1);
+		SQLiteDatabase db = supp.getReadableDatabase();
+		Cursor c = db.rawQuery("SELECT * FROM Plant", null);
+		// We have to make sure that there's at least one register
+		if (c.moveToFirst()) {
+			// Move the cursor till we have no more registers
+			do {
+				Plant p = new Plant();
+				p.setId(c.getInt(0));
+				dbId = p.getId();
+				p.setName(c.getString(1));
+				p.setDescription(c.getString(2));
+				p.setTimeToGrow(c.getInt(3));
+				plants.add(p);
+			} while (c.moveToNext());
+		}
+		db.close();
+		return plants;
 	}
 
 	@Override
@@ -71,6 +123,7 @@ public class PlantManagerFragment extends Fragment {
 
 		list = (ExpandableListView) view.findViewById(R.id.list);
 		filter = (EditText) view.findViewById(R.id.filter);
+
 
 		adapter = new PlantManagerAdapter(getActivity(), plants.getAddedPlants(),
 				plants.getAllPlants());
@@ -113,11 +166,7 @@ public class PlantManagerFragment extends Fragment {
 				Toast.makeText(getActivity(), "Short click", Toast.LENGTH_SHORT)
 						.show();
 
-				Intent intent = new Intent(getActivity(),
-						PlantInformationActivity.class);
-				intent.putExtra("id", childPosition);
-
-				startActivity(intent);
+				onButtonPressed(childPosition);
 
 				return false;
 			}
@@ -242,5 +291,43 @@ public class PlantManagerFragment extends Fragment {
 		    });
 		    return builder.create();
 		}
+	}
+
+	// TODO: Rename method, update argument and hook method into UI event
+	public void onButtonPressed(int id) {
+		if (mListener != null) {
+			mListener.onFragmentInteraction(id);
+		}
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mListener = (OnFragmentInteractionListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnFragmentInteractionListener");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mListener = null;
+	}
+
+	/**
+	 * This interface must be implemented by activities that contain this
+	 * fragment to allow an interaction in this fragment to be communicated to
+	 * the activity and potentially other fragments contained in that activity.
+	 * <p>
+	 * See the Android Training lesson <a href=
+	 * "http://developer.android.com/training/basics/fragments/communicating.html"
+	 * >Communicating with Other Fragments</a> for more information.
+	 */
+	public interface OnFragmentInteractionListener {
+		// TODO: Update argument type and name
+		public void onFragmentInteraction(int id);
 	}
 }

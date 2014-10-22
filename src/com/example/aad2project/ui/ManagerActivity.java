@@ -17,20 +17,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
+import com.example.aad2project.ui.PlantManagerFragment.OnFragmentInteractionListener;
 
 public class ManagerActivity extends ActionBarActivity implements
-		ActionBar.TabListener {
+		ActionBar.TabListener, OnFragmentInteractionListener {
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
+	private FrameLayout container;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manager);
+
+		container = (FrameLayout) findViewById(R.id.fragment_container);
 
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
@@ -138,7 +143,7 @@ public class ManagerActivity extends ActionBarActivity implements
 			// Return a PlaceholderFragment (defined as a static inner class
 			// below).
 			switch (position) {
-			case 0:				
+			case 0:
 				return new TaskCalendarFragment();
 			case 1:
 				return new PlantManagerFragment();
@@ -177,5 +182,30 @@ public class ManagerActivity extends ActionBarActivity implements
 	      finish();
 	      
 	   }
+
+	@Override
+	public void onFragmentInteraction(int id) {
+		if (container != null) {
+			// Creation of the first fragment
+			PlantInformationFragment loginFragment = new PlantInformationFragment();
+			Bundle args = new Bundle();
+			args.putInt("id", id);
+			loginFragment.setArguments(args);
+			
+			// Fragment transaction with fragment manager
+			FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+					.beginTransaction();
+			// Fragment add into the frame_layout
+			fragmentTransaction.replace(R.id.fragment_container, loginFragment);
+
+			// Actions displayed
+			fragmentTransaction.commit();
+		} else {
+			Intent intent = new Intent(this, PlantInformationActivity.class);
+			intent.putExtra("id", id);
+
+			startActivity(intent);
+		}
+	}
 
 }
