@@ -1,7 +1,5 @@
 package com.example.aad2project.ui;
 
-import java.util.ArrayList;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;

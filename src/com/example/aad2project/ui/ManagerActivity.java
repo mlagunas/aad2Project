@@ -2,35 +2,36 @@ package com.example.aad2project.ui;
 
 import java.util.Locale;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
+import com.example.aad2project.ui.PlantManagerFragment.OnFragmentInteractionListener;
 
 public class ManagerActivity extends ActionBarActivity implements
-		ActionBar.TabListener {
+		ActionBar.TabListener, OnFragmentInteractionListener {
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
+	private FrameLayout container;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manager);
+
+		container = (FrameLayout) findViewById(R.id.fragment_container);
 
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
@@ -81,23 +82,23 @@ public class ManagerActivity extends ActionBarActivity implements
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
-	    // action with ID action_refresh was selected
-	    case R.id.log_out:
-	      Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT)
-	          .show();
-	      break;
-	    // action with ID action_settings was selected
-	    case R.id.action_settings:
-	      Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-	          .show();
-	      
-	      Intent intent = new Intent(ManagerActivity.this,SettingsActivity.class);
-	      startActivity(intent);
-	            
-	      break;
-	    default:
-	      break;
-	    }
+		// action with ID action_refresh was selected
+		case R.id.log_out:
+			Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT).show();
+			break;
+		// action with ID action_settings was selected
+		case R.id.action_settings:
+			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+					.show();
+
+			Intent intent = new Intent(ManagerActivity.this,
+					SettingsActivity.class);
+			startActivity(intent);
+
+			break;
+		default:
+			break;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -135,7 +136,7 @@ public class ManagerActivity extends ActionBarActivity implements
 			// Return a PlaceholderFragment (defined as a static inner class
 			// below).
 			switch (position) {
-			case 0:				
+			case 0:
 				return new TaskCalendarFragment();
 			case 1:
 				return new PlantManagerFragment();
@@ -159,6 +160,31 @@ public class ManagerActivity extends ActionBarActivity implements
 				return getString(R.string.title_section1).toUpperCase(l);
 			}
 			return null;
+		}
+	}
+
+	@Override
+	public void onFragmentInteraction(int id) {
+		if (container != null) {
+			// Creation of the first fragment
+			PlantInformationFragment loginFragment = new PlantInformationFragment();
+			Bundle args = new Bundle();
+			args.putInt("id", id);
+			loginFragment.setArguments(args);
+			
+			// Fragment transaction with fragment manager
+			FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+					.beginTransaction();
+			// Fragment add into the frame_layout
+			fragmentTransaction.replace(R.id.fragment_container, loginFragment);
+
+			// Actions displayed
+			fragmentTransaction.commit();
+		} else {
+			Intent intent = new Intent(this, PlantInformationActivity.class);
+			intent.putExtra("id", id);
+
+			startActivity(intent);
 		}
 	}
 

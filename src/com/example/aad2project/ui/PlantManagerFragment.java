@@ -2,22 +2,15 @@ package com.example.aad2project.ui;
 
 import java.util.ArrayList;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
+import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -44,8 +37,9 @@ public class PlantManagerFragment extends Fragment {
 
 	private ExpandableListView list;
 	private EditText filter;
-
 	private PlantListAdapter adapter;
+
+	private OnFragmentInteractionListener mListener;
 
 	// the parameters on the database of the database in the plant
 	private int dbId;
@@ -100,7 +94,6 @@ public class PlantManagerFragment extends Fragment {
 		return plants;
 	}
 
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -119,7 +112,6 @@ public class PlantManagerFragment extends Fragment {
 
 		list = (ExpandableListView) view.findViewById(R.id.list);
 		filter = (EditText) view.findViewById(R.id.filter);
-
 		adapter = new PlantListAdapter(getActivity(), plants.getAddedPlants(),
 				plants.getAllPlants());
 
@@ -161,11 +153,7 @@ public class PlantManagerFragment extends Fragment {
 				Toast.makeText(getActivity(), "Short click", Toast.LENGTH_SHORT)
 						.show();
 
-				Intent intent = new Intent(getActivity(),
-						PlantInformationActivity.class);
-				intent.putExtra("id", childPosition);
-
-				startActivity(intent);
+				onButtonPressed(childPosition);
 
 				return false;
 			}
@@ -203,5 +191,43 @@ public class PlantManagerFragment extends Fragment {
 
 			}
 		});
+	}
+
+	// TODO: Rename method, update argument and hook method into UI event
+	public void onButtonPressed(int id) {
+		if (mListener != null) {
+			mListener.onFragmentInteraction(id);
+		}
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mListener = (OnFragmentInteractionListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnFragmentInteractionListener");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mListener = null;
+	}
+
+	/**
+	 * This interface must be implemented by activities that contain this
+	 * fragment to allow an interaction in this fragment to be communicated to
+	 * the activity and potentially other fragments contained in that activity.
+	 * <p>
+	 * See the Android Training lesson <a href=
+	 * "http://developer.android.com/training/basics/fragments/communicating.html"
+	 * >Communicating with Other Fragments</a> for more information.
+	 */
+	public interface OnFragmentInteractionListener {
+		// TODO: Update argument type and name
+		public void onFragmentInteraction(int id);
 	}
 }
