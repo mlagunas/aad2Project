@@ -14,7 +14,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -279,11 +278,15 @@ public class ManagerActivity extends ActionBarActivity implements
 		Log.i("TAG", "notification");
 	}
 	
+	/**
+	 * Start the alarm for the daily notifications for the daily tasks
+	 */
 	public void startAlarm() {
 	    // Prepare intent to launch notification
 	    Intent intent = new Intent(this, MyReceiver.class);
 	    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
+	    // Sets the date and the hour on today, 18;00
 	    Date dat  = new Date();//initializes to now
 	    Calendar cal_alarm = Calendar.getInstance();
 	    Calendar cal_now = Calendar.getInstance();
@@ -299,17 +302,16 @@ public class ManagerActivity extends ActionBarActivity implements
 	    // The alarm manager is an android system service
 	    AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 	    am.set(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(), pendingIntent);
-	    
-	    Log.i("TAG", "Start timer...");
 	}
 	
+	// BroadcastReceiver of the ManagerActivity, to receive the intent from the MyReceiver class
 	BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 	    @Override
 	    public void onReceive(Context context, Intent intent) {
 	    	String title = "Put a title";
 	    	String text = "Put a text";
+	    	// Display the notification
 	        notifications(title, text, 0);
-	        Log.i("TAG", "Receive");
 	    }
 	};
 
