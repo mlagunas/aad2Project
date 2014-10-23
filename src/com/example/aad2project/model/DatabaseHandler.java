@@ -12,7 +12,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"temperatureMin NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"temperatureMax NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"humidityMin    NUMBER(3) NOT NULL DEFAULT 0,        			" +
-			"humidityMax    NUMBER(3) NOT NULL DEFAULT 0, "
+			"humidityMax    NUMBER(3) NOT NULL DEFAULT 0, " +
 			"lightnessMin   NUMBER(5) NOT NULL DEFAULT 0,       			" +
 			"lightnessMax   NUMBER(5) NOT NULL DEFAULT 0        			" +
 			");";

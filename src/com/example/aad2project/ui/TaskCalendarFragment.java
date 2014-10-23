@@ -15,6 +15,7 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 
 import com.example.aad2project.R;
+import com.example.aad2project.model.Plant;
 import com.example.aad2project.model.Task;
 import com.example.aad2project.model.TaskPlant;
 
@@ -40,22 +41,34 @@ public class TaskCalendarFragment extends Fragment {
 		Task t2 = new Task(1, "Harvest fruits");
 		Task t3 = new Task(2, "Plant plant");
 		Task t4 = new Task(3, "Cut grass");
+		Plant p1 = new Plant();
+		p1.setName("Potato");
+		Plant p2 = new Plant();
+		p2.setName("Tomato");
+		Plant p3 = new Plant();
+		p3.setName("Peas");
+		Plant p4 = new Plant();
+		p4.setName("Bananas");
 
 		TaskPlant tp1 = new TaskPlant();
 		tp1.setDate(new Date());
 		tp1.setTask(t1);
+		tp1.setPlant(p1);
 
 		TaskPlant tp2 = new TaskPlant();
 		tp2.setDate(new Date());
 		tp2.setTask(t2);
+		tp2.setPlant(p2);
 
 		TaskPlant tp3 = new TaskPlant();
 		tp3.setDate(new Date(System.currentTimeMillis() + 86400000));
 		tp3.setTask(t3);
+		tp3.setPlant(p3);
 
 		TaskPlant tp4 = new TaskPlant();
 		tp4.setDate(new Date(System.currentTimeMillis() + 86400000 * 2));
 		tp4.setTask(t4);
+		tp4.setPlant(p4);
 
 		tasks.add(tp1);
 		tasks.add(tp2);
