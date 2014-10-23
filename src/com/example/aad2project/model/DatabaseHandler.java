@@ -12,6 +12,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"temperatureMin NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"temperatureMax NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"humidityMin    NUMBER(3) NOT NULL DEFAULT 0,        			" +
+			"humidityMax    NUMBER(3) NOT NULL DEFAULT 0, "
 			"lightnessMin   NUMBER(5) NOT NULL DEFAULT 0,       			" +
 			"lightnessMax   NUMBER(5) NOT NULL DEFAULT 0        			" +
 			");";
@@ -56,8 +57,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"weatherId   NUMBER(2) NOT NULL," +
 			"FOREIGN KEY (weatherId) REFERENCES WEATHER(id)" +
 			");" ;
-		    
-		
+	
+	public static final String INSERT_WEATHER_Potatoes = 
+			"INSERT INTO Weather (id, temperatureMin, temperatureMax, humidityMin, humidityMax, lightnessMin, lightnessMax" +
+			") VALUES ( 1, 15, 20, 40, 60, 25000, 75000)";
+	
+	public static final String INSERT_WEATHER_CARROTS = 
+			"INSERT INTO Weather (id, temperatureMin, temperatureMax, humidityMin, humidityMax, lightnessMin, lightnessMax" +
+			") VALUES ( 2, 15, 18, 10, 20, 500, 50000)";
+	
+	public static final String INSERT_WEATHER_TOMATOES =
+			"INSERT INTO Weather (id, temperatureMin, temperatureMax, humidityMin, humidityMax, lightnessMin, lightnessMax" +
+			") VALUES ( 3, 16, 20, 20, 30, 25000, 75000)";
+	
+	public static final String INSERT_WEATHER_LETTUCE =
+			"INSERT INTO Weather (id, temperatureMin, temperatureMax, humidityMin, humidityMax, lightnessMin, lightnessMax" +
+			") VALUES ( 4, 12, 15, 40, 60, 25000, 75000)";
+	
+	public static final String INSERT_WEATHER_SWEETPEAS =
+			"INSERT INTO Weather (id, temperatureMin, temperatureMax, humidityMin, humidityMax, lightnessMin, lightnessMax" +
+			") VALUES ( 5, 15, 20, 40, 60, 25000, 75000)";
+	
+	public static final String INSERT_WEATHER_LILIES =
+			"INSERT INTO Weather (id, temperatureMin, temperatureMax, humidityMin, humidityMax, lightnessMin, lightnessMax" +
+			") VALUES ( 6, 15, 20, 40, 60, 25000, 75000)";
+			
 	public DatabaseHandler(Context context, String name, CursorFactory factory, int version) {
 		    super(context, name, factory, version);
 	}
