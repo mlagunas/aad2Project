@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="greenhub_color">#345830</color>
+    <color name="actionbar_color">#183115</color>
+    <color name="tab_indicator_logo">#6ed063</color>
+    <color name="popup_color">#303030</color>
+    <color name="accent_color">#80d676</color>
+</resources>

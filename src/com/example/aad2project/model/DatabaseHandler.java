@@ -12,7 +12,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"temperatureMin NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"temperatureMax NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"humidityMin    NUMBER(3) NOT NULL DEFAULT 0,        			" +
-			"humidityMax    NUMBER(3) NOT NULL DEFAULT 0, "+
+			"humidityMax    NUMBER(3) NOT NULL DEFAULT 0, " +
 			"lightnessMin   NUMBER(5) NOT NULL DEFAULT 0,       			" +
 			"lightnessMax   NUMBER(5) NOT NULL DEFAULT 0        			" +
 			");";
@@ -125,15 +125,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(ALL_EXISTING_PLANTS);
 		db.execSQL(INSERT_WEATHER_Potatoes);
 		db.execSQL(INSERT_WEATHER_CARROTS);
-		db.execSql(INSERT_WEATHER_TOMATOES);
-		db.execSql(INSERT_WEATHER_LETTUCE);
-		db.execSql(INSERT_WEATHER_SWEETPEAS);
-		db.execSql(INSERT_WEATHER_LILIES);
-		db.execSql(INSERT_POTATOES);
-		db.execSql(INSERT_CARROTS);
-		db.execSql(INSERT_LETTUCE);
-		db.execSql(INSERT_SweetPea);
-		db.execSql(INSERT_LILIES);
+		db.execSQL(INSERT_WEATHER_TOMATOES);
+		db.execSQL(INSERT_WEATHER_LETTUCE);
+		db.execSQL(INSERT_WEATHER_SWEETPEAS);
+		db.execSQL(INSERT_WEATHER_LILIES);
+		db.execSQL(INSERT_POTATOES);
+		db.execSQL(INSERT_CARROTS);
+		db.execSQL(INSERT_LETTUCE);
+		db.execSQL(INSERT_SweetPea);
+		db.execSQL(INSERT_LILIES);
 		
 		initializeDB(db);
 		

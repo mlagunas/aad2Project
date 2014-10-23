@@ -99,10 +99,12 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 		TextView groupTitle = (TextView) convertView
 				.findViewById(R.id.group_title);
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM",Locale.ENGLISH);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM",
+				Locale.ENGLISH);
 
-		groupTitle.setText(dateFormat.format(mDays.get(groupPosition).get(0).getDate())); // TODO - Change title for
-														// Date
+		groupTitle.setText(dateFormat.format(mDays.get(groupPosition).get(0)
+				.getDate())); // TODO - Change title for
+		// Date
 		// once Task class is fixed
 		convertView.setLongClickable(false);
 		convertView.setFocusable(false);
@@ -121,10 +123,13 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 		}
 
 		TextView taskDescription = (TextView) convertView
-				.findViewById(R.id.task_description);
+				.findViewById(R.id.task_name);
+		TextView taskTarget = (TextView) convertView
+				.findViewById(R.id.task_target);
 
 		TaskPlant task = (TaskPlant) getChild(groupPosition, childPosition);
 		taskDescription.setText(task.getTask().getDescription());
+		taskTarget.setText(task.getPlant().getName());
 		return convertView;
 	}
 

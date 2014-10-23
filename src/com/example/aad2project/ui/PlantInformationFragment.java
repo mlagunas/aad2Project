@@ -54,9 +54,9 @@ public class PlantInformationFragment extends Fragment {
 
 		View view = inflater.inflate(R.layout.fragment_plant_information,
 				container, false);
-		imageView = (ImageView) view.findViewById(R.id.imageView1);
-		textView1 = (TextView) view.findViewById(R.id.textView1);
-		textView2 = (TextView) view.findViewById(R.id.textView2);
+		/*imageView = (ImageView) view.findViewById(R.id.plant_image);
+		textView1 = (TextView) view.findViewById(R.id.plant_name);
+		textView2 = (TextView) view.findViewById(R.id.plant_description);
 
 		Toast.makeText(getActivity(), "The id is: " + plantId,
 				Toast.LENGTH_SHORT).show();
@@ -83,7 +83,7 @@ public class PlantInformationFragment extends Fragment {
 			textView2.setText("Garlic is very healthy");
 			break;
 
-		}
+		}*/
 		return view;
 	}
 
