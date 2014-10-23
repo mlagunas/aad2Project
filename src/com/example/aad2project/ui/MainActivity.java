@@ -54,6 +54,7 @@ public class MainActivity extends ActionBarActivity implements
 				Intent i = new Intent(this,
 						com.example.aad2project.ui.ManagerActivity.class);
 				startActivity(i);
+				finish();
 			}
 		}
 		super.onResume();
