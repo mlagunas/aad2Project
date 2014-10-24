@@ -1,6 +1,7 @@
 package com.example.aad2project.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class TaskPlantDao extends DaoBase {
 		super.mDb.execSQL("DELETE FROM TaskPlant");
 	}
 	
-	public void createTaskPlant(Plant p, Task t, Date d){
-		//Log.d("all task", this.getAllTaskPlant().toString());
+	public void createTaskPlant(Plant p, Task t, long d){
+		
 		super.mDb.execSQL("INSERT INTO TaskPlant (taskId,plantId,date,done)" +
 				"VALUES ("+p.getId()+","+t.getId()+","+d+",0);");
 		Log.d("all taskPlant", this.getAllTaskPlant().toString());

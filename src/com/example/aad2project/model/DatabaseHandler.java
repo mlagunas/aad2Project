@@ -136,8 +136,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(INSERT_LETTUCE);
 		db.execSQL(INSERT_SweetPea);
 		db.execSQL(INSERT_LILIES);
-				
-		}
+	}
+
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

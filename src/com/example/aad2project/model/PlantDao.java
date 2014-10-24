@@ -1,7 +1,9 @@
 package com.example.aad2project.model;
 
+import java.sql.Timestamp;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.example.aad2project.ui.TaskCalendarAdapter;
 import com.example.aad2project.ui.TaskCalendarFragment;
@@ -52,8 +54,10 @@ public class PlantDao extends DaoBase {
 		c.moveToLast();
 		t.setId(c.getInt(0));
 		
+		Calendar cal = Calendar.getInstance();
+		
 		TaskPlantDao tp = new TaskPlantDao(context);
-		tp.createTaskPlant(plant, t, new Date(System.currentTimeMillis()+timeToGrow*24*60*60*1000));
+		tp.createTaskPlant(plant, t, cal.getTimeInMillis());
 	}
 	
 	public void setFragment(TaskCalendarFragment fragment) {
