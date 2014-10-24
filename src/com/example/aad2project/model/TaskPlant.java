@@ -9,6 +9,10 @@ public class TaskPlant {
 	private Plant plant;
 	private TaskPlant next;
 	
+	public TaskPlant (Plant plant, Task task) {
+		this.plant = plant;
+		this.task  = task;
+	}
 	public int getId() {
 		return id;
 	}
@@ -56,7 +60,7 @@ public class TaskPlant {
 		}
 	}
 	
-	public TaskPlant getPlantNumber(int i) {
+	public TaskPlant getTaskPlantNumber(int i) {
 		TaskPlant taskPlant = this;
 		
 		for (int j = 0; j < i; j++) {
