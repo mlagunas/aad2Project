@@ -137,31 +137,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(INSERT_SweetPea);
 		db.execSQL(INSERT_LILIES);
 				
-		}
-	
-	private void initializeDB(SQLiteDatabase db){
-		String[] plants = new String[]{
-				new String("tomatoes"),
-				new String("potatoes"),
-				new String("onions"),
-				new String("lettuce")
-		};
-		String[] description = new String[]{
-				new String("red plant"),
-				new String("grows underground"),
-				new String("white plant, grows underground"),
-				new String("green and white plant")
-		};
-		
-		for (int i=0; i< plants.length;i++){
-			db.execSQL(add(i,plants[i],description[i],(i+10),1));
-		}
-	}
-	
-	private String add(int id, String name, String description, int timeToGrow, int weatherId){
-		return "INSERT INTO ExistingPlants " +
-				"(id,name,description,timeTogrow,weatherId) VALUES (" +
-				id+" ,'"+name+"','"+description+"', "+timeToGrow+","+weatherId+");";
 	}
 	
 	@Override

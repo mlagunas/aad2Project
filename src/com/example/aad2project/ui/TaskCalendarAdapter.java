@@ -108,9 +108,8 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM",
 				Locale.ENGLISH);
-
 		groupTitle.setText(dateFormat.format(mDays.get(groupPosition).get(0)
-				.getDate())); // TODO - Change title for
+					.getDate())); // TODO - Change title for
 		// Date
 		// once Task class is fixed
 		convertView.setLongClickable(false);

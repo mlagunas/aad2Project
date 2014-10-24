@@ -1,6 +1,7 @@
 package com.example.aad2project.ui;
 
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -73,15 +74,18 @@ public class TaskCalendarFragment extends Fragment {
 		
 		noPlants = p.getAddedPlants().isEmpty();
 		
-		tp.deleteAllTaskPlant();
-		t.deleteAllTask();
+		//tp.deleteAllTaskPlant();
+		//t.deleteAllTask();
 		
-		
-		if(!noPlants){
+		Date date = new Date();
+		Integer i = (int) date.getTime();
+		Calendar cal = Calendar.getInstance();		
+
+		/*if(!noPlants){
 				t.addTask("Water "+p.getAddedPlants().get(0).getName());
 				tp.createTaskPlant(p.getAddedPlants().get(0), 
-					t.getAllTask().get(0), new Date(System.currentTimeMillis()));
-		}
+					t.getAllTask().get(0),date.getTime());
+		}*/
 		
 		
 		return view;
@@ -112,7 +116,7 @@ public class TaskCalendarFragment extends Fragment {
 			}
 		});
 		
-		if(!noPlants){
+		//if(!noPlants){
 			mAdapter = new TaskCalendarAdapter(getActivity(), tp.getAllTaskPlant());
 			mList.setAdapter(mAdapter);
 			mList.setGroupIndicator(null);		
@@ -120,7 +124,7 @@ public class TaskCalendarFragment extends Fragment {
 				mList.expandGroup(i);
 			}
 
-		}
+		//}
 		
 		super.onViewCreated(view, savedInstanceState);
 	}
