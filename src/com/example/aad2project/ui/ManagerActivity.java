@@ -50,7 +50,6 @@ public class ManagerActivity extends ActionBarActivity implements
 		setContentView(R.layout.activity_manager);
 		
 		startAlarm();
-		
 		container = (FrameLayout) findViewById(R.id.fragment_container);
 
 		// Set up the action bar.
