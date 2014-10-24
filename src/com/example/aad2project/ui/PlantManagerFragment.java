@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -49,6 +50,9 @@ public class PlantManagerFragment extends Fragment {
 	private Boolean lastExpandedTop = false;
 	private Boolean lastExpandedBot = false;
 	
+	private FragmentManager fm;
+	private DialogFragment dialog;
+	
 	public PlantManagerFragment() {
 		// Required empty public constructor
 	}
@@ -56,19 +60,14 @@ public class PlantManagerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		/*
-		 * plants.addPlant("tomatoe", "red plant", 20, 0);
-		 * plants.addPlant("potatoes", "grows underground", 50, 0);
-		 * plants.addPlant("letucce", "green and white plant", 15, 0);
-		 * plants.addPlant("onions", "white plant which grows underground", 25,
-		 * 0);
-		 */
 		
+		dialog = new LongClickDialogFragment();
+		//fm = getActivity().getSupportFragmentManager();
+		dialog.setTargetFragment(this,1);
 		// Inflate the layout for this fragment
-		PlantDao plants = new PlantDao(getActivity());
+		plants = new PlantDao(getActivity());
 		View view = inflater.inflate(R.layout.fragment_plant_manager,
 				container, false);
-
 		list = (ExpandableListView) view.findViewById(R.id.list);
 		filter = (EditText) view.findViewById(R.id.filter);
 
@@ -78,14 +77,29 @@ public class PlantManagerFragment extends Fragment {
 		
 		list.setAdapter(adapter);
 		list.expandGroup(0);
-		return view;
+		
+		TaskCalendarFragment tcf = (TaskCalendarFragment) getFragmentManager().findFragmentById(R.layout.fragment_task_calendar);
+		plants.setFragment(tcf);
+		
+		return view; 
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String text = "";
+		if (requestCode == 1) //make sure fragment codes match up {
+			text = data.getStringExtra("KEY");
+			if (text.equals("refresh")){
+				adapter.updatePlantList(plants.getAddedPlants(), plants.getAllPlants());
+			}
+			
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedState) {
 		super.onActivityCreated(savedState);
 		plants = new PlantDao(getActivity());
-
+		
 		filter.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
@@ -151,12 +165,17 @@ public class PlantManagerFragment extends Fragment {
 					int position, long id) {
 				if (id < 0) {
 					// Create dialog
-					DialogFragment dialog = new LongClickDialogFragment();
+					
+					
 					Plant p;
 					
 					// Put boolean to show Add or Delete
 					Bundle bundle = new Bundle();
 					
+					/*
+					 * Search the correct position regarding if the list are Collapsed or Expanded
+					 * and regarding if the user is pressing in the top or bottom list 
+					 */
 					if ( (Boolean) view.getTag()){
 						ArrayList<Plant> data = plants.getAddedPlants();
 						p = data.get(position-1);
@@ -169,6 +188,7 @@ public class PlantManagerFragment extends Fragment {
 							p = data.get(position-2);
 					}
 					
+					// Send all the data through a Bundle object
 					bundle.putBoolean("function", (Boolean) view.getTag());
 					bundle.putString("name", p.getName());
 					bundle.putString("description", p.getDescription());
@@ -185,62 +205,4 @@ public class PlantManagerFragment extends Fragment {
 		});
 	}
 	
-	public class LongClickDialogFragment extends DialogFragment {
-
-		private int listId;	
-		private boolean function;
-		
-		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			int arrayId;		
-			listId = getArguments().getInt("position");
-			
-			function = getArguments().getBoolean("function");
-			if (function){
-				arrayId = R.array.long_click_delete;
-			} else {
-				arrayId = R.array.long_click_add;
-			}
-			
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		    builder.setItems(arrayId, new DialogInterface.OnClickListener() {
-		               public void onClick(DialogInterface dialog, int which) {
-		               // The 'which' argument contains the index position
-		               // of the selected item
-		            	   
-		            	   switch (which) {
-		            	   case 0:
-		            		   // add or delete
-		            		   // we have to differentiate between them
-		            		   // but there's only one listener for both popups
-		            		   
-		            		   PlantDao p = new PlantDao(getActivity());
-		            		   if(!function){
-		            		   		p.addPlant(getArguments().getString("name"), 
-		            		   				getArguments().getString("description"), getArguments().getInt("timeToGrow")
-		            		   				, getArguments().getInt("number"));
-		            		   		Toast.makeText(getActivity(), "Added",
-			   	   							Toast.LENGTH_LONG).show();
-		            		   }
-		            		   else{
-		            			   p.deletePlant(getArguments().getInt("id"));
-		            			   Toast.makeText(getActivity(), "Deleted",
-			   	   							Toast.LENGTH_LONG).show();
-		            		   }
-		            		   adapter.updatePlantList(plants.getAddedPlants(),plants.getAllPlants());
-		            		   break;
-		            	   case 1:
-		            		   // this one will always be "show info"
-		            		   // so we can implement one function for both
-		            		   Intent intent = new Intent(getActivity(),PlantInformationActivity.class);
-		            		   intent.putExtra("id",listId);
-		            		   startActivity(intent);
-		            		   break;            		  
-		            	   }
-		           
-	               }
-		    });
-		    return builder.create();
-		}
 	}
-}

@@ -34,11 +34,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			");";
 	
 	public static final String  TASK_PLANT_CREATE_TABLE =
-			"CREATE TABLE TaskPlant ( 							   " +
+			"CREATE TABLE TaskPlant ( 	" +
 			"taskId  NUMBER(4) NOT NULL,							   " +
 			"plantId NUMBER(4) NOT NULL, 							   " +
 			"date    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
-			"done    NUMBER(2) NOT NULL DEFAULT 0					   " +
+			"done    NUMBER(1) NOT NULL DEFAULT 0, " +
+			"PRIMARY KEY(plantId,taskId)"+
 			");";
 	
 	public static final String WEATHER_CALENDAR_CREATE_TABLE =
@@ -73,6 +74,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		initializeDB(db);
 		
 		}
+	
 	private void initializeDB(SQLiteDatabase db){
 		String[] plants = new String[]{
 				new String("tomatoes"),

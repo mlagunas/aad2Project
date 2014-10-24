@@ -81,6 +81,13 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 		return childPosition;
 	}
 
+	public void updateTaskList(List<TaskPlant> newList) {
+	    mDays.clear(); 
+	    mDays.addAll(divideTaskPerDays(newList));
+	    this.notifyDataSetChanged();
+	    
+	}
+	
 	@Override
 	public boolean hasStableIds() {
 		return true;
@@ -122,9 +129,11 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 		TextView taskDescription = (TextView) convertView
 				.findViewById(R.id.task_description);
-
-		TaskPlant task = (TaskPlant) getChild(groupPosition, childPosition);
-		taskDescription.setText(task.getTask().getDescription());
+		
+		if (getChild(groupPosition, childPosition) != null){ 
+			TaskPlant task = (TaskPlant) getChild(groupPosition, childPosition);
+			taskDescription.setText(task.getTask().getDescription());
+		}
 		return convertView;
 	}
 

@@ -1,87 +1,98 @@
 package com.example.aad2project.ui;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Task;
-import com.example.aad2project.model.TaskPlant;
+import com.example.aad2project.model.PlantDao;
+import com.example.aad2project.model.TaskDao;
+import com.example.aad2project.model.TaskPlantDao;
 
 /**
  * A simple {@link Fragment} subclass.
  * 
  */
 public class TaskCalendarFragment extends Fragment {
-
+	
 	private ExpandableListView mList;
 	private TaskCalendarAdapter mAdapter;
-
+	private PlantDao p;
+	private TaskDao t;
+	private TaskPlantDao tp;
+	private boolean noPlants;
+	
+	
 	public TaskCalendarFragment() {
 		// Required empty public constructor
 	}
 	
-	
-	// THIS WHOLE CLASS SHOLD BE DONE USING TASKPLANTS INSTEAD OF TASKS. MUST FIX
-	private List<TaskPlant> getTasks() {
-		List<TaskPlant> tasks = new ArrayList<TaskPlant>();
-		Task t1 = new Task(0, "Water plants");
-		Task t2 = new Task(1, "Harvest fruits");
-		Task t3 = new Task(2, "Plant plant");
-		Task t4 = new Task(3, "Cut grass");
-		
-		TaskPlant tp1 = new TaskPlant();
-		tp1.setDate(new Date());
-		tp1.setTask(t1);
-		
-		TaskPlant tp2 = new TaskPlant();
-		tp2.setDate(new Date());
-		tp2.setTask(t2);
-		
-		TaskPlant tp3 = new TaskPlant();
-		tp3.setDate(new Date(System.currentTimeMillis()+86400000));
-		tp3.setTask(t3);
-		
-		TaskPlant tp4 = new TaskPlant();
-		tp4.setDate(new Date(System.currentTimeMillis()+86400000*2));
-		tp4.setTask(t4);
-		
-		
-		tasks.add(tp1);
-		tasks.add(tp2);
-		tasks.add(tp3);
-		tasks.add(tp4);
-		return tasks;
+	public void refresh(){
+		mAdapter.updateTaskList(tp.getAllTaskPlant());
 	}
-
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String text = "";
+		if (requestCode == 2) //make sure fragment codes match up {
+			text = data.getStringExtra("REF");
+			if (text.equals("refresh")){
+				mAdapter.updateTaskList(tp.getAllTaskPlant());
+			}
+			
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_task_calendar,
 				container, false);
-
+		
 		mList = (ExpandableListView) view.findViewById(R.id.list);
-
+		
+		p = new PlantDao(getActivity());
+		tp = new TaskPlantDao(getActivity());
+		t = new TaskDao(getActivity());
+		
+		p.setFragment(this);
+		
+		noPlants = p.getAddedPlants().isEmpty();
+		
+		tp.deleteAllTaskPlant();
+		t.deleteAllTask();
+		
+		
+		if(!noPlants){
+				t.addTask("Water "+p.getAddedPlants().get(0).getName());
+				tp.createTaskPlant(p.getAddedPlants().get(0), 
+					t.getAllTask().get(0), new Date(System.currentTimeMillis()));
+		}
+		
+		
 		return view;
 	}
 
+	
+	
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		mAdapter = new TaskCalendarAdapter(getActivity(), getTasks());
-		mList.setAdapter(mAdapter);
 		
-		mList.setGroupIndicator(null);		
-		for (int i = 0; i < mAdapter.getGroupCount(); i++) {
-			mList.expandGroup(i);
+		if(!noPlants){
+			mAdapter = new TaskCalendarAdapter(getActivity(), tp.getAllTaskPlant());
+			mList.setAdapter(mAdapter);
+			mList.setGroupIndicator(null);		
+			for (int i = 0; i < mAdapter.getGroupCount(); i++) {
+				mList.expandGroup(i);
+			}
 		}
 		super.onViewCreated(view, savedInstanceState);
 	}
