@@ -38,7 +38,7 @@ public class ManagerActivity extends ActionBarActivity implements
 		ActionBar.TabListener, OnPlantManagerFragmentInteractionListener,
 		OnTaskCalendarFragmentInteractionListener {
 
-	SectionsPagerAdapter mSectionsPagerAdapter;
+	public SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
 	private FrameLayout container;
 
@@ -132,6 +132,9 @@ public class ManagerActivity extends ActionBarActivity implements
 			FragmentTransaction fragmentTransaction) {
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
+		if(tab.getPosition()==0){
+			mSectionsPagerAdapter.getItem(tab.getPosition()).onActivityResult(0, 2, new Intent());
+		}
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
 

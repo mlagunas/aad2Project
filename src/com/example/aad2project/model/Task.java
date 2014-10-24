@@ -6,17 +6,18 @@ public class Task {
 	private String description;
 	private Task next;
 	
-	public Task(int id, String description) {
-		this.id 		 = id;
-		this.description = description;
+	public Task() {
 	}
 	
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int id) {
 		this.id = id;
+
 	}
+	
 	public String getDescription() {
 		return description;
 	}
@@ -57,5 +58,9 @@ public class Task {
 			j++;
 		} while(task.next != null);
 		return j;
+	}
+	
+	public String toString(){
+		return id+" "+description;
 	}
 }
