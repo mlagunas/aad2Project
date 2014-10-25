@@ -47,12 +47,17 @@
             android:label="@string/title_activity_preference" >
         </activity>
         <activity
-            android:name="com.example.aad2project.ui.TaskInformationActivity"
+            android:name=".ui.TaskInformationActivity"
             android:label="@string/title_activity_task_information" >
         </activity>
-        <receiver
-            android:name="com.example.aad2project.model.MyReceiver" >
+
+        <receiver android:name=".model.MyReceiver" >
         </receiver>
+
+        <activity
+            android:name="com.example.aad2project.ui.AboutActivity"
+            android:label="@string/title_activity_about" >
+        </activity>
     </application>
 
 </manifest>
