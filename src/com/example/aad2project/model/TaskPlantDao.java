@@ -25,7 +25,6 @@ public class TaskPlantDao extends DaoBase {
 	}
 	
 	public void createTaskPlant(Plant p, Task t, Date d){
-		//Log.d("all task", this.getAllTaskPlant().toString());
 		super.mDb.execSQL("INSERT INTO TaskPlant (taskId,plantId,date,done)" +
 				"VALUES ("+p.getId()+","+t.getId()+","+d+",0);");
 		Log.d("all taskPlant", this.getAllTaskPlant().toString());

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ import com.example.aad2project.model.TaskPlant;
 public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 	private List<List<TaskPlant>> mDays;
-
 	private Context context;
 
 	public TaskCalendarAdapter(Context context, List<TaskPlant> mTasks) {
@@ -82,12 +82,12 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 	}
 
 	public void updateTaskList(List<TaskPlant> newList) {
-	    mDays.clear(); 
-	    mDays.addAll(divideTaskPerDays(newList));
-	    this.notifyDataSetChanged();
-	    
+		mDays = divideTaskPerDays(newList);
+		Log.d("TAG","MIDA: "+mDays.size());
+		notifyDataSetChanged();
+
 	}
-	
+
 	@Override
 	public boolean hasStableIds() {
 		return true;
@@ -110,9 +110,9 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 				Locale.ENGLISH);
 
 		groupTitle.setText(dateFormat.format(mDays.get(groupPosition).get(0)
-				.getDate())); // TODO - Change title for
-		// Date
-		// once Task class is fixed
+				.getDate()));
+
+		// Disable clicks on groups
 		convertView.setLongClickable(false);
 		convertView.setFocusable(false);
 		convertView.setClickable(true);
@@ -131,7 +131,7 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 		TextView taskDescription = (TextView) convertView
 
-				.findViewById(R.id.task_name);
+		.findViewById(R.id.task_name);
 		TextView taskTarget = (TextView) convertView
 				.findViewById(R.id.task_target);
 
