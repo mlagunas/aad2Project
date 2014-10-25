@@ -105,21 +105,26 @@ public class ManagerActivity extends ActionBarActivity implements
 		switch (item.getItemId()) {
 		// action with ID action_refresh was selected
 		case R.id.log_out:
-			Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT).show();
 
 			logout();
 
 			break;
 		// action with ID action_settings was selected
 		case R.id.action_settings:
-			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-					.show();
+		//	Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+			//		.show();
 
 			Intent intent = new Intent(ManagerActivity.this,
 					SettingsActivity.class);
 			startActivity(intent);
-
 			break;
+			
+		case R.id.action_about:
+			Intent intent2 = new Intent(ManagerActivity.this,AboutActivity.class);
+			startActivity(intent2);
+			break;	
+			
 		default:
 			break;
 		}

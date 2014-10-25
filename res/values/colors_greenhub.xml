@@ -5,4 +5,5 @@
     <color name="tab_indicator_logo">#6ed063</color>
     <color name="popup_color">#303030</color>
     <color name="accent_color">#80d676</color>
+    <color name="white_opaque">#ffffff</color>
 </resources>

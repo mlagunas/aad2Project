@@ -30,6 +30,9 @@
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_greenhub_green</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Greenhub_green</item>
         
+     	<item name="android:windowBackground">@color/white_opaque</item>
+      	<item name="android:colorBackground">@color/white_opaque</item>
+        
                 <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Greenhub_green.Widget</item>
 
