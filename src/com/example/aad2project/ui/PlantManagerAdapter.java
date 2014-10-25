@@ -22,9 +22,10 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 	private List<Plant> filteredAll;
 	private Context context;
 
-	public PlantManagerAdapter(Context context, List<Plant> added, List<Plant> all) {
+	public PlantManagerAdapter(Context context, List<Plant> added,
+			List<Plant> all) {
 		this.context = context;
-		this.added = added;		
+		this.added = added;
 		this.all = all;
 		filteredAdded = added;
 		filteredAll = all;
@@ -38,16 +39,17 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 			filteredAdded = new ArrayList<Plant>();
 			filteredAll = new ArrayList<Plant>();
 			for (Plant p : added) {
-				if (p.getName().toLowerCase().startsWith(s.toLowerCase())){
+				if (p.getName().toLowerCase().startsWith(s.toLowerCase())) {
 					filteredAdded.add(p);
 				}
 			}
 			for (Plant p : all) {
-				if (p.getName().toLowerCase().startsWith(s.toLowerCase())){
+				if (p.getName().toLowerCase().startsWith(s.toLowerCase())) {
 					filteredAll.add(p);
 				}
 			}
 		}
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -124,18 +126,22 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.group_title);
 
 		groupTitle.setText((String) getGroup(groupPosition));
+
+		// Disable clicks on groups
 		convertView.setLongClickable(false);
+		convertView.setFocusable(false);
+		convertView.setClickable(true);
 		return convertView;
 	}
 
-	public void updatePlantList(List<Plant> newAdd,List<Plant> newAll) {
-	    added.clear(); 
-	    all.clear();
-	    added.addAll(newAdd);
-	    all.addAll(newAll);
-	    this.notifyDataSetChanged();
+	public void updatePlantList(List<Plant> newAdd, List<Plant> newAll) {
+		added.clear();
+		all.clear();
+		added.addAll(newAdd);
+		all.addAll(newAll);
+		this.notifyDataSetChanged();
 	}
-	
+
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
