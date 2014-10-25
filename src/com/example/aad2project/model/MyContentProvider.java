@@ -21,7 +21,7 @@ import android.util.Log;
 public class MyContentProvider extends ContentProvider {
 
 	public static final Uri CONTENT_URI = Uri
-			.parse("content://com.example.aad2project.model.MyContentProvider");
+			.parse("content://com.example.aad2project.model.mycontentprovider");
 	public static final String CONTENT_PROVIDER_DB_NAME = "account.db";
 	public static final int CONTENT_PROVIDER_DB_VERSION = 1;
 	public static final String CONTENT_PROVIDER_TABLE_NAME = "account";
