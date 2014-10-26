@@ -79,7 +79,7 @@ public Weather(){}
 	}
 
 
-	public void setMaxLightnesss(int maxLightnesss) {
+	public void setMaxLightness(int maxLightnesss) {
 		this.maxLightnesss = maxLightnesss;
 	}
 
