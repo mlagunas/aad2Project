@@ -2,6 +2,7 @@ package com.example.aad2project.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -11,6 +12,15 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.example.aad2project.model.PlantDao;
+import com.example.aad2project.model.Weather;
+import com.example.aad2project.model.WeatherDao;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -26,14 +36,25 @@ import android.util.Log;
 
 public class WeatherService extends IntentService{
 	private final static String TAG = "TestRequette";
-
+	private WeatherDao w;
+	private Weather weather;
 	public WeatherService() {
 		super(TAG);
 	}
 
 	protected void onHandleIntent(Intent intent) {
 		Log.d(TAG, "Requettes5");
-		getWeatherRequest();
+		try {
+			Log.d(TAG, "Requettes6");
+
+			getWeatherRequest();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	
@@ -61,9 +82,10 @@ public class WeatherService extends IntentService{
 		return null;
 	}
 
-	protected String getWeatherRequest() {
+	protected String getWeatherRequest() throws JSONException, ParseException {
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpResponse response = null;
+		Log.d(TAG, "Requettes9");
 
 		try {
 			response = httpclient.execute(new HttpGet(
@@ -81,7 +103,8 @@ public class WeatherService extends IntentService{
 			try {
 				response.getEntity().writeTo(out);
 				
-				
+				Log.d(TAG, "Requettes11");
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -92,11 +115,35 @@ public class WeatherService extends IntentService{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String responseString = out.toString();
-			
-			Log.d(TAG,String.valueOf(responseString));
+			Log.d(TAG, "Requettes10");
 
-			return responseString;
+			String responseString = out.toString();
+
+			
+			Log.d(TAG,"name=" + responseString);
+
+			JSONObject json = (JSONObject)new JSONParser().parse(responseString);
+			JSONObject info = (JSONObject) json.get("main");
+			
+			
+			info.get("temp_min");
+
+		
+
+			
+			
+			
+			weather =  new Weather();
+			weather.setMaxTemp((Integer) info.get("temp_max"));
+			weather.setMinTemp((Integer) info.get("temp_min"));
+			weather.setMinHumi((Integer) info.get("humidity"));
+			weather.setMaxHumi((Integer) info.get("humidity"));
+			weather.setMaxLightness(1);
+			weather.setMinLightness(2);
+
+			w = new WeatherDao(this);
+			w.add(weather);
+			
 
 		
 		} else {
@@ -119,6 +166,7 @@ public class WeatherService extends IntentService{
 			
 			return null;
 		}
+		return null;
 	}
 
 	
