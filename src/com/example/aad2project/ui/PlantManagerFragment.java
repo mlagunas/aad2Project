@@ -64,44 +64,6 @@ public class PlantManagerFragment extends Fragment {
 		// Required empty public constructor
 	}
 
-	/**
-	 * This method return all the data stored in the Database regarding to the
-	 * user who is using the application
-	 * 
-	 * @return
-	 */
-	private ArrayList<Plant> getPlants() {
-		// Need the data from the database to initialize the Array
-		// So we invent various plant objects and their parameters
-		ArrayList<Plant> plants = new ArrayList<Plant>();
-		/*
-		 * Plant p1 = new Plant(); p1.setName("potatoes"); p1.setId(id1); Plant
-		 * p2 = new Plant(); p2.setName("tomatoes"); p2.setId(id2); Plant p3 =
-		 * new Plant(); p3.setName("onions"); p3.setId(id3); Plant p4 = new
-		 * Plant(); p4.setName("garlics"); p4.setId(id4); plants.add(p1);
-		 * plants.add(p2); plants.add(p3); plants.add(p4); return plants;
-		 */
-
-		DatabaseHandler supp = new DatabaseHandler(getActivity(), "try.db",
-				null, 1);
-		SQLiteDatabase db = supp.getReadableDatabase();
-		Cursor c = db.rawQuery("SELECT * FROM Plant", null);
-		// We have to make sure that there's at least one register
-		if (c.moveToFirst()) {
-			// Move the cursor till we have no more registers
-			do {
-				Plant p = new Plant();
-				p.setId(c.getInt(0));
-				dbId = p.getId();
-				p.setName(c.getString(1));
-				p.setDescription(c.getString(2));
-				p.setTimeToGrow(c.getInt(3));
-				plants.add(p);
-			} while (c.moveToNext());
-		}
-		db.close();
-		return plants;
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

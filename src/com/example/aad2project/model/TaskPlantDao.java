@@ -82,7 +82,10 @@ public class TaskPlantDao extends DaoBase {
 		         
 		         tp.setIdTask(idP);		         
 		         tp.setIdPlant(idT);
-		         tp.setDate(new Date(c.getInt(2)));
+		         Log.d("FECHA"," "+c.getInt(2));
+		         Date test = new Date(c.getLong(2));
+		         Log.d("REALDATE",test.toString());
+		         tp.setDate(test);
 		         tp.setDone(c.getInt(3));
 		         aux.add(tp);
 		     } while(c.moveToNext());

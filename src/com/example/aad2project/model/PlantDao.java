@@ -1,7 +1,7 @@
 package com.example.aad2project.model;
 
 import java.sql.Timestamp;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -53,11 +53,13 @@ public class PlantDao extends DaoBase {
 		c = super.mDb.rawQuery("SELECT id FROM Task", null);
 		c.moveToLast();
 		t.setId(c.getInt(0));
-		
-		Calendar cal = Calendar.getInstance();
-		
+				
 		TaskPlantDao tp = new TaskPlantDao(context);
-		tp.createTaskPlant(plant, t, cal.getTimeInMillis());
+		
+		Calendar today = Calendar.getInstance();
+		Date toGrow = new Date(today.getTimeInMillis() + (1000*60*60*24*timeToGrow));
+		
+		tp.createTaskPlant(plant, t, toGrow.getTime());
 	}
 	
 	public void setFragment(TaskCalendarFragment fragment) {
@@ -76,6 +78,9 @@ public class PlantDao extends DaoBase {
 		     do {
 		         Plant p = new Plant();
 		         p.setName(c.getString(1));
+		         p.setId(c.getInt(0));
+		         p.setDescription(c.getString(2));
+		         p.setTimeToGrow(c.getInt(3));
 		    	 plants.add(p);
 		     } while(c.moveToNext());
 		}
