@@ -12,7 +12,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"temperatureMin NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"temperatureMax NUMBER(2) NOT NULL DEFAULT 0,     			" +
 			"humidityMin    NUMBER(3) NOT NULL DEFAULT 0,        			" +
-			"humidityMax    NUMBER(3) NOT NULL DEFAULT 0, " +
+			"humidityMax    NUMBER(3) NOT NULL DEFAULT 0, 	" +
 			"lightnessMin   NUMBER(5) NOT NULL DEFAULT 0,       			" +
 			"lightnessMax   NUMBER(5) NOT NULL DEFAULT 0        			" +
 			");";
@@ -39,8 +39,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"taskId  NUMBER(4) NOT NULL,							   " +
 			"plantId NUMBER(4) NOT NULL, 							   " +
 			"date    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
-			"done    NUMBER(1) NOT NULL DEFAULT 0, " +
-			"PRIMARY KEY(plantId,taskId)"+
+			"done    NUMBER(1) NOT NULL DEFAULT 0," +
+			//"FOREIGN KEY (taskId) REFERENCES Task(id) ON DELETE CASCADE, " +
+			//"FOREIGN KEY (plantId) REFERENCES Plant(id) ON DELETE CASCADE, " +
+			"PRIMARY KEY (plantId,taskId)"+
 			");";
 	
 	public static final String WEATHER_CALENDAR_CREATE_TABLE =
@@ -133,6 +135,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(INSERT_WEATHER_LILIES);
 		db.execSQL(INSERT_POTATOES);
 		db.execSQL(INSERT_CARROTS);
+		db.execSQL(INSERT_TOMATOES);
 		db.execSQL(INSERT_LETTUCE);
 		db.execSQL(INSERT_SweetPea);
 		db.execSQL(INSERT_LILIES);

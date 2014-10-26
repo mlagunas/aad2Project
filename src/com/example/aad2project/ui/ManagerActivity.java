@@ -72,8 +72,7 @@ public class ManagerActivity extends ActionBarActivity implements
 					getApplicationContext(),
 					"There is not internet connection, the data can't be updated.",
 					Toast.LENGTH_LONG).show();
-		
-		
+
 		startAlarm();
 		container = (FrameLayout) findViewById(R.id.fragment_container);
 
@@ -131,26 +130,28 @@ public class ManagerActivity extends ActionBarActivity implements
 		switch (item.getItemId()) {
 		// action with ID action_refresh was selected
 		case R.id.log_out:
-			//Toast.makeText(this, "Log out selected", Toast.LENGTH_SHORT).show();
+			// Toast.makeText(this, "Log out selected",
+			// Toast.LENGTH_SHORT).show();
 
 			logout();
 
 			break;
 		// action with ID action_settings was selected
 		case R.id.action_settings:
-		//	Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-			//		.show();
+			// Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+			// .show();
 
 			Intent intent = new Intent(ManagerActivity.this,
 					SettingsActivity.class);
 			startActivity(intent);
 			break;
-			
+
 		case R.id.action_about:
-			Intent intent2 = new Intent(ManagerActivity.this,AboutActivity.class);
+			Intent intent2 = new Intent(ManagerActivity.this,
+					AboutActivity.class);
 			startActivity(intent2);
-			break;	
-			
+			break;
+
 		default:
 			break;
 		}
@@ -267,7 +268,7 @@ public class ManagerActivity extends ActionBarActivity implements
 			fragmentTransaction.replace(R.id.fragment_container, loginFragment);
 			fragmentTransaction.commit();
 		} else {
-			Log.d("INTENT","1. Id: "+id);
+			Log.d("INTENT", "1. Id: " + id);
 
 			// Phone behavior (Start new activity)
 			Intent intent = new Intent(this, PlantInformationActivity.class);
@@ -408,7 +409,17 @@ public class ManagerActivity extends ActionBarActivity implements
 	@Override
 	public void onDialogItemClick() {
 		// Refresh the fragments
-		mSectionsPagerAdapter.getRegisteredFragment(mViewPager.getCurrentItem());
+		// mSectionsPagerAdapter.getRegisteredFragment(mViewPager.getCurrentItem());
+		for (Fragment f : getSupportFragmentManager().getFragments()) {
+			if ( f.getClass() == PlantManagerFragment.class){
+				Log.d("REFRESHING MANAGER","REFRESH");
+				((PlantManagerFragment) f).refresh();
+			} else if ( f.getClass() == TaskCalendarFragment.class){
+				((TaskCalendarFragment) f).refresh();
+				Log.d("REFRESHING CALENDAR","REFRESH");
+			}
+		}
+		mSectionsPagerAdapter.notifyDataSetChanged();
 	}
 
 }

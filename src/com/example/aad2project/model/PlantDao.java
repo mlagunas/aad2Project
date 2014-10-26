@@ -1,16 +1,13 @@
 package com.example.aad2project.model;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import com.example.aad2project.ui.TaskCalendarAdapter;
-import com.example.aad2project.ui.TaskCalendarFragment;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+
+import com.example.aad2project.ui.TaskCalendarFragment;
 
 public class PlantDao extends DaoBase {
 
@@ -32,7 +29,6 @@ public class PlantDao extends DaoBase {
 			p.setName(c.getString(1));
 			p.setDescription(c.getString(2));
 			p.setTimeToGrow(c.getInt(3));
-			Log.d("Tag", "Lo que sea");
 			return p;
 		} else {
 			return null;
@@ -41,7 +37,6 @@ public class PlantDao extends DaoBase {
 
 	public Plant searchPlant(int id) {
 		for (Plant p : getAllPlants()) {
-			Log.d("ESTE ES EL ID",p.getId()+" ");
 			if (p.getId() == id) {
 				return p;
 			}
@@ -63,7 +58,6 @@ public class PlantDao extends DaoBase {
 			p.setName(name);
 			p.setDescription(c.getString(2));
 			p.setTimeToGrow(c.getInt(3));
-			Log.d("Tag", "Lo que sea");
 			return p;
 		} else {
 			return null;
@@ -186,9 +180,10 @@ public class PlantDao extends DaoBase {
 	public void deletePlant(int id) {
 
 		TaskPlantDao tp = new TaskPlantDao(context);
+
 		tp.deleteTaskPlant(id);
-
-		super.mDb.execSQL("DELETE FROM Plant " + "WHERE id = " + id + ";");
-
+		
+		super.mDb.execSQL("DELETE FROM Plant " +
+					"WHERE id = "+id+";");
 	}
 }

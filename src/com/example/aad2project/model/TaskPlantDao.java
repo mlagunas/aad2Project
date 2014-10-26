@@ -1,11 +1,8 @@
 package com.example.aad2project.model;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.aad2project.ui.TaskCalendarFragment;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -22,20 +19,20 @@ public class TaskPlantDao extends DaoBase {
 	}
 	
 	public void deleteAllTaskPlant(){
-		super.mDb.execSQL("DELETE FROM TaskPlant");
+		super.mDb.execSQL("DELETE FROM taskPlant");
 	}
 	
 	public void createTaskPlant(Plant p, Task t, long d){
-		super.mDb.execSQL("INSERT INTO TaskPlant (taskId,plantId,date,done)" +
+		super.mDb.execSQL("INSERT INTO taskPlant (taskId,plantId,date,done)" +
 				"VALUES ("+p.getId()+","+t.getId()+","+d+",0);");
-		Log.d("all taskPlant", this.getAllTaskPlant().toString());
-	}
-	
-	public void deleteTaskPlant(Integer id){
-		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = "+id);
-		Log.d("id", id.toString());
-		Log.d("all taskPlant", this.getAllTaskPlant().toString());
+		Log.d("TASK PLANTS ADD",getAllTaskPlant().toString());
 
+	}
+		
+	public void deleteTaskPlant(Integer id){
+		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = " + id);
+		Log.d("TASK PLANTS DELETE",getAllTaskPlant().toString());
+		
 	}
 	
 	private Plant createPlant(Cursor c, int idP){
@@ -73,8 +70,6 @@ public class TaskPlantDao extends DaoBase {
 		         TaskPlant tp = new TaskPlant();
 		         Integer idP = c.getInt(0);
 		         Integer idT = c.getInt(1);
-		         Log.d("ALL PLANT ID"," "+idP);
-		 		 Log.d("ALL TASK ID"," "+idT);  
 		         
 		 		 tp.setTask(createTask(super.mDb.rawQuery("SELECT * FROM Task WHERE id ="+ idT, null),idT));
 		         tp.setPlant(createPlant(super.mDb.rawQuery("SELECT * FROM Plant WHERE id ="+ idP, null),idP));

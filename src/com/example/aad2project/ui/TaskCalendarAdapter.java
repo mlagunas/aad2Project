@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
+import android.provider.Contacts.GroupsColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,36 +31,45 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 	}
 
 	private List<List<TaskPlant>> divideTaskPerDays(List<TaskPlant> mTasks) {
-		List<List<TaskPlant>> mDays = new ArrayList<List<TaskPlant>>();
-		List<TaskPlant> mDayTasks = new ArrayList<TaskPlant>();
-		TaskPlant lastTask = null;
-		Calendar lastDate = Calendar.getInstance();
-		Calendar date = Calendar.getInstance();
-		for (TaskPlant mTask : mTasks) {
-			date.setTime(mTask.getDate());
-			if (date.get(Calendar.DAY_OF_YEAR) != lastDate
-					.get(Calendar.DAY_OF_YEAR)) {// TODO - Properly divide the
-													// tasks
-				if (mDayTasks.size() > 0) { // into days when the class is fixed
-					mDays.add(mDayTasks);
+			List<List<TaskPlant>> mDays = new ArrayList<List<TaskPlant>>();
+			List<TaskPlant> mDayTasks = new ArrayList<TaskPlant>();
+			Calendar lastDate = Calendar.getInstance();
+			Calendar date = Calendar.getInstance();
+			//TaskPlant lastTask = null;
+			for (TaskPlant mTask : mTasks) {
+				date.setTime(mTask.getDate());
+				if (date.get(Calendar.DAY_OF_YEAR) != 
+						lastDate.get(Calendar.DAY_OF_YEAR)) {// TODO - Properly divide the									// tasks
+					if (mDayTasks.size() > 0) { // into days when the class is fixed
+						mDays.add(mDayTasks);
+					}
+					mDayTasks = new ArrayList<TaskPlant>();
 				}
-				mDayTasks = new ArrayList<TaskPlant>();
+				Log.d("mTask",mTask.toString());
+				mDayTasks.add(mTask);
+				//lastTask = mTask;
+				lastDate.setTime(mTask.getDate());
 			}
-			mDayTasks.add(mTask);
-			lastTask = mTask;
-			lastDate.setTime(mTask.getDate());
-		}
-		mDays.add(mDayTasks);
-		return mDays;
+			
+			if(mDayTasks.size()>0)
+				mDays.add(mDayTasks);
+			Log.d("SIZE LISTLIST",mDays.size()+" ");
+			int i =0;
+			for(List<TaskPlant> l : mDays){
+				Log.d("SIZE LIST "+i,l.size()+" ");
+			}
+			return mDays;
 	}
 
 	@Override
 	public int getGroupCount() {
+		Log.d("SIZE GROUP"," "+mDays.size());
 		return mDays.size();
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
+		Log.d("SIZE CHILD",mDays.get(groupPosition).size()+" ");
 		return mDays.get(groupPosition).size();
 	}
 
@@ -70,6 +80,7 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
+		Log.d("SELECTION",mDays.get(groupPosition).get(childPosition).toString());
 		return mDays.get(groupPosition).get(childPosition);
 	}
 
@@ -80,19 +91,24 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public long getChildId(int groupPosition, int childPosition) {
+
 		return childPosition;
 	}
 
 	public void updateTaskList(List<TaskPlant> newList) {
+		mDays.clear();
+		Collections.sort(newList);
 		mDays = divideTaskPerDays(newList);
-		Log.d("TAG", "MIDA: " + mDays.size());
+		
 		notifyDataSetChanged();
 
 	}
 
 	@Override
 	public boolean hasStableIds() {
-		return true;
+		Log.d("HENTRAU","OLE");
+		
+		return false;
 	}
 
 	@Override
@@ -110,8 +126,12 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM",
 				Locale.ENGLISH);
-		groupTitle.setText(dateFormat.format(mDays.get(groupPosition).get(0)
-				.getDate())); // TODO - Change title for
+		if(!mDays.isEmpty())
+			groupTitle.setText(dateFormat.format(mDays.get(groupPosition).get(0)
+				.getDate())); 
+
+		
+		// TODO - Change title for
 		// Date
 		// once Task class is fixed
 
@@ -138,6 +158,7 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.task_target);
 
 		TaskPlant task = (TaskPlant) getChild(groupPosition, childPosition);
+		Log.d("TASKPLANT TEXT", task.getTask().getDescription());
 		taskDescription.setText(task.getTask().getDescription());
 		taskTarget.setText(task.getPlant().getName());
 

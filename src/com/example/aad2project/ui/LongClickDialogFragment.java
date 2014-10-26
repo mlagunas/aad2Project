@@ -64,14 +64,6 @@ public class LongClickDialogFragment extends DialogFragment {
 						p.deletePlant(plantId);
 						Toast.makeText(getActivity(), "Deleted",
 								Toast.LENGTH_LONG).show();
-						/*
-						 * setTargetFragment(((ManagerActivity)
-						 * getActivity()).mSectionsPagerAdapter.getItem(0),2);
-						 * Intent a = new Intent(); a.putExtra("REF","refresh");
-						 * 
-						 * getTargetFragment().onActivityResult(getTargetRequestCode
-						 * (), 2, a);
-						 */
 					}
 					mListener.onDialogItemClick();
 					// adapter.updatePlantList(plants.getAddedPlants(),plants.getAllPlants());
