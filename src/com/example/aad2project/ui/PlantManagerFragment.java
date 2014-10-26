@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +59,10 @@ public class PlantManagerFragment extends Fragment {
 		// Create mAdapter for the ListView
 		mAdapter = new PlantManagerAdapter(getActivity(),
 				plants.getAddedPlants(), plants.getAllPlants());
+		
+		for (Plant p:plants.getAllPlants()){
+			Log.d("TAG","IDS: "+p.getName()+"  "+p.getId());
+		}
 
 		return view;
 	}
@@ -106,8 +110,10 @@ public class PlantManagerFragment extends Fragment {
 				Toast.makeText(getActivity(), "Short click", Toast.LENGTH_SHORT)
 						.show();
 				// Notify the activity and send the id of the clicked plant
-				onItemPressed(((Plant) mAdapter.getChild(groupPosition,
-						childPosition)).getId());
+				int  plantId = ((Plant) mAdapter.getChild(groupPosition,
+						childPosition)).getId();
+				Log.d("TAG","ID: "+plantId);
+				onItemPressed(plantId);
 
 				return false;
 			}
