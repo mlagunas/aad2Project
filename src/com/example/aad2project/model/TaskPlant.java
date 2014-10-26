@@ -1,8 +1,9 @@
 package com.example.aad2project.model;
 
+import java.util.Comparator;
 import java.util.Date;
 
-public class TaskPlant {
+public class TaskPlant implements Comparable<TaskPlant>{
 	private int done;
 	private Date date;
 	private Task task;
@@ -109,5 +110,10 @@ public class TaskPlant {
 	public String toString(){
 		return getId()+" "+plant.getName()+" "+task.getDescription()+" "+date.toString()+" "+done+'\n';
 	}
+
+	@Override
+	  public int compareTo(TaskPlant o) {
+	    return getDate().compareTo(o.getDate());
+	  }
 
 }

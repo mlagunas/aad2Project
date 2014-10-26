@@ -3,6 +3,7 @@ package com.example.aad2project.ui;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,6 +25,7 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 	public TaskCalendarAdapter(Context context, List<TaskPlant> mTasks) {
 		this.context = context;
+		Collections.sort(mTasks);
 		mDays = divideTaskPerDays(mTasks);
 	}
 

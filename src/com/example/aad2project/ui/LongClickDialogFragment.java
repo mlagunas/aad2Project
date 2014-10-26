@@ -77,7 +77,6 @@ public class LongClickDialogFragment extends DialogFragment {
 					// adapter.updatePlantList(plants.getAddedPlants(),plants.getAllPlants());
 					break;
 				case 1:
-					Log.d("INTENT","1. Id: "+plantId);
 
 					// this one will always be "show info"
 					// so we can implement one function for both

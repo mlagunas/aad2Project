@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
@@ -28,7 +29,8 @@ public class PlantInformationFragment extends Fragment {
 
 	private TextView plantName, plantDescription, plantHumidity,
 			plantTemperature, plantLightness;
-
+	private ImageView plantImage;
+	
 	public static PlantInformationFragment newInstance(int plantId) {
 		PlantInformationFragment fragment = new PlantInformationFragment();
 		Bundle args = new Bundle();
@@ -58,7 +60,8 @@ public class PlantInformationFragment extends Fragment {
 
 		View view = inflater.inflate(R.layout.fragment_plant_information,
 				container, false);
-
+		
+		plantImage = (ImageView) view.findViewById(R.id.plant_image);
 		plantName = (TextView) view.findViewById(R.id.plant_name);
 		plantDescription = (TextView) view.findViewById(R.id.plant_description);
 		plantHumidity = (TextView) view.findViewById(R.id.humidity_text);
@@ -75,14 +78,34 @@ public class PlantInformationFragment extends Fragment {
 		PlantDao pDao = new PlantDao(getActivity());
 		WeatherDao wDao = new WeatherDao(getActivity());
 		
-		Plant p = pDao.getPlant(plantId);
+		Plant p = pDao.searchPlant(plantId);
 		
+		
+		plantImage.setImageResource(getImageResource(p.getName()));
 		plantName.setText(p.getName());
 		plantDescription.setText(p.getDescription());
+		
 		
 		Log.d("TAG","Description: "+p.getDescription());
 
 		super.onViewCreated(view, savedInstanceState);
+	}
+	
+	private int getImageResource(String name){
+		
+		if (name.equalsIgnoreCase("potatoes")){
+			return R.drawable.ic_potatoes_big;
+		} else if (name.equalsIgnoreCase("carrots")){
+			return R.drawable.ic_carrot_big;
+		} else if (name.equalsIgnoreCase("tomatoes")){
+			return R.drawable.ic_tomatoes_big;
+		} else if (name.equalsIgnoreCase("lettuces")){
+			return R.drawable.ic_lettuce_big;
+		} else if (name.equalsIgnoreCase("sweet peas")){
+			return R.drawable.ic_sweat_pea_big;
+		} else {
+			return R.drawable.ic_lillies_big;
+		}
 	}
 
 }

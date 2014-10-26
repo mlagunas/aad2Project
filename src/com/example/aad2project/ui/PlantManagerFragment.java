@@ -112,7 +112,6 @@ public class PlantManagerFragment extends Fragment {
 				// Notify the activity and send the id of the clicked plant
 				int  plantId = ((Plant) mAdapter.getChild(groupPosition,
 						childPosition)).getId();
-				Log.d("TAG","ID: "+plantId);
 				onItemPressed(plantId);
 
 				return false;

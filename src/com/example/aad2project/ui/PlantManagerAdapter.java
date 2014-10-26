@@ -175,16 +175,30 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 		plantReminingTime.setText("2 weeks left"); // TODO - Change text
 													// according to remaining
 													// time
-		plantImage.setImageResource(R.drawable.plant_image); // TODO - Change
-																// image
-																// according to
-																// plant
+		plantImage.setImageResource(getImageResource(plant.getName()));
 		return convertView;
 	}
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
+	}
+	
+private int getImageResource(String name){
+		
+		if (name.equalsIgnoreCase("potatoes")){
+			return R.drawable.ic_potatoes;
+		} else if (name.equalsIgnoreCase("carrots")){
+			return R.drawable.ic_carrot;
+		} else if (name.equalsIgnoreCase("tomatoes")){
+			return R.drawable.ic_tomatoes;
+		} else if (name.equalsIgnoreCase("lettuces")){
+			return R.drawable.ic_lettuce;
+		} else if (name.equalsIgnoreCase("sweet peas")){
+			return R.drawable.ic_sweat_pea;
+		} else {
+			return R.drawable.ic_lillies;
+		}
 	}
 
 }
