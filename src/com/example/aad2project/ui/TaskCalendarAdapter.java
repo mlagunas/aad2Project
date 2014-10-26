@@ -105,9 +105,7 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public boolean hasStableIds() {
-		Log.d("HENTRAU","OLE");
-		
+	public boolean hasStableIds() {		
 		return false;
 	}
 

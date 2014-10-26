@@ -38,11 +38,13 @@ public class PlantDao extends DaoBase {
 	public Plant searchPlant(int id) {
 		for (Plant p : getAllPlants()) {
 			if (p.getId() == id) {
+				Log.d("PLANT",p.getName());
 				return p;
 			}
 		}
 		for(Plant p: getAddedPlants()){
 			if(p.getId() == id){
+				Log.d("PLANT",p.getName());
 				return p;
 			}
 		}

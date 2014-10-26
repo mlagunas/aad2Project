@@ -19,7 +19,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	public static final String PLANT_CREATE_TABLE =
 			"CREATE TABLE Plant (									  " +
-			"id 		 Integer PRIMARY KEY AUTOINCREMENT, " +
+			"id 		 Integer PRIMARY KEY AUTOINCREMENT , " +
 			"name 		 VARCHAR(50) NOT NULL,								  " +
 			"description VARCHAR(200) NOT NULL,								  " +
 			"timeToGrow  NUMBER(4) NOT NULL DEFAULT 0,				  " +
@@ -86,6 +86,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"INSERT INTO Weather (id, temperatureMin, temperatureMax, humidityMin, humidityMax, lightnessMin, lightnessMax" +
 			") VALUES ( 6, 15, 20, 40, 60, 25000, 75000)";
 	
+	public static final String START_100 =
+			"INSERT INTO Plant (id, name ,description, timeToGrow, weatherId) VALUES (100, 'try', 'try', 1, 0);";
+	
 	public static final String INSERT_POTATOES =
 			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Potatoes'," + 
 			"'Potatoes are a key for anybody who seeks to be self-sufficient. The potato is a starchy, tuberous crop that came from America but grow easily all over the world. It takes between 65 and 100 days to grow, and it should planted in spring. The soil should always be humid so you should water the around 3 times a week. When they flourish they will need more water. They can be harvested whenever they flourish and they should leave on the ground 1 day so they get dry.'," +
@@ -115,6 +118,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Lilies'," + 
 			"'Lilies are a group of flowering plants which are important in culture and literature in much of the world. Lily flowers are valued for their very showy, often fragrant flowers. You should plant the bulbs in autumn and they need from 6 to 8 hours of sunlight. Regarding the soil, lilies require a well-drained site as water trapped beneath the scales may rot the bulb. In active growth, water freely and apply a high-potash liquid fertilizer every 2 weeks.'," +
 			"30, 6);";
+	public static final String DELETE_100 =
+			"DELETE FROM plant " +
+			"WHERE id = 100" ;
+	
 			
 	public DatabaseHandler(Context context, String name, CursorFactory factory, int version) {
 		    super(context, name, factory, version);
@@ -139,6 +146,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(INSERT_LETTUCE);
 		db.execSQL(INSERT_SweetPea);
 		db.execSQL(INSERT_LILIES);
+		db.execSQL(START_100);
+		db.execSQL(DELETE_100);
+		
 	}
 
 	
