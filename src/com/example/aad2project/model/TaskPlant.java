@@ -107,7 +107,7 @@ public class TaskPlant {
 	}
 	
 	public String toString(){
-		return getId()+" "+plant.getName()+" "+task.getDescription()+" "+date.toString()+" "+done+'\n';
+		return plant.getId()+" "+plant.getName()+" "+task.getId()+task.getDescription()+" "+date.toString()+" "+done+'\n';
 	}
 
 }

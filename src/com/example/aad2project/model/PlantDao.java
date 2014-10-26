@@ -1,16 +1,13 @@
 package com.example.aad2project.model;
 
-import java.sql.Timestamp;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import com.example.aad2project.ui.TaskCalendarAdapter;
-import com.example.aad2project.ui.TaskCalendarFragment;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+
+import com.example.aad2project.ui.TaskCalendarFragment;
 
 public class PlantDao extends DaoBase {
 	
@@ -144,11 +141,12 @@ public class PlantDao extends DaoBase {
 	public void deletePlant(int id) {
 		
 		TaskPlantDao tp = new TaskPlantDao(context);
-		tp.deleteTaskPlant(id);
+		
+		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = " + id);
 		
 		super.mDb.execSQL("DELETE FROM Plant " +
 					"WHERE id = "+id+";");
 		
-		
+		Log.d("TASKPLANT",tp.getAllTaskPlant().toString());
 	}
 }

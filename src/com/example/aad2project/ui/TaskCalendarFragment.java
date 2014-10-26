@@ -1,5 +1,6 @@
 package com.example.aad2project.ui;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,6 +43,10 @@ public class TaskCalendarFragment extends Fragment {
 		if (mAdapter != null && tp != null) {
 			mAdapter.updateTaskList(tp.getAllTaskPlant());
 		}
+
+		for (int i = 0; i < mAdapter.getGroupCount(); i++) {
+			mList.expandGroup(i);
+		}
 	}
 
 	@Override
@@ -61,27 +66,17 @@ public class TaskCalendarFragment extends Fragment {
 
 		noPlants = p.getAddedPlants().isEmpty();
 
+		// tp.deleteAllTaskPlant();
+		// t.deleteAllTask();
 
-		tp.deleteAllTaskPlant();
-		t.deleteAllTask();
+		// if(!noPlants){
+		// t.addTask("Water "+p.getAddedPlants().get(0).getName());
+		// tp.createTaskPlant(p.getAddedPlants().get(0),
+		// t.getAllTask().get(0), new Date(System.currentTimeMillis()));
+		// }
 
-		if (!noPlants) {
-			t.addTask("Water " + p.getAddedPlants().get(0).getName());
-			tp.createTaskPlant(p.getAddedPlants().get(0),
-					t.getAllTask().get(0), new Date().getTime());
-		
-		//tp.deleteAllTaskPlant();
-		//t.deleteAllTask();
-		
-		
-		if(!noPlants){
-				//t.addTask("Water "+p.getAddedPlants().get(0).getName());
-				//tp.createTaskPlant(p.getAddedPlants().get(0), 
-					//t.getAllTask().get(0), new Date(System.currentTimeMillis()));
-		}
-		}
 		return view;
-	
+
 	}
 
 	@Override
@@ -107,16 +102,11 @@ public class TaskCalendarFragment extends Fragment {
 				return false;
 			}
 		});
-
-		if (!noPlants) {
-			mAdapter = new TaskCalendarAdapter(getActivity(),
-					tp.getAllTaskPlant());
-			mList.setAdapter(mAdapter);
-			mList.setGroupIndicator(null);
-			for (int i = 0; i < mAdapter.getGroupCount(); i++) {
-				mList.expandGroup(i);
-			}
-
+		mAdapter = new TaskCalendarAdapter(getActivity(), tp.getAllTaskPlant());
+		mList.setAdapter(mAdapter);
+		mList.setGroupIndicator(null);
+		for (int i = 0; i < mAdapter.getGroupCount(); i++) {
+			mList.expandGroup(i);
 		}
 
 		super.onViewCreated(view, savedInstanceState);
