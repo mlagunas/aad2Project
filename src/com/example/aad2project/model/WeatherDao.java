@@ -9,6 +9,7 @@ public class WeatherDao extends DaoBase {
 
 	public WeatherDao(Context pContext) {
 		super(pContext);
+		super.open();
 	}
 	
 	public Weather getWeather(int id){
@@ -21,7 +22,7 @@ public class WeatherDao extends DaoBase {
 			w.setMinHumi(c.getInt(3));
 			w.setMaxHumi(c.getInt(4));
 			w.setMinLightness(c.getInt(5));
-			w.setMinLightness(c.getInt(6));
+			w.setMaxLightness(c.getInt(6));
 			return w;
 		}
 		else
