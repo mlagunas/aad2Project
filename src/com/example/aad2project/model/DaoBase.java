@@ -1,19 +1,22 @@
 package com.example.aad2project.model;
 
+import com.example.aad2project.ui.TaskCalendarFragment;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public abstract class DaoBase {
 	  // First base version
 	  // Update this attribute if version change
 	  protected final static int VERSION = 1;
 	  // database name
-	  protected final static String NAME = "try_3.db";
+	  protected final static String NAME = "try_8.db";
 	  
 	  protected SQLiteDatabase mDb = null;
 	  protected DatabaseHandler mHandler = null;
-
+	  	  
 	  protected String query;
 	  protected String[] args;
 	  protected Cursor c;
@@ -34,6 +37,6 @@ public abstract class DaoBase {
 	  public SQLiteDatabase getDb() {
 	    return mDb;
 	  }
-     
+ 	  	 	  
 	  protected abstract boolean convertResultToObject ();
 }

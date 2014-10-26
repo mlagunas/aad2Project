@@ -3,22 +3,47 @@ package com.example.aad2project.model;
 import java.util.Date;
 
 public class TaskPlant {
-	private int id,done;
+	private int done;
 	private Date date;
 	private Task task;
 	private Plant plant;
 	private TaskPlant next;
+	private int idPlant;
+	private int idTask;
+	private int id;
+	
+	public TaskPlant(){}
 	
 	public TaskPlant (Plant plant, Task task) {
 		this.plant = plant;
 		this.task  = task;
 	}
-	public int getId() {
+
+	public int getIdPlant() {
+		return idPlant;
+	}
+	
+	public void setId(int id){
+		this.id=id;
+	}
+	
+	public int getId(){
+
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	
+	public int getIdTask() {
+		return idTask;
 	}
+	
+	public void setIdPlant(int id) {
+		this.idPlant = id;
+	}
+	
+	public void setIdTask(int id) {
+		this.idTask = id;
+	}
+	
 	public int getDone() {
 		return done;
 	}
@@ -81,6 +106,8 @@ public class TaskPlant {
 		return j;
 	}
 	
-
+	public String toString(){
+		return getId()+" "+plant.getName()+" "+task.getDescription()+" "+date.toString()+" "+done+'\n';
+	}
 
 }

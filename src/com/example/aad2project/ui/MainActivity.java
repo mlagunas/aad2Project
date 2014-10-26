@@ -72,13 +72,18 @@ public class MainActivity extends ActionBarActivity implements
 		switch (item.getItemId()) {
 		// action with ID action_settings was selected
 		case R.id.action_settings:
-			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-					.show();
-
+			//Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+				//	.show();
 			Intent intent = new Intent(MainActivity.this,
 					SettingsActivity.class);
 			startActivity(intent);
 			break;
+			
+		case R.id.action_about:
+			Intent intent2 = new Intent(MainActivity.this,AboutActivity.class);
+			startActivity(intent2);
+			break;			
+			
 		default:
 			break;
 		}

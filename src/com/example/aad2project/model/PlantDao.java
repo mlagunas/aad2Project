@@ -1,31 +1,67 @@
 package com.example.aad2project.model;
 
+import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import com.example.aad2project.ui.TaskCalendarAdapter;
+import com.example.aad2project.ui.TaskCalendarFragment;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 public class PlantDao extends DaoBase {
 	
+	private Context context;
+	private TaskCalendarFragment fragment;
+	
 	public PlantDao (Context pContext) {
 		super(pContext);
+		this.context=pContext;
 		super.open();
 	}
  	
 	/**
-	 * This method add a plant 
+	 * This method add a plant  into the Database
 	 * @param plant
 	 */
 	public void addPlant(Plant plant) {
+		
 		String name,description;
 		int timeToGrow,number;
+		
 		name = plant.getName();
 		description = plant.getDescription();
 		timeToGrow = plant.getTimeToGrow();
 		number = plant.getNumber();
-		
+
 		super.mDb.execSQL("INSERT INTO  Plant (name,description,timeToGrow,number,weatherId)" +
 				"	VALUES ('"+name+"','"+description+"',"+timeToGrow+","+number+",1);");
+		
+		Task t = new Task();
+		t.setDescription("Collect "+name);
+		
+		TaskDao td = new TaskDao(context);
+		td.addTask(t);
+
+		Cursor c = super.mDb.rawQuery("SELECT id FROM Plant", null);
+		c.moveToLast();
+		plant.setId(c.getInt(0));
+
+		c = super.mDb.rawQuery("SELECT id FROM Task", null);
+		c.moveToLast();
+		t.setId(c.getInt(0));
+		
+		Calendar cal = Calendar.getInstance();
+		
+		TaskPlantDao tp = new TaskPlantDao(context);
+		tp.createTaskPlant(plant, t, cal.getTimeInMillis());
+	}
+	
+	public void setFragment(TaskCalendarFragment fragment) {
+		this.fragment = fragment;
 	}
 	
 	/**
@@ -65,10 +101,13 @@ public class PlantDao extends DaoBase {
 		     do {
 		    	 if(c.getInt(4) > 0){
 			         Plant p = new Plant();
+			         int id = c.getInt(0);
+			         
+			 		
+			         p.setId(id);
 			         p.setName(c.getString(1));
 			         p.setDescription(c.getString(2));
-			         p.setTimeToGrow(c.getInt(3));
-			         p.setId(c.getInt(0));
+			         p.setTimeToGrow(c.getInt(3));  
 			    	 plants.add(p);
 		    	 }
 		     } while(c.moveToNext());
@@ -77,24 +116,18 @@ public class PlantDao extends DaoBase {
 		return plants;
 	}
 	
-	/**
-	 * This method add a new Plant to the database
-	 * @param name
-	 * @param description
-	 * @param timeToGrow
-	 * @param number
-	 */
-	public void addPlant(String name, String description,int timeToGrow, int number){
-		super.mDb.execSQL("INSERT INTO  Plant (name,description,timeToGrow,number,weatherId)" +
-				"	VALUES ('"+name+"','"+description+"',"+timeToGrow+","+number+",1);");
-	}
 	
 	
 	protected boolean convertResultToObject() { return true;}
 
 	public void deletePlant(int id) {
+		
+		TaskPlantDao tp = new TaskPlantDao(context);
+		tp.deleteTaskPlant(id);
+		
 		super.mDb.execSQL("DELETE FROM Plant " +
 					"WHERE id = "+id+";");
+		
 		
 	}
 }

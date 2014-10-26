@@ -2,6 +2,7 @@ package com.example.aad2project.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
@@ -15,7 +16,5 @@ public class SettingsActivity extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
-		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-		String syncConnPref = sharedPrefs.getString("pref_time", "");
 	}
 }

@@ -1,16 +1,18 @@
 TODO
 
-Implement the add and delete functions to the plant lists 					- Manu
+Implement the add and delete functions to the plant lists 					- Manu ++
 
-TaskCalendar 																- Gerard (GUI) ++, Manu (Adding from database)
+TaskCalendar 																- Gerard (GUI) ++, Manu (Creating tasks and adding from database)
 
-Implement the settings button	 											- Asier
-	Change hour from 24h to am-pm
-	Change from ºC to ºF or viceversa
+Implement the overflow button	 											- Asier
+	Settings
+		Change hour from 24h to am-pm
+		Change from ºC to ºF or viceversa
+		Decide 
+	About section
+	Log out																	++
 
-Implement the log out 														- Asier ++
-
-Change the view when working in tablet mode 								- Alex
+Change the view when working in tablet mode 								- Alex ++
 
 Add the filter to the plant manager 										- Gerard ++
 
@@ -19,17 +21,22 @@ Fix errors:
 	Don't log out when we close the app, so we can continue next time
 	without having to log in every time 									- Asier ++
 	
-Create a logo and put it on the app 										- Toscan
+Create a logo and put it on the app 										- Asier
 
 Simulation of the microcontroller data
 	We either create random parameters or we take data
 	from the Internet 														- ??
-	
-Create tasks when plants are added 											- Gerard
-	
+		
 General features to be done
 	Notifications for the tasks												- Alexandre
 	Internet, retrieve weather info 										- Toscan
 	Localization, maps 														- Toscan
 	Background tasking, service, broadcast receiver 						- Toscan, Alexandre
 	Asynchronous task 														- Toscan, Alexandre
+	
+DAO architecture  															- Kevin
+
+Add real data about plants to database										- Kevin
+Request plants from database												- Kevin
+
+Display the plants and tasks												- Gerard

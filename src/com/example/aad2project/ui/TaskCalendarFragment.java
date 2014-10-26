@@ -1,8 +1,7 @@
 package com.example.aad2project.ui;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,9 +14,10 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Plant;
-import com.example.aad2project.model.Task;
+import com.example.aad2project.model.PlantDao;
+import com.example.aad2project.model.TaskDao;
 import com.example.aad2project.model.TaskPlant;
+import com.example.aad2project.model.TaskPlantDao;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +27,10 @@ public class TaskCalendarFragment extends Fragment {
 
 	private ExpandableListView mList;
 	private TaskCalendarAdapter mAdapter;
+	private PlantDao p;
+	private TaskDao t;
+	private TaskPlantDao tp;
+	private boolean noPlants;
 
 	private OnTaskCalendarFragmentInteractionListener mListener;
 
@@ -34,47 +38,10 @@ public class TaskCalendarFragment extends Fragment {
 		// Required empty public constructor
 	}
 
-	// THIS WHOLE METHOD SHOULD BE DONE USING THE DATABASE
-	private List<TaskPlant> getTasks() {
-		List<TaskPlant> tasks = new ArrayList<TaskPlant>();
-		Task t1 = new Task(0, "Water plants");
-		Task t2 = new Task(1, "Harvest fruits");
-		Task t3 = new Task(2, "Plant plant");
-		Task t4 = new Task(3, "Cut grass");
-		Plant p1 = new Plant();
-		p1.setName("Potato");
-		Plant p2 = new Plant();
-		p2.setName("Tomato");
-		Plant p3 = new Plant();
-		p3.setName("Peas");
-		Plant p4 = new Plant();
-		p4.setName("Bananas");
-
-		TaskPlant tp1 = new TaskPlant();
-		tp1.setDate(new Date());
-		tp1.setTask(t1);
-		tp1.setPlant(p1);
-
-		TaskPlant tp2 = new TaskPlant();
-		tp2.setDate(new Date());
-		tp2.setTask(t2);
-		tp2.setPlant(p2);
-
-		TaskPlant tp3 = new TaskPlant();
-		tp3.setDate(new Date(System.currentTimeMillis() + 86400000));
-		tp3.setTask(t3);
-		tp3.setPlant(p3);
-
-		TaskPlant tp4 = new TaskPlant();
-		tp4.setDate(new Date(System.currentTimeMillis() + 86400000 * 2));
-		tp4.setTask(t4);
-		tp4.setPlant(p4);
-
-		tasks.add(tp1);
-		tasks.add(tp2);
-		tasks.add(tp3);
-		tasks.add(tp4);
-		return tasks;
+	public void refresh() {
+		if (mAdapter != null && tp != null) {
+			mAdapter.updateTaskList(tp.getAllTaskPlant());
+		}
 	}
 
 	@Override
@@ -86,14 +53,40 @@ public class TaskCalendarFragment extends Fragment {
 
 		mList = (ExpandableListView) view.findViewById(R.id.list);
 
+		p = new PlantDao(getActivity());
+		tp = new TaskPlantDao(getActivity());
+		t = new TaskDao(getActivity());
+
+		p.setFragment(this);
+
+		noPlants = p.getAddedPlants().isEmpty();
+
+
+		tp.deleteAllTaskPlant();
+		t.deleteAllTask();
+
+		if (!noPlants) {
+			t.addTask("Water " + p.getAddedPlants().get(0).getName());
+			tp.createTaskPlant(p.getAddedPlants().get(0),
+					t.getAllTask().get(0), new Date().getTime());
+		
+		//tp.deleteAllTaskPlant();
+		//t.deleteAllTask();
+		
+		
+		if(!noPlants){
+				//t.addTask("Water "+p.getAddedPlants().get(0).getName());
+				//tp.createTaskPlant(p.getAddedPlants().get(0), 
+					//t.getAllTask().get(0), new Date(System.currentTimeMillis()));
+		}
+		}
 		return view;
+	
 	}
 
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		mAdapter = new TaskCalendarAdapter(getActivity(), getTasks());
-		mList.setAdapter(mAdapter);
-		
+
 		// Hide the Expand button of the group
 		mList.setGroupIndicator(null);
 
@@ -104,20 +97,28 @@ public class TaskCalendarFragment extends Fragment {
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 				// Get task's ID
-				TaskPlant tp = (TaskPlant) mAdapter.getChild(groupPosition, childPosition);
+				TaskPlant tp = (TaskPlant) mAdapter.getChild(groupPosition,
+						childPosition);
 				int taskId = tp.getTask().getId();
-				
+
 				// Send ID back to activity
 				onItemPressed(taskId);
-				
+
 				return false;
 			}
 		});
-		
-		// Expand all groups
-		for (int i = 0; i < mAdapter.getGroupCount(); i++) {
-			mList.expandGroup(i);
+
+		if (!noPlants) {
+			mAdapter = new TaskCalendarAdapter(getActivity(),
+					tp.getAllTaskPlant());
+			mList.setAdapter(mAdapter);
+			mList.setGroupIndicator(null);
+			for (int i = 0; i < mAdapter.getGroupCount(); i++) {
+				mList.expandGroup(i);
+			}
+
 		}
+
 		super.onViewCreated(view, savedInstanceState);
 	}
 
