@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -37,6 +39,7 @@ import android.widget.Toast;
 import com.example.aad2project.R;
 import com.example.aad2project.model.MyReceiver;
 import com.example.aad2project.model.Plant;
+import com.example.aad2project.services.WeatherService;
 import com.example.aad2project.ui.LongClickDialogFragment.LongClickDialogListener;
 import com.example.aad2project.ui.PlantManagerFragment.OnPlantManagerFragmentInteractionListener;
 import com.example.aad2project.ui.TaskCalendarFragment.OnTaskCalendarFragmentInteractionListener;
@@ -55,6 +58,22 @@ public class ManagerActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manager);
 
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+		// Check if there is internet on the phone. Yes-> Download new
+		// information about the weather/ No-> Toast to prevent information are
+		// not updated
+		if (networkInfo.isConnected()) {
+			Intent i = new Intent(ManagerActivity.this, WeatherService.class);
+			startService(i);
+
+		} else
+			Toast.makeText(
+					getApplicationContext(),
+					"There is not internet connection, the data can't be updated.",
+					Toast.LENGTH_LONG).show();
+		
+		
 		startAlarm();
 		container = (FrameLayout) findViewById(R.id.fragment_container);
 
