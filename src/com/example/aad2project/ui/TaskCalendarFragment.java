@@ -1,5 +1,6 @@
 package com.example.aad2project.ui;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -61,25 +62,17 @@ public class TaskCalendarFragment extends Fragment {
 
 		noPlants = p.getAddedPlants().isEmpty();
 
-
 		tp.deleteAllTaskPlant();
 		t.deleteAllTask();
-
-		if (!noPlants) {
-			t.addTask("Water " + p.getAddedPlants().get(0).getName());
-			tp.createTaskPlant(p.getAddedPlants().get(0),
-					t.getAllTask().get(0), new Date().getTime());
 		
-		//tp.deleteAllTaskPlant();
-		//t.deleteAllTask();
-		
-		
+		Calendar cal = Calendar.getInstance();
+								
 		if(!noPlants){
-				//t.addTask("Water "+p.getAddedPlants().get(0).getName());
-				//tp.createTaskPlant(p.getAddedPlants().get(0), 
-					//t.getAllTask().get(0), new Date(System.currentTimeMillis()));
+				t.addTask("Water "+p.getAddedPlants().get(0).getName());
+				tp.createTaskPlant(p.getAddedPlants().get(0), 
+					t.getAllTask().get(0),cal.getTimeInMillis());
 		}
-		}
+		
 		return view;
 	
 	}
