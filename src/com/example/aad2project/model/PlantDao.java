@@ -23,6 +23,23 @@ public class PlantDao extends DaoBase {
 		super.open();
 	}
  	
+	public Plant getPlant(int id){
+		Plant p = new Plant();
+		c = super.mDb.rawQuery("SELECT * FROM existingPlants " +
+				"WHERE id = "+id , null);
+		if(c.moveToFirst()){
+			p.setId(id);
+			p.setName(c.getString(1));
+			p.setDescription(c.getString(2));
+			p.setTimeToGrow(c.getInt(3));
+			Log.d("Tag","Lo que sea");
+			return p;
+		}
+		else{
+			return null;
+		}
+	}
+	
 	/**
 	 * This method add a plant  into the Database
 	 * @param plant
@@ -76,6 +93,10 @@ public class PlantDao extends DaoBase {
 		     do {
 		         Plant p = new Plant();
 		         p.setName(c.getString(1));
+		         p.setId(c.getInt(0));
+		         p.setDescription(c.getString(2));
+		         p.setTimeToGrow(c.getInt(3));
+		         p.setWeatherId(c.getInt(4));
 		    	 plants.add(p);
 		     } while(c.moveToNext());
 		}

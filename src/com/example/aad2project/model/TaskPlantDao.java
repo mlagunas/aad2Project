@@ -47,7 +47,7 @@ public class TaskPlantDao extends DaoBase {
 	        p.setDescription(c.getString(2));
 	        p.setTimeToGrow(c.getInt(3));
 	        p.setNumber(c.getInt(4));
-	        p.setWeatherId(null);
+	        p.setWeatherId(c.getInt(5));
 
 		}
         return p;
