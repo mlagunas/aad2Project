@@ -406,7 +406,7 @@ public class ManagerActivity extends ActionBarActivity implements
 	@Override
 	public void onDialogItemClick() {
 		// Refresh the fragments
-		//mSectionsPagerAdapter.getRegisteredFragment(mViewPager.getCurrentItem());
+		mSectionsPagerAdapter.getRegisteredFragment(mViewPager.getCurrentItem());
 	}
 
 }
