@@ -94,7 +94,7 @@ public class Plant {
 	}
 	
 	public int size() {
-		int j = 1;
+		int j = 0;
 		Plant plant = this;
 		do {
 			j++;

@@ -51,7 +51,7 @@ public class WeatherCalendar {
 	}
 	
 	public int size() {
-		int j = 1;
+		int j = 0;
 		WeatherCalendar weatherCalendar = this;
 		do {
 			j++;

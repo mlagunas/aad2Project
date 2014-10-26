@@ -103,7 +103,7 @@ public Weather(){}
 	}
 	
 	public int size() {
-		int j = 1;
+		int j = 0;
 		Weather weater = this;
 		do {
 			j++;

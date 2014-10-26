@@ -52,7 +52,7 @@ public class Task {
 	}
 	
 	public int size() {
-		int j = 1;
+		int j = 0;
 		Task task = this;
 		do {
 			j++;
