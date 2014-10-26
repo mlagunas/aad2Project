@@ -1,6 +1,8 @@
 package com.example.aad2project.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -73,21 +75,32 @@ public class PlantInformationFragment extends Fragment {
 
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		Log.d("INTENT","3. Id: "+plantId);
 
 		PlantDao pDao = new PlantDao(getActivity());
 		WeatherDao wDao = new WeatherDao(getActivity());
 		
 		Plant p = pDao.searchPlant(plantId);
 		
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String temperature = sharedPref.getString("pref_temperature", "");
 		
 		plantImage.setImageResource(getImageResource(p.getName()));
 		plantName.setText(p.getName());
 		plantDescription.setText(p.getDescription());
+		plantHumidity.setText(wDao.getWeather(plantId).getMinHumi() + "% - " +
+									wDao.getWeather(plantId).getMaxHumi()+"%");
+		plantLightness.setText(wDao.getWeather(plantId).getMinLightness() + "lm - "+
+				wDao.getWeather(plantId).getMaxLightnesss() + "lm");
+		
+		// Difference between Celsius and Fahrenheit
+		if(temperature.equals(0))
+			plantTemperature.setText(wDao.getWeather(plantId).getMinTemp()+ "ºC - "+
+									wDao.getWeather(plantId).getMaxTemp()+"ºC");
+		else
+			plantTemperature.setText((wDao.getWeather(plantId).getMinTemp()*9/5+32)+ "ºF - "+
+					(wDao.getWeather(plantId).getMaxTemp()*9/5+32)+"ºF");
 		
 		
-		Log.d("TAG","Description: "+p.getDescription());
-
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
