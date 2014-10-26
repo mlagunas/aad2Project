@@ -1,15 +1,18 @@
 package com.example.aad2project.ui;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.aad2project.R;
+import com.example.aad2project.model.Plant;
+import com.example.aad2project.model.PlantDao;
+import com.example.aad2project.model.WeatherDao;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -22,8 +25,9 @@ import com.example.aad2project.R;
  */
 public class PlantInformationFragment extends Fragment {
 	private int plantId;
-	private TextView textView1, textView2;
-	private ImageView imageView;
+
+	private TextView plantName, plantDescription, plantHumidity,
+			plantTemperature, plantLightness;
 
 	public static PlantInformationFragment newInstance(int plantId) {
 		PlantInformationFragment fragment = new PlantInformationFragment();
@@ -54,37 +58,31 @@ public class PlantInformationFragment extends Fragment {
 
 		View view = inflater.inflate(R.layout.fragment_plant_information,
 				container, false);
-		/*imageView = (ImageView) view.findViewById(R.id.plant_image);
-		textView1 = (TextView) view.findViewById(R.id.plant_name);
-		textView2 = (TextView) view.findViewById(R.id.plant_description);
 
-		Toast.makeText(getActivity(), "The id is: " + plantId,
-				Toast.LENGTH_SHORT).show();
+		plantName = (TextView) view.findViewById(R.id.plant_name);
+		plantDescription = (TextView) view.findViewById(R.id.plant_description);
+		plantHumidity = (TextView) view.findViewById(R.id.humidity_text);
+		plantTemperature = (TextView) view.findViewById(R.id.temperature_text);
+		plantLightness = (TextView) view.findViewById(R.id.lightness_text);
 
-		switch (plantId) {
-		case 1:
-			imageView.setImageResource(R.drawable.potatoes);
-			textView1.setText(R.string.potatoes);
-			textView2.setText("Potatoes are nice");
-			break;
-		case 2:
-			imageView.setImageResource(R.drawable.tomatoes);
-			textView1.setText(R.string.tomatoes);
-			textView2.setText("Tomatoes are red");
-			break;
-		case 3:
-			imageView.setImageResource(R.drawable.potatoes);
-			textView1.setText(R.string.onions);
-			textView2.setText("Onions make you cry");
-			break;
-		case 4:
-			imageView.setImageResource(R.drawable.garlic);
-			textView1.setText(R.string.garlic);
-			textView2.setText("Garlic is very healthy");
-			break;
-
-		}*/
 		return view;
+	}
+
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		Log.d("INTENT","3. Id: "+plantId);
+
+		PlantDao pDao = new PlantDao(getActivity());
+		WeatherDao wDao = new WeatherDao(getActivity());
+		
+		Plant p = pDao.getPlant(plantId);
+		
+		plantName.setText(p.getName());
+		plantDescription.setText(p.getDescription());
+		
+		Log.d("TAG","Description: "+p.getDescription());
+
+		super.onViewCreated(view, savedInstanceState);
 	}
 
 }

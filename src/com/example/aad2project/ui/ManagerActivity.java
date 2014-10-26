@@ -267,6 +267,8 @@ public class ManagerActivity extends ActionBarActivity implements
 			fragmentTransaction.replace(R.id.fragment_container, loginFragment);
 			fragmentTransaction.commit();
 		} else {
+			Log.d("INTENT","1. Id: "+id);
+
 			// Phone behavior (Start new activity)
 			Intent intent = new Intent(this, PlantInformationActivity.class);
 			intent.putExtra("id", id);

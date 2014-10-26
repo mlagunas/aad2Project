@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
@@ -76,15 +77,14 @@ public class LongClickDialogFragment extends DialogFragment {
 					// adapter.updatePlantList(plants.getAddedPlants(),plants.getAllPlants());
 					break;
 				case 1:
+					Log.d("INTENT","1. Id: "+plantId);
+
 					// this one will always be "show info"
 					// so we can implement one function for both
 					Intent intent = new Intent(getActivity(),
 							PlantInformationActivity.class);
 					intent.putExtra("id", plantId);
 					startActivity(intent);
-					// adapter.updatePlantList(plants.getAddedPlants(),plants.getAllPlants());
-					getTargetFragment().onActivityResult(1, 1,
-							getActivity().getIntent());
 					break;
 				}
 

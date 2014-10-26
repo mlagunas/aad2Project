@@ -14,27 +14,17 @@ public class PlantInformationActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_plant_information);
 
-		if (getIntent() == null) {
-			Log.d("TAG", "Intent es null");
-		} else {
-			Log.d("TAG", "Intent no es null");
-
-		}
-
 		// Retrieve the id of the plant that has been pressed
 		int listId = getIntent().getIntExtra("id", 0);
-
+		Log.d("INTENT","2. Id: "+listId);
 		// Creation of the first fragment
-		PlantInformationFragment loginFragment = new PlantInformationFragment();
-		Bundle args = new Bundle();
-		args.putInt("id", listId);
-		loginFragment.setArguments(args);
+		PlantInformationFragment fragment = PlantInformationFragment.newInstance(listId);
 
 		// Fragment transaction with fragment manager
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager()
 				.beginTransaction();
 		// Fragment add into the frame_layout
-		fragmentTransaction.replace(R.id.frame_content, loginFragment);
+		fragmentTransaction.replace(R.id.frame_content, fragment);
 
 		// Actions displayed
 		fragmentTransaction.commit();

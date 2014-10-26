@@ -85,32 +85,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			") VALUES ( 6, 15, 20, 40, 60, 25000, 75000)";
 	
 	public static final String INSERT_POTATOES =
-			"INSERT INTO ExistingPlants (id, name, description, timeToGrow, weatherId) VALUES (1,'Potatoes'," + 
+			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Potatoes'," + 
 			"'Potatoes are a key for anybody who seeks to be self-sufficient. The potato is a starchy, tuberous crop that came from America but grow easily all over the world. It takes between 65 and 100 days to grow, and it should planted in spring. The soil should always be humid so you should water the around 3 times a week. When they flourish they will need more water. They can be harvested whenever they flourish and they should leave on the ground 1 day so they get dry.'," +
 			"120, 1);";
 			
 	public static final String INSERT_CARROTS =
-			"INSERT INTO ExistingPlants (id, name, description, timeToGrow, weatherId) VALUES (2, 'Carrots'," + 
+			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Carrots'," + 
 			"'Carrots are a root vegetable, usually orange and with a crisp texture when fresh. They provide a good source of A vitamin which is good for the sight. They take between 2 and 3 months to grow and they should be planted either in spring, autumn or winter. Carrot seeds need a lot of humidity so two days before planting you could put the seeds between two humid papers. Make a hole of 1 cm deep in the ground and pour more than one seed because some will not germinate. They like cold climate but sunny at the same time. It is recommended that they get sun throughout all the day. When watering carrots you have to make sure that the water reaches deep in the hole.'," +
 			"120, 2);";
 	
 	public static final String INSERT_TOMATOES =
-			"INSERT INTO ExistingPlants (id, name, description, timeToGrow, weatherId) VALUES (3, 'Tomatoes'," + 
+			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Tomatoes'," + 
 			"'Tomato is a red fruit but considered a vegetable for culinary purposes. Its many varieties are now widely grown, sometimes in greenhouses in cooler climates. It should be planted in the end of spring and it will grow in about 3 months. Tomatoes need rich soil so you can previously treat yours with compost or similar. You have also to be careful with the cold since it can kill the plant. Tomatoes also need at least 6 hours of sun so make sure that your garden or terrace has plenty of sunlight. Regarding the watering, you should not water the plant’s leaves and water the plant not so regularly but with abundant water each time. You should also put a vertical stick attached so it grows properly.'," +
 			"210, 3);";
 			
 	public static final String INSERT_LETTUCE =
-			"INSERT INTO ExistingPlants (id, name, description, timeToGrow, weatherId) VALUES (4, 'Lettuces'," + 
+			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Lettuces'," + 
 			"'Lettuce is a green annual plant which is most often grown as a leaf vegetable. It is easily cultivated, although it requires relatively low temperatures to prevent it from flowering quickly. It can be planted almost throughout all the year and it takes between 20 and 65 days to grow. The soil must be very rich in nutrients and have to drain water very good. You should also maintain the ground humid. You can harvest you lettuce during all the flourishing period, as they will always be very tasty.'," +
 			"56, 4);";
 	
 	public static final String INSERT_SweetPea =
-			"INSERT INTO ExistingPlants (id, name, description, timeToGrow, weatherId) VALUES (5, 'Sweet Peas'," + 
+			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Sweet Peas'," + 
 			"'Sweet peas enchant us with their fragile, seductive fragrance and make great bouquets. These pea-like flowers grow in many lovely colours and are suitable for an annual border, a woodland garden, and a trellis or arch. Early sowing is one of the secrets of sweet peas. The bloom time for this flower is in summer and fall. Before planting, soak the seeds in water for 1 day. If you are in temperate climate you do not need to do so. Germination can take 7 to 15 days and you must keep the soil humid and moist. Sweet peas prefer cool days and nights and will start to fade when temperatures go above 65 Fº. They are climbers so give them at least 1.8 m of good support.'," +
 			"70, 5);";	
 	
 	public static final String INSERT_LILIES =
-			"INSERT INTO ExistingPlants (id, name, description, timeToGrow, weatherId) VALUES (6, 'Lilies'," + 
+			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Lilies'," + 
 			"'Lilies are a group of flowering plants which are important in culture and literature in much of the world. Lily flowers are valued for their very showy, often fragrant flowers. You should plant the bulbs in autumn and they need from 6 to 8 hours of sunlight. Regarding the soil, lilies require a well-drained site as water trapped beneath the scales may rot the bulb. In active growth, water freely and apply a high-potash liquid fertilizer every 2 weeks.'," +
 			"30, 6);";
 			
