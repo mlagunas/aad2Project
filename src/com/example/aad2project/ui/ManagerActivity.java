@@ -1,5 +1,6 @@
 package com.example.aad2project.ui;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -28,6 +29,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -39,6 +41,7 @@ import android.widget.Toast;
 import com.example.aad2project.R;
 import com.example.aad2project.model.MyReceiver;
 import com.example.aad2project.model.Plant;
+import com.example.aad2project.model.TaskPlant;
 import com.example.aad2project.services.WeatherService;
 import com.example.aad2project.ui.LongClickDialogFragment.LongClickDialogListener;
 import com.example.aad2project.ui.PlantManagerFragment.OnPlantManagerFragmentInteractionListener;
@@ -46,12 +49,13 @@ import com.example.aad2project.ui.TaskCalendarFragment.OnTaskCalendarFragmentInt
 
 @SuppressLint("NewApi")
 public class ManagerActivity extends ActionBarActivity implements
-		ActionBar.TabListener, OnPlantManagerFragmentInteractionListener,
-		OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
+ActionBar.TabListener, OnPlantManagerFragmentInteractionListener,
+OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 
 	public SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
 	private FrameLayout container;
+	private TaskPlant tp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,7 @@ public class ManagerActivity extends ActionBarActivity implements
 					Toast.LENGTH_LONG).show();
 
 		startAlarm();
+
 		container = (FrameLayout) findViewById(R.id.fragment_container);
 
 		// Set up the action bar.
@@ -94,12 +99,12 @@ public class ManagerActivity extends ActionBarActivity implements
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
 		mViewPager
-				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-					@Override
-					public void onPageSelected(int position) {
-						actionBar.setSelectedNavigationItem(position);
-					}
-				});
+		.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			@Override
+			public void onPageSelected(int position) {
+				actionBar.setSelectedNavigationItem(position);
+			}
+		});
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -136,7 +141,7 @@ public class ManagerActivity extends ActionBarActivity implements
 			logout();
 
 			break;
-		// action with ID action_settings was selected
+			// action with ID action_settings was selected
 		case R.id.action_settings:
 			// Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
 			// .show();
@@ -369,10 +374,16 @@ public class ManagerActivity extends ActionBarActivity implements
 	BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String title = "Put a title";
-			String text = "Put a text";
-			// Display the notification
-			notifications(title, text, 0);
+
+			for (int i = 0; i < tp.size(); i++) { 
+				Date dateTp = tp.getDate();
+				Calendar cal = Calendar.getInstance();
+				if (dateTp == cal.getTime()) {
+					String plantName = tp.getTaskPlantNumber(i).getPlant().getName(); 
+					String taskName = tp.getTaskPlantNumber(i).getTask().getDescription();
+					notifications(plantName, taskName, i);
+				}
+			}
 		}
 	};
 
