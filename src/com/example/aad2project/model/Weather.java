@@ -2,12 +2,12 @@ package com.example.aad2project.model;
 
 public class Weather {
 
-	private int maxHumidity;
-	private int minHumidity;
-	private int maxTemperature;
-	private int minTemperature;
-	private int minLightness;
-	private int maxLightnesss;
+	private double maxHumidity;
+	private double minHumidity;
+	private double maxTemperature;
+	private double minTemperature;
+	private double minLightness;
+	private double maxLightnesss;
 	private Weather next;
 	
 	private int id;
@@ -24,7 +24,7 @@ public Weather(){}
 	}
 	
 	
-	public int getMaxHumi() {
+	public double getMaxHumi() {
 		return maxHumidity;
 	}
 
@@ -34,7 +34,7 @@ public Weather(){}
 	}
 
 
-	public int getMinHumi() {
+	public double getMinHumi() {
 		return minHumidity;
 	}
 
@@ -44,7 +44,7 @@ public Weather(){}
 	}
 
 
-	public int getMaxTemp() {
+	public double getMaxTemp() {
 		return maxTemperature;
 	}
 
@@ -54,7 +54,7 @@ public Weather(){}
 	}
 
 
-	public int getMinTemp() {
+	public double getMinTemp() {
 		return minTemperature;
 	}
 
@@ -64,7 +64,7 @@ public Weather(){}
 	}
 
 
-	public int getMinLightness() {
+	public double getMinLightness() {
 		return minLightness;
 	}
 
@@ -74,7 +74,7 @@ public Weather(){}
 	}
 
 
-	public int getMaxLightnesss() {
+	public double getMaxLightnesss() {
 		return maxLightnesss;
 	}
 
