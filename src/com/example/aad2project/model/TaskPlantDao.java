@@ -91,7 +91,7 @@ public class TaskPlantDao extends DaoBase {
 				"tp.date, tp.done " +
 				"FROM Task t INNER JOIN TaskPlant tp ON tp.taskId = t.id " +
 				"INNER JOIN PLANT p ON p.id = tp.plantId " +
-				"WHERE tp.date = date('now') AND done = 0;";
+				"WHERE date(tp.date) = date('now') AND done = 0;";
 		
 	    c 	  = mDb.rawQuery(query, null);
 		
