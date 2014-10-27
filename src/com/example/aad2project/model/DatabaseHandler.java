@@ -92,7 +92,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String INSERT_POTATOES =
 			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Potatoes'," + 
 			"'Potatoes are a key for anybody who seeks to be self-sufficient. The potato is a starchy, tuberous crop that came from America but grow easily all over the world. It takes between 65 and 100 days to grow, and it should planted in spring. The soil should always be humid so you should water the around 3 times a week. When they flourish they will need more water. They can be harvested whenever they flourish and they should leave on the ground 1 day so they get dry.'," +
-			"120, 1);";
+			"0, 1);";
 			
 	public static final String INSERT_CARROTS =
 			"INSERT INTO ExistingPlants ( name, description, timeToGrow, weatherId) VALUES ( 'Carrots'," + 
