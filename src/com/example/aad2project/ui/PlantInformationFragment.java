@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Plant;
 import com.example.aad2project.model.PlantDao;
 import com.example.aad2project.model.WeatherDao;
+import com.example.aad2project.object.Plant;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment

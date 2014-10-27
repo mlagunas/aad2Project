@@ -4,7 +4,7 @@
  *
  */
 
-package com.example.aad2project.model;
+package com.example.aad2project.provider;
 
 import android.provider.BaseColumns;
 

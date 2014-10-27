@@ -11,8 +11,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Plant;
 import com.example.aad2project.model.PlantDao;
+import com.example.aad2project.object.Plant;
 
 public class LongClickDialogFragment extends DialogFragment {
 

@@ -4,6 +4,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.aad2project.object.Plant;
+import com.example.aad2project.object.Task;
+import com.example.aad2project.object.TaskPlant;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;

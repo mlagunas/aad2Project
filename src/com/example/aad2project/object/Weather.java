@@ -1,4 +1,4 @@
-package com.example.aad2project.model;
+package com.example.aad2project.object;
 
 public class Weather {
 

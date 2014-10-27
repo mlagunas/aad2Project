@@ -19,8 +19,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.example.aad2project.model.PlantDao;
-import com.example.aad2project.model.Weather;
 import com.example.aad2project.model.WeatherDao;
+import com.example.aad2project.object.Weather;
 
 import android.app.IntentService;
 import android.content.Context;

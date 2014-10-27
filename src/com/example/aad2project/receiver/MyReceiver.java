@@ -1,4 +1,4 @@
-package com.example.aad2project.model;
+package com.example.aad2project.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

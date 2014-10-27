@@ -16,8 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.MyContentProvider;
-import com.example.aad2project.model.SharedInformation.Account;
+import com.example.aad2project.provider.MyContentProvider;
+import com.example.aad2project.provider.SharedInformation.Account;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment

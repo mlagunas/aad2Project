@@ -1,4 +1,4 @@
-package com.example.aad2project.ui;
+package com.example.aad2project.adapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.TaskPlant;
+import com.example.aad2project.object.TaskPlant;
 
 public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 

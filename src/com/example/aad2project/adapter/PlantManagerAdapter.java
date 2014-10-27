@@ -1,4 +1,4 @@
-package com.example.aad2project.ui;
+package com.example.aad2project.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Plant;
+import com.example.aad2project.object.Plant;
 
 public class PlantManagerAdapter extends BaseExpandableListAdapter {
 

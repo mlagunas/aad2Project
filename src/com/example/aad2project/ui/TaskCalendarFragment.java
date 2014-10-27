@@ -13,10 +13,11 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
+import com.example.aad2project.adapter.TaskCalendarAdapter;
 import com.example.aad2project.model.PlantDao;
 import com.example.aad2project.model.TaskDao;
-import com.example.aad2project.model.TaskPlant;
 import com.example.aad2project.model.TaskPlantDao;
+import com.example.aad2project.object.TaskPlant;
 
 /**
  * A simple {@link Fragment} subclass.

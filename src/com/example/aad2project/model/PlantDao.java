@@ -7,6 +7,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.aad2project.object.Plant;
+import com.example.aad2project.object.Task;
 import com.example.aad2project.ui.TaskCalendarFragment;
 
 public class PlantDao extends DaoBase {

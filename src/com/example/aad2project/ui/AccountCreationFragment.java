@@ -86,7 +86,7 @@ public class AccountCreationFragment extends Fragment {
 		passwordView = (EditText) view.findViewById (R.id.passwordCreationAccount);
 		passwordConfirmView = (EditText) view.findViewById (R.id.confirmPasswordAccount);
 		Create = (Button) view.findViewById (R.id.buttonCreate);
-		// Put OnClickListener on the login button
+		// Put OnClickListener on the create button
 		Create.setOnClickListener(new OnClickListener() {
 
 			// Create an account

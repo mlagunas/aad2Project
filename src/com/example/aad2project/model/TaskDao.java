@@ -3,6 +3,7 @@ package com.example.aad2project.model;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import com.example.aad2project.object.Task;
 import com.example.aad2project.ui.TaskCalendarFragment;
 
 import android.app.Fragment;

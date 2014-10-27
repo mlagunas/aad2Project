@@ -4,9 +4,9 @@
  *
  */
 
-package com.example.aad2project.model;
+package com.example.aad2project.provider;
 
-import com.example.aad2project.model.SharedInformation.Account;
+import com.example.aad2project.provider.SharedInformation.Account;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;

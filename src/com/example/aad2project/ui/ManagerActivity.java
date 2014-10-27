@@ -37,10 +37,11 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.MyReceiver;
-import com.example.aad2project.model.Plant;
-import com.example.aad2project.model.TaskPlant;
+import com.example.aad2project.adapter.TaskCalendarAdapter;
 import com.example.aad2project.model.TaskPlantDao;
+import com.example.aad2project.object.Plant;
+import com.example.aad2project.object.TaskPlant;
+import com.example.aad2project.receiver.MyReceiver;
 import com.example.aad2project.services.WeatherService;
 import com.example.aad2project.ui.LongClickDialogFragment.LongClickDialogListener;
 import com.example.aad2project.ui.PlantManagerFragment.OnPlantManagerFragmentInteractionListener;

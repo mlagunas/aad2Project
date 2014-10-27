@@ -20,8 +20,9 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Plant;
+import com.example.aad2project.adapter.PlantManagerAdapter;
 import com.example.aad2project.model.PlantDao;
+import com.example.aad2project.object.Plant;
 
 /**
  * A simple {@link Fragment} subclass.
