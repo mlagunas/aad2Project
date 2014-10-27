@@ -132,8 +132,8 @@ public class WeatherService extends IntentService{
 
 			
 			
-			
-			/*weather =  new Weather();
+	/*		
+			weather =  new Weather();
 			weather.setMaxTemp((Integer) info.get("temp_max"));
 			weather.setMinTemp((Integer) info.get("temp_min"));
 			weather.setMinHumi((Integer) info.get("humidity"));
@@ -142,7 +142,7 @@ public class WeatherService extends IntentService{
 			weather.setMinLightness(2);
 
 			w = new WeatherDao(this);
-			w.add(weather);*/
+			w.add(weather); */
 			
 
 		
