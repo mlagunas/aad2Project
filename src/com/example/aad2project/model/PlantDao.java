@@ -35,17 +35,20 @@ public class PlantDao extends DaoBase {
 		}
 	}
 
-	public Plant searchPlant(int id) {
-		for (Plant p : getAllPlants()) {
-			if (p.getId() == id) {
-				Log.d("PLANT",p.getName());
-				return p;
+	public Plant searchPlant(int id, boolean upperGroup) {
+		if (!upperGroup) {
+			for (Plant p : getAllPlants()) {
+				if (p.getId() == id) {
+					Log.d("PLANT", p.getName());
+					return p;
+				}
 			}
-		}
-		for(Plant p: getAddedPlants()){
-			if(p.getId() == id){
-				Log.d("PLANT",p.getName());
-				return p;
+		} else {
+			for (Plant p : getAddedPlants()) {
+				if (p.getId() == id) {
+					Log.d("PLANT", p.getName());
+					return p;
+				}
 			}
 		}
 		return null;
@@ -184,8 +187,7 @@ public class PlantDao extends DaoBase {
 		TaskPlantDao tp = new TaskPlantDao(context);
 
 		tp.deleteTaskPlant(id);
-		
-		super.mDb.execSQL("DELETE FROM Plant " +
-					"WHERE id = "+id+";");
+
+		super.mDb.execSQL("DELETE FROM Plant " + "WHERE id = " + id + ";");
 	}
 }
