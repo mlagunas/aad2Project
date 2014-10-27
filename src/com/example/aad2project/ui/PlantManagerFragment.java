@@ -112,7 +112,8 @@ public class PlantManagerFragment extends Fragment {
 				// Notify the activity and send the id of the clicked plant
 				int  plantId = ((Plant) mAdapter.getChild(groupPosition,
 						childPosition)).getId();
-				onItemPressed(plantId);
+				boolean upperGroup = groupPosition == 0;
+				onItemPressed(plantId, upperGroup);
 
 				return false;
 			}
@@ -149,9 +150,9 @@ public class PlantManagerFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 	}
 
-	public void onItemPressed(int id) {
+	public void onItemPressed(int id, boolean upperGroup) {
 		if (mListener != null) {
-			mListener.onPlantManagerFragmentInteraction(id);
+			mListener.onPlantManagerFragmentInteraction(id, upperGroup);
 		}
 	}
 
@@ -174,7 +175,7 @@ public class PlantManagerFragment extends Fragment {
 	}
 
 	public interface OnPlantManagerFragmentInteractionListener {
-		public void onPlantManagerFragmentInteraction(int id);
+		public void onPlantManagerFragmentInteraction(int id, boolean upperGroup);
 
 		public void onLongClickedPlantFragmentInteraction(Plant plant,
 				boolean added);

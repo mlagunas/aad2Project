@@ -28,15 +28,17 @@ import com.example.aad2project.model.WeatherDao;
  */
 public class PlantInformationFragment extends Fragment {
 	private int plantId;
+	private boolean upperGroup;
 
 	private TextView plantName, plantDescription, plantHumidity,
 			plantTemperature, plantLightness;
 	private ImageView plantImage;
 	
-	public static PlantInformationFragment newInstance(int plantId) {
+	public static PlantInformationFragment newInstance(int plantId, boolean upperGroup) {
 		PlantInformationFragment fragment = new PlantInformationFragment();
 		Bundle args = new Bundle();
 		args.putInt("PLANT_ID", plantId);
+		args.putBoolean("UPPER_GROUP", upperGroup);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -50,6 +52,7 @@ public class PlantInformationFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
 			plantId = getArguments().getInt("PLANT_ID", 0);
+			upperGroup = getArguments().getBoolean("UPPER_GROUP");
 		}
 	}
 
@@ -79,15 +82,14 @@ public class PlantInformationFragment extends Fragment {
 		PlantDao pDao = new PlantDao(getActivity());
 		WeatherDao wDao = new WeatherDao(getActivity());
 		
-		Plant p = pDao.searchPlant(plantId);
+		Plant p = pDao.searchPlant(plantId, upperGroup);
 		
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String temperature = sharedPref.getString("pref_temperature", "");
-		
+		Log.d("TEMPERATURE",":"+temperature);
 		plantImage.setImageResource(getImageResource(p.getName()));
 		plantName.setText(p.getName());
 		plantDescription.setText(p.getDescription());
-		Log.d("WEATHER PLANT",p.getWeatherId()+" ");
 		
 		plantHumidity.setText(wDao.getWeather(p.getWeatherId()).getMinHumi() + "% - " +
 									wDao.getWeather(p.getWeatherId()).getMaxHumi()+"%");
@@ -104,7 +106,7 @@ public class PlantInformationFragment extends Fragment {
 		plantLightness.setText(brMin + "Lm - "+ brMax + "Lm");
 		
 		// Difference between Celsius and Fahrenheit
-		if(temperature.equals(0))
+		if(temperature.equals("0"))
 			plantTemperature.setText(wDao.getWeather(p.getWeatherId()).getMinTemp()+ "ºC - "+
 									wDao.getWeather(p.getWeatherId()).getMaxTemp()+"ºC");
 		else
