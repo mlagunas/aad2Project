@@ -86,11 +86,10 @@ public class PlantInformationFragment extends Fragment {
 		
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String temperature = sharedPref.getString("pref_temperature", "");
-		
+		Log.d("TEMPERATURE",":"+temperature);
 		plantImage.setImageResource(getImageResource(p.getName()));
 		plantName.setText(p.getName());
 		plantDescription.setText(p.getDescription());
-		Log.d("WEATHER PLANT",p.getWeatherId()+" ");
 		
 		plantHumidity.setText(wDao.getWeather(p.getWeatherId()).getMinHumi() + "% - " +
 									wDao.getWeather(p.getWeatherId()).getMaxHumi()+"%");
@@ -107,7 +106,7 @@ public class PlantInformationFragment extends Fragment {
 		plantLightness.setText(brMin + "Lm - "+ brMax + "Lm");
 		
 		// Difference between Celsius and Fahrenheit
-		if(temperature.equals(0))
+		if(temperature.equals("0"))
 			plantTemperature.setText(wDao.getWeather(p.getWeatherId()).getMinTemp()+ "ºC - "+
 									wDao.getWeather(p.getWeatherId()).getMaxTemp()+"ºC");
 		else
