@@ -30,7 +30,7 @@ public class WeatherDao extends DaoBase {
 	
 
 	public void add(Weather weather) {
-		int minHumidity,maxHumidity,maxTemperature,minTemperature,minLightness,maxLightness;
+		double minHumidity,maxHumidity,maxTemperature,minTemperature,minLightness,maxLightness;
 		minHumidity = weather.getMinHumi();
 		maxHumidity = weather.getMaxHumi();
 		maxTemperature = weather.getMaxTemp();
