@@ -10,6 +10,7 @@ public abstract class DaoBase {
 	  protected final static int VERSION = 1;
 	  // database name
 	  protected final static String NAME = "database_9.db";
+
 	  
 	  protected SQLiteDatabase mDb = null;
 	  protected DatabaseHandler mHandler = null;

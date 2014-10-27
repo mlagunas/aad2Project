@@ -41,7 +41,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"date    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
 			"done    NUMBER(1) NOT NULL DEFAULT 0," +
 			//"FOREIGN KEY (taskId) REFERENCES Task(id) ON DELETE CASCADE, " +
-			//"FOREIGN KEY (plantId) REFERENCES Plant(id) ON DELETE CASCADE, " +
+			//"FOREIGN KEY (plantId) REFERENCES Plant(id) ON DELETE CASCADE " +
 			"PRIMARY KEY (plantId,taskId)"+
 			");";
 	

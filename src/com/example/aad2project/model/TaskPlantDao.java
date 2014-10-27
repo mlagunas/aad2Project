@@ -23,16 +23,13 @@ public class TaskPlantDao extends DaoBase {
 	}
 	
 	public void createTaskPlant(Plant p, Task t, long d){
+		Log.d("ID PLANTA",p.getId()+" ");
 		super.mDb.execSQL("INSERT INTO taskPlant (taskId,plantId,date,done)" +
 				"VALUES ("+p.getId()+","+t.getId()+","+d+",0);");
-		Log.d("TASK PLANTS ADD",getAllTaskPlant().toString());
-
 	}
 		
 	public void deleteTaskPlant(Integer id){
-		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = " + id);
-		Log.d("TASK PLANTS DELETE",getAllTaskPlant().toString());
-		
+		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = " + id);		
 	}
 	
 	private Plant createPlant(Cursor c, int idP){

@@ -172,7 +172,7 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 		}
 
 		plantName.setText(plant.getName());
-		plantReminingTime.setText("2 weeks left"); // TODO - Change text
+		plantReminingTime.setText(R.string.app_name); // TODO - Change text
 													// according to remaining
 													// time
 		plantImage.setImageResource(getImageResource(plant.getName()));

@@ -355,8 +355,8 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 		Calendar cal_now = Calendar.getInstance();
 		cal_now.setTime(dat);
 		cal_alarm.setTime(dat);
-		cal_alarm.set(Calendar.HOUR_OF_DAY, 18);// set the alarm time
-		cal_alarm.set(Calendar.MINUTE, 0);
+		cal_alarm.set(Calendar.HOUR_OF_DAY, 1);// set the alarm time
+		cal_alarm.set(Calendar.MINUTE, 42);
 		cal_alarm.set(Calendar.SECOND, 0);
 		if (cal_alarm.before(cal_now)) {// if its in the past increment
 			cal_alarm.add(Calendar.DATE, 1);

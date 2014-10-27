@@ -60,8 +60,6 @@ public class TaskCalendarFragment extends Fragment {
 		tp = new TaskPlantDao(getActivity());
 		t = new TaskDao(getActivity());
 
-		p.setFragment(this);
-
 		noPlants = p.getAddedPlants().isEmpty();
 
 

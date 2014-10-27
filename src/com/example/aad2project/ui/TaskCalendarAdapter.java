@@ -39,13 +39,12 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 			for (TaskPlant mTask : mTasks) {
 				date.setTime(mTask.getDate());
 				if (date.get(Calendar.DAY_OF_YEAR) != 
-						lastDate.get(Calendar.DAY_OF_YEAR)) {// TODO - Properly divide the									// tasks
+						lastDate.get(Calendar.DAY_OF_YEAR)) {// TODO - Properly divide the tasks
 					if (mDayTasks.size() > 0) { // into days when the class is fixed
 						mDays.add(mDayTasks);
 					}
 					mDayTasks = new ArrayList<TaskPlant>();
 				}
-				Log.d("mTask",mTask.toString());
 				mDayTasks.add(mTask);
 				//lastTask = mTask;
 				lastDate.setTime(mTask.getDate());
@@ -53,23 +52,16 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 			
 			if(mDayTasks.size()>0)
 				mDays.add(mDayTasks);
-			Log.d("SIZE LISTLIST",mDays.size()+" ");
-			int i =0;
-			for(List<TaskPlant> l : mDays){
-				Log.d("SIZE LIST "+i,l.size()+" ");
-			}
 			return mDays;
 	}
 
 	@Override
 	public int getGroupCount() {
-		Log.d("SIZE GROUP"," "+mDays.size());
 		return mDays.size();
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		Log.d("SIZE CHILD",mDays.get(groupPosition).size()+" ");
 		return mDays.get(groupPosition).size();
 	}
 
@@ -80,7 +72,6 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		Log.d("SELECTION",mDays.get(groupPosition).get(childPosition).toString());
 		return mDays.get(groupPosition).get(childPosition);
 	}
 
@@ -156,7 +147,6 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.task_target);
 
 		TaskPlant task = (TaskPlant) getChild(groupPosition, childPosition);
-		Log.d("TASKPLANT TEXT", task.getTask().getDescription());
 		taskDescription.setText(task.getTask().getDescription());
 		taskTarget.setText(task.getPlant().getName());
 

@@ -10,13 +10,4 @@
         android:entryValues="@array/pref_temp_entry_values"
         android:defaultValue="0" />
     
-    <ListPreference
-        android:key="pref_time"
-        android:title="@string/pref_time"
-        android:summary="@string/pref_time_summary"
-        android:dialogTitle="@string/pref_choose_one"
-        android:entries="@array/pref_time_entries"
-        android:entryValues="@array/pref_time_entry_values"
-        android:defaultValue="0" />
-    
 </PreferenceScreen>
