@@ -139,6 +139,8 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 		all.clear();
 		added.addAll(newAdd);
 		all.addAll(newAll);
+		filteredAdded = added;
+		filteredAll = all;
 		this.notifyDataSetChanged();
 	}
 

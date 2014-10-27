@@ -21,11 +21,11 @@ import android.util.Log;
 public class MyContentProvider extends ContentProvider {
 
 	public static final Uri CONTENT_URI = Uri
-			.parse("content://com.example.aad2project.model.mycontentprovider");
+			.parse("content://com.example.aad2project.provider.mycontentprovider");
 	public static final String CONTENT_PROVIDER_DB_NAME = "account.db";
 	public static final int CONTENT_PROVIDER_DB_VERSION = 1;
 	public static final String CONTENT_PROVIDER_TABLE_NAME = "account";
-	public static final String CONTENT_PROVIDER_MIME = "vnd.android.cursor.item/vnd.com.example.aad2project.model.account";
+	public static final String CONTENT_PROVIDER_MIME = "vnd.android.cursor.item/vnd.com.example.aad2project.provider.account";
 
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -92,7 +92,7 @@ public class MyContentProvider extends ContentProvider {
 			if (id == -1) {
 				throw new RuntimeException(String.format(
 						"%s : Failed to insert [%s] for unknown reasons.",
-						"TutosAndroidProvider", values, uri));
+						"MyContentProvider", values, uri));
 			} else {
 				// Insert the value
 				return ContentUris.withAppendedId(uri, id);

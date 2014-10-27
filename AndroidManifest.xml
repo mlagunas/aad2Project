@@ -39,7 +39,7 @@
 
         <provider
             android:name="com.example.aad2project.provider.MyContentProvider"
-            android:authorities="com.example.aad2project.model.mycontentprovider" >
+            android:authorities="com.example.aad2project.provider.mycontentprovider" >
         </provider>
 
         <activity
