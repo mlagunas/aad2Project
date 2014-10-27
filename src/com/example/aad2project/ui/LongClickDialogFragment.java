@@ -75,6 +75,7 @@ public class LongClickDialogFragment extends DialogFragment {
 					Intent intent = new Intent(getActivity(),
 							PlantInformationActivity.class);
 					intent.putExtra("id", plantId);
+					intent.putExtra("upper_group", function);
 					startActivity(intent);
 					break;
 				}

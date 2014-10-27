@@ -1,6 +1,5 @@
 package com.example.aad2project.ui;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -29,7 +28,6 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -262,11 +260,11 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 	}
 
 	@Override
-	public void onPlantManagerFragmentInteraction(int id) {
+	public void onPlantManagerFragmentInteraction(int id, boolean upperGroup) {
 		if (container != null) {
 			// Tablet behavior (Add Fragment to the side of the screen)
 			PlantInformationFragment loginFragment = PlantInformationFragment
-					.newInstance(id);
+					.newInstance(id, upperGroup);
 
 			FragmentTransaction fragmentTransaction = getSupportFragmentManager()
 					.beginTransaction();
@@ -278,6 +276,7 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 			// Phone behavior (Start new activity)
 			Intent intent = new Intent(this, PlantInformationActivity.class);
 			intent.putExtra("id", id);
+			intent.putExtra("upper_group", upperGroup);
 			startActivity(intent);
 		}
 	}
