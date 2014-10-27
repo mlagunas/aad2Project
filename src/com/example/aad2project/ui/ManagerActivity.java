@@ -40,6 +40,7 @@ import com.example.aad2project.R;
 import com.example.aad2project.model.MyReceiver;
 import com.example.aad2project.model.Plant;
 import com.example.aad2project.model.TaskPlant;
+import com.example.aad2project.model.TaskPlantDao;
 import com.example.aad2project.services.WeatherService;
 import com.example.aad2project.ui.LongClickDialogFragment.LongClickDialogListener;
 import com.example.aad2project.ui.PlantManagerFragment.OnPlantManagerFragmentInteractionListener;
@@ -53,7 +54,10 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 	public SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
 	private FrameLayout container;
+	private TaskCalendarAdapter mAdapter;
+	private TaskPlantDao tpDAO;
 	private TaskPlant tp;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -354,8 +358,8 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 		Calendar cal_now = Calendar.getInstance();
 		cal_now.setTime(dat);
 		cal_alarm.setTime(dat);
-		cal_alarm.set(Calendar.HOUR_OF_DAY, 18);// set the alarm time
-		cal_alarm.set(Calendar.MINUTE, 0);
+		cal_alarm.set(Calendar.HOUR_OF_DAY, 17);// set the alarm time
+		cal_alarm.set(Calendar.MINUTE, 30);
 		cal_alarm.set(Calendar.SECOND, 0);
 		if (cal_alarm.before(cal_now)) {// if its in the past increment
 			cal_alarm.add(Calendar.DATE, 1);
@@ -373,15 +377,14 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 	BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			
+			tpDAO = new TaskPlantDao(getBaseContext());
+			tp = tpDAO.getCurrentDayTaskPlant();
 			for (int i = 0; i < tp.size(); i++) { 
-				Date dateTp = tp.getDate();
-				Calendar cal = Calendar.getInstance();
-				if (dateTp == cal.getTime()) {
-					String plantName = tp.getTaskPlantNumber(i).getPlant().getName(); 
-					String taskName = tp.getTaskPlantNumber(i).getTask().getDescription();
-					notifications(plantName, taskName, i);
-				}
+
+				String plantName = tp.getTaskPlantNumber(i).getPlant().getName(); 
+				String taskName = tp.getTaskPlantNumber(i).getTask().getDescription();
+				notifications(plantName, taskName, i);
+
 			}
 		}
 	};
