@@ -118,17 +118,6 @@ public class MainActivity extends ActionBarActivity implements
 	}
 
 	/**
-	 * Use this method when the user don't use the correct credentials
-	 */
-	public void wrongCredentials() {
-		// Toast to inform the user that the credentials were wrong
-		Toast.makeText(getApplicationContext(),
-				getResources().getString(R.string.wrong_credentials),
-				Toast.LENGTH_SHORT).show();
-	}
-
-	// TODO Preba
-	/**
 	 * Use this method when the user click on the "create a new account" text on
 	 * the login page
 	 */

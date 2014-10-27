@@ -10,11 +10,11 @@
     <string name="login">Login</string>
     <string name="success_login">Successful authentication</string>
     <string name="creation_account">Account Successfully Created</string>
-    <string name="wrong_credentials">Login</string>
+    <string name="wrong_credentials">Wrong credentials</string>
     <string name="create">Create</string>
     <string name="new_account">Create new account</string>
     <string name="account_creation_fragment">Account creation</string>
-    <string name="title_activity_manager">Manager</string>
+    <string name="title_activity_manager">GreenHub</string>
     <string name="title_section1">Plant Manager</string>
     <string name="title_section2">Task Calendar</string>
     <string name="title_section3">Section 3</string>
@@ -42,6 +42,7 @@
     <string name="kevin">Kevin Hantzen</string>
     <string name="manu">Manuel Lagunas</string>
     <string name="toscan">Toscan Vertanessian</string>
+  	
 
     <string-array name="long_click_add">
         <item>Add</item>
