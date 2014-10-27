@@ -1,7 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp"
     tools:context="com.example.aad2project.ui.AccountCreationFragment" >
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,18 +13,16 @@
         android:id="@+id/accountCreation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp"
+        android:layout_gravity="center"
+        android:textSize="24sp"
         android:text="@string/account_creation_fragment" />
 
     <EditText
         android:id="@+id/emailCreationAccount"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/accountCreation"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="@string/email_hint"
         android:inputType="textEmailAddress" >
@@ -29,35 +30,32 @@
         <requestFocus />
     </EditText>
 
-    <Button
-        android:id="@+id/buttonCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/confirmpasswordCreationAccount"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
-        android:text="@string/create" />
-
     <EditText
         android:id="@+id/passwordCreationAccount"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/emailCreationAccount"
-        android:layout_below="@+id/emailCreationAccount"
-        android:layout_marginTop="36dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/password_hint"
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/confirmpasswordCreationAccount"
-        android:layout_width="wrap_content"
+        android:id="@+id/confirmPasswordAccount"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/passwordCreationAccount"
-        android:layout_below="@+id/passwordCreationAccount"
-        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/confirm_password_hint"
         android:inputType="textPassword" />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/buttonCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:text="@string/create" />
+
+</LinearLayout>

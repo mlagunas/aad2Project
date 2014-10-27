@@ -146,8 +146,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(INSERT_LETTUCE);
 		db.execSQL(INSERT_SweetPea);
 		db.execSQL(INSERT_LILIES);
-		db.execSQL(START_100);
-		db.execSQL(DELETE_100);
+		//db.execSQL(START_100);
+		//db.execSQL(DELETE_100);
 		
 	}
 

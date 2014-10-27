@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.Toast;
 
 import com.example.aad2project.R;
 import com.example.aad2project.model.PlantDao;
@@ -95,7 +96,10 @@ public class TaskCalendarFragment extends Fragment {
 				int taskId = tp.getTask().getId();
 
 				// Send ID back to activity
-				onItemPressed(taskId);
+				//onItemPressed(taskId);
+				
+				Toast.makeText(getActivity(), "Task done. Good job!", Toast.LENGTH_SHORT)
+					.show();
 
 				return false;
 			}
