@@ -12,7 +12,7 @@ public abstract class DaoBase {
 	  // Update this attribute if version change
 	  protected final static int VERSION = 1;
 	  // database name
-	  protected final static String NAME = "database_5.db";
+	  protected final static String NAME = "database_10.db";
 	  
 	  protected SQLiteDatabase mDb = null;
 	  protected DatabaseHandler mHandler = null;

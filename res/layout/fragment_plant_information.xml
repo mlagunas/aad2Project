@@ -82,11 +82,15 @@
 
             <TextView
                 android:id="@+id/lightness_text"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:maxLines="100"
+                android:scrollHorizontally="false"
+                android:ellipsize="none"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/lightness_icon"
                 android:layout_toRightOf="@+id/lightness_icon"
                 android:paddingBottom="4dp"
+                android:layout_below="@id/humidity_text"
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>

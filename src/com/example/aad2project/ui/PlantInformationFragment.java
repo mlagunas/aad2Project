@@ -87,18 +87,29 @@ public class PlantInformationFragment extends Fragment {
 		plantImage.setImageResource(getImageResource(p.getName()));
 		plantName.setText(p.getName());
 		plantDescription.setText(p.getDescription());
-		plantHumidity.setText(wDao.getWeather(plantId).getMinHumi() + "% - " +
-									wDao.getWeather(plantId).getMaxHumi()+"%");
-		plantLightness.setText(wDao.getWeather(plantId).getMinLightness() + "lm - "+
-				wDao.getWeather(plantId).getMaxLightnesss() + "lm");
+		Log.d("WEATHER PLANT",p.getWeatherId()+" ");
+		
+		plantHumidity.setText(wDao.getWeather(p.getWeatherId()).getMinHumi() + "% - " +
+									wDao.getWeather(p.getWeatherId()).getMaxHumi()+"%");
+		
+		//Setting Kilo Lumens if it's necessary
+		String brMin = wDao.getWeather(p.getWeatherId()).getMinLightness()+" ";
+		if(brMin.length() > 5){
+			brMin = (String) brMin.subSequence(0, brMin.length()-4)+" k";
+		}
+		String brMax = wDao.getWeather(p.getWeatherId()).getMaxLightnesss()+" ";
+		if(brMax.length() > 5){
+			brMax = (String) brMax.subSequence(0, brMax.length()-4)+" k";
+		}
+		plantLightness.setText(brMin + "Lm - "+ brMax + "Lm");
 		
 		// Difference between Celsius and Fahrenheit
 		if(temperature.equals(0))
-			plantTemperature.setText(wDao.getWeather(plantId).getMinTemp()+ "ºC - "+
-									wDao.getWeather(plantId).getMaxTemp()+"ºC");
+			plantTemperature.setText(wDao.getWeather(p.getWeatherId()).getMinTemp()+ "ºC - "+
+									wDao.getWeather(p.getWeatherId()).getMaxTemp()+"ºC");
 		else
-			plantTemperature.setText((wDao.getWeather(plantId).getMinTemp()*9/5+32)+ "ºF - "+
-					(wDao.getWeather(plantId).getMaxTemp()*9/5+32)+"ºF");
+			plantTemperature.setText((wDao.getWeather(p.getWeatherId()).getMinTemp()*9/5+32)+ "ºF - "+
+					(wDao.getWeather(p.getWeatherId()).getMaxTemp()*9/5+32)+"ºF");
 		
 		
 		super.onViewCreated(view, savedInstanceState);

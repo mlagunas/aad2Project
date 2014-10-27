@@ -12,7 +12,6 @@ import com.example.aad2project.ui.TaskCalendarFragment;
 public class PlantDao extends DaoBase {
 
 	private Context context;
-	private TaskCalendarFragment fragment;
 
 	public PlantDao(Context pContext) {
 		super(pContext);
@@ -29,6 +28,7 @@ public class PlantDao extends DaoBase {
 			p.setName(c.getString(1));
 			p.setDescription(c.getString(2));
 			p.setTimeToGrow(c.getInt(3));
+			p.setWeatherId(c.getInt(4));
 			return p;
 		} else {
 			return null;
@@ -60,6 +60,7 @@ public class PlantDao extends DaoBase {
 			p.setName(name);
 			p.setDescription(c.getString(2));
 			p.setTimeToGrow(c.getInt(3));
+			p.setWeatherId(c.getInt(4));
 			return p;
 		} else {
 			return null;
@@ -113,10 +114,6 @@ public class PlantDao extends DaoBase {
 		tp.createTaskPlant(plant, t, toGrow.getTime());
 	}
 
-	public void setFragment(TaskCalendarFragment fragment) {
-		this.fragment = fragment;
-	}
-
 	/**
 	 * This method return an ArrayList which contains all the plants added in
 	 * the database
@@ -142,10 +139,6 @@ public class PlantDao extends DaoBase {
 		return plants;
 	}
 
-	public void deletePlant(Plant p) {
-
-	}
-
 	/**
 	 * This method returns an ArrayList with all the plants which the user have
 	 * added to the garden
@@ -167,6 +160,7 @@ public class PlantDao extends DaoBase {
 					p.setName(c.getString(1));
 					p.setDescription(c.getString(2));
 					p.setTimeToGrow(c.getInt(3));
+					p.setWeatherId(c.getInt(4));
 					plants.add(p);
 				}
 			} while (c.moveToNext());
@@ -180,11 +174,11 @@ public class PlantDao extends DaoBase {
 	}
 
 	public void deletePlant(int id) {
-
 		TaskPlantDao tp = new TaskPlantDao(context);
-
+		Log.d("TASKPLANT BEFORE",tp.getAllTaskPlant().toString());
+		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = "+id);
 		tp.deleteTaskPlant(id);
-		
+		Log.d("TASKPLANT AFTER",tp.getAllTaskPlant().toString());
 		super.mDb.execSQL("DELETE FROM Plant " +
 					"WHERE id = "+id+";");
 	}
