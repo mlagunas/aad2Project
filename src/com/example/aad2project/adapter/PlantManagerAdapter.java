@@ -31,7 +31,7 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 		filteredAll = all;
 	}
 
-	public void filter(String s) {
+	public boolean filter(String s) {
 		if (s == "") {
 			filteredAdded = added;
 			filteredAll = all;
@@ -50,8 +50,17 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 			}
 		}
 		notifyDataSetChanged();
+		return true;
 	}
 
+	public List<Plant> getFilteredAdded(){
+		return filteredAdded;
+	}
+	
+	public List<Plant> getFilteredAll(){
+		return filteredAll;
+	}
+	
 	@Override
 	public int getGroupCount() {
 		return 2;

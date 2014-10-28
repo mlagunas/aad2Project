@@ -39,7 +39,7 @@ public class PlantDao extends DaoBase {
 	}
 
 	public Plant searchPlant(int id, boolean upperGroup) {
-		if (!upperGroup) {
+		/*if (!upperGroup) {
 			for (Plant p : getAllPlants()) {
 				if (p.getId() == id) {
 					return p;
@@ -51,8 +51,39 @@ public class PlantDao extends DaoBase {
 					return p;
 				}
 			}
+		}*/
+		Plant p = new Plant();
+
+		if(!upperGroup){
+			c = super.mDb.rawQuery("SELECT * FROM ExistingPlants WHERE id = " + id, null);
+			if(c.moveToFirst()){
+				p.setId(c.getInt(0));
+				p.setName(c.getString(1));
+				p.setDescription(c.getString(2));
+				p.setTimeToGrow(c.getInt(3));
+				p.setWeatherId(c.getInt(4));
+				return p;
+			}
+			return null;
 		}
-		return null;
+		else{
+			c = super.mDb.rawQuery("SELECT * FROM Plant WHERE id = "+ id, null);
+			if (c.moveToFirst()) {
+				
+				p.setId(c.getInt(0));
+				p.setDate(new Date(c.getLong(1)));
+				p.setExistingId(c.getInt(2));
+				Cursor aux = super.mDb.rawQuery("SELECT * FROM existingPlants WHERE id = " + c.getInt(2), null);
+				if(aux.moveToFirst()){
+					p.setName(aux.getString(1));
+					p.setDescription(aux.getString(2));
+					p.setTimeToGrow(aux.getInt(3));
+					p.setWeatherId(aux.getInt(4));
+				}
+				return p;
+			}
+			return null;
+		}
 	}
 
 	public Plant getPlant(String name) {
@@ -79,21 +110,23 @@ public class PlantDao extends DaoBase {
 	public void addPlant(Plant plant) {
 
 		String name, description;
-		int timeToGrow, number;
+		int timeToGrow, number, id;
+		Date tday;
 
 		name = plant.getName();
 		description = plant.getDescription();
 		timeToGrow = plant.getTimeToGrow();
 		number = plant.getNumber();
-
+		id = plant.getId();
+		tday = new Date();
+		
 		super.mDb
-				.execSQL("INSERT INTO  Plant (name,description,timeToGrow,number,weatherId)"
-						+ "	VALUES ('"
-						+ name
-						+ "','"
-						+ description
-						+ "',"
-						+ timeToGrow + "," + number + ",1);");
+				.execSQL("INSERT INTO  Plant (existingId,date)"
+						+ "	VALUES ("
+						+ id
+						+ ", "
+						+ tday.getTime()
+						+ ");");
 
 		Task t = new Task();
 		t.setDescription("Collect " + name);
@@ -101,10 +134,16 @@ public class PlantDao extends DaoBase {
 		TaskDao td = new TaskDao(context);
 		td.addTask(t);
 
-		Cursor c = super.mDb.rawQuery("SELECT id FROM Plant", null);
+		Plant insert = new Plant();
+		
+		c = super.mDb.rawQuery("SELECT id FROM Plant", null);
 		c.moveToLast();
-		plant.setId(c.getInt(0));
-
+		insert.setId(c.getInt(0));
+		insert.setName(name);
+		insert.setDescription(description);
+		insert.setTimeToGrow(timeToGrow);
+		insert.setExistingId(id);
+		
 		c = super.mDb.rawQuery("SELECT id FROM Task", null);
 		c.moveToLast();
 		t.setId(c.getInt(0));
@@ -114,7 +153,6 @@ public class PlantDao extends DaoBase {
 		Calendar today = Calendar.getInstance();
 		Date toGrow = new Date(today.getTimeInMillis()
 				+ (1000 * 60 * 60 * 24 * timeToGrow));
-
 		tp.createTaskPlant(plant, t, toGrow.getTime());
 
 		// Notify the Loader
@@ -139,6 +177,7 @@ public class PlantDao extends DaoBase {
 				p.setDescription(c.getString(2));
 				p.setTimeToGrow(c.getInt(3));
 				p.setWeatherId(c.getInt(4));
+				p.setExistingId(-1);
 				plants.add(p);
 			} while (c.moveToNext());
 		}
@@ -155,27 +194,30 @@ public class PlantDao extends DaoBase {
 	public ArrayList<Plant> getAddedPlants() {
 		ArrayList<Plant> plants = new ArrayList<Plant>();
 
-		Cursor c = super.mDb.rawQuery("SELECT * FROM Plant", null);
+		c = super.mDb.rawQuery("SELECT * FROM Plant", null);
 		// Read the result of the Query and Add the objects to the ArrayList
 		if (c.moveToFirst()) {
 			do {
-				if (c.getInt(4) > 0) {
 					Plant p = new Plant();
-					int id = c.getInt(0);
-
-					p.setId(id);
-					p.setName(c.getString(1));
-					p.setDescription(c.getString(2));
-					p.setTimeToGrow(c.getInt(3));
-					p.setWeatherId(c.getInt(4));
+					p.setId(c.getInt(0));
+					p.setDate(new Date(c.getLong(1)));
+					p.setExistingId(c.getInt(2));
+					Cursor aux = super.mDb.rawQuery("SELECT * FROM existingPlants WHERE id = " + c.getInt(2), null);
+					if(aux.moveToFirst()){
+						p.setName(aux.getString(1));
+						p.setDescription(aux.getString(2));
+						p.setTimeToGrow(aux.getInt(3));
+						p.setWeatherId(aux.getInt(4));
+					}
 					plants.add(p);
-				}
 			} while (c.moveToNext());
 		}
 
 		return plants;
 	}
 
+	
+	
 	protected boolean convertResultToObject() {
 		return true;
 	}
