@@ -34,10 +34,11 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-public class WeatherService extends IntentService{
+public class WeatherService extends IntentService {
 	private final static String TAG = "TestRequette";
 	private WeatherDao w;
 	private Weather weather;
+
 	public WeatherService() {
 		super(TAG);
 	}
@@ -57,28 +58,26 @@ public class WeatherService extends IntentService{
 		}
 
 	}
-	
-	
-	protected String getPosition()
-	{
-			
+
+	protected String getPosition() {
+
 		Log.d(TAG, "Requette0");
-//		LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-//		Criteria crit = new Criteria();
-//		crit.setAccuracy(Criteria.ACCURACY_FINE);	
-//		String provider = LocationManager.NETWORK_PROVIDER;
-//        Location loc = locationManager.getLastKnownLocation(provider);
+		// LocationManager locationManager =
+		// (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		// Criteria crit = new Criteria();
+		// crit.setAccuracy(Criteria.ACCURACY_FINE);
+		// String provider = LocationManager.NETWORK_PROVIDER;
+		// Location loc = locationManager.getLastKnownLocation(provider);
 		Log.d(TAG, "Requettes3");
-		
-//		Log.d(TAG,LocationManager.NETWORK_PROVIDER);
-//		locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 1000, 0, this);
 
-//
-//	    Log.d("GPS", ""+loc+"");
-//		Log.d(TAG, "Requettes4");
+		// Log.d(TAG,LocationManager.NETWORK_PROVIDER);
+		// locationManager.requestLocationUpdates(
+		// LocationManager.NETWORK_PROVIDER, 1000, 0, this);
 
+		//
+		// Log.d("GPS", ""+loc+"");
+		// Log.d(TAG, "Requettes4");
 
-		
 		return null;
 	}
 
@@ -88,8 +87,9 @@ public class WeatherService extends IntentService{
 		Log.d(TAG, "Requettes9");
 
 		try {
-			response = httpclient.execute(new HttpGet(
-					"http://api.openweathermap.org/data/2.5/weather?q=Arhus,dk"));		
+			response = httpclient
+					.execute(new HttpGet(
+							"http://api.openweathermap.org/data/2.5/weather?q=Arhus,dk"));
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,7 +102,7 @@ public class WeatherService extends IntentService{
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			try {
 				response.getEntity().writeTo(out);
-				
+
 				Log.d(TAG, "Requettes11");
 
 			} catch (IOException e) {
@@ -115,37 +115,38 @@ public class WeatherService extends IntentService{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Log.d(TAG, "Requettes10");
 
 			String responseString = out.toString();
 
-			
-			Log.d(TAG,"name=" + responseString);
+			JSONObject json = (JSONObject) new JSONParser()
+					.parse(responseString);
 
-			JSONObject json = (JSONObject)new JSONParser().parse(responseString);
 			JSONObject info = (JSONObject) json.get("main");
-			
-			
-			info.get("temp_min");
 
-		
+			weather = new Weather();
 
-			
-			
-			
-			/*weather =  new Weather();
-			weather.setMaxTemp((Integer) info.get("temp_max"));
-			weather.setMinTemp((Integer) info.get("temp_min"));
-			weather.setMinHumi((Integer) info.get("humidity"));
-			weather.setMaxHumi((Integer) info.get("humidity"));
-			weather.setMaxLightness(1);
-			weather.setMinLightness(2);
+			weather.setMaxTemp((Double) info.get("temp_max"));
+			Log.d("Yo", "ok2 ");
+
+			weather.setMinTemp((Double) info.get("temp_min"));
+			Log.d("Yo", "ok3");
+
+			weather.setMinHumi((Long) info.get("humidity"));
+			Log.d("Yo", "ok4");
+
+
+			weather.setMaxLightness(1.255);
+			Log.d("Yo", "ok5");
+
+			weather.setMinLightness(2.255);
+			Log.d("Yo", "ok6");
 
 			w = new WeatherDao(this);
-			w.add(weather);*/
-			
+			w.add(weather);
+			Log.d("Yo", "ok7");
 
-		
+			Log.d("Yo", "Asier Encule3");
+
 		} else {
 			// Closes the connection.
 			try {
@@ -163,119 +164,118 @@ public class WeatherService extends IntentService{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			return null;
 		}
 		return null;
 	}
 
-	
-	
-//
-//private LocationManager mLocationManager = null;
-//private static final int LOCATION_INTERVAL = 1000;
-//private static final float LOCATION_DISTANCE = 10f;
-//
-//private class LocationListener implements android.location.LocationListener{
-//    Location mLastLocation;
-//    
-//    
-//    public LocationListener(String provider)
-//    {
-//        Log.e(TAG, "LocationListener " + provider);
-//        mLastLocation = new Location(provider);
-//    }
-//    @Override
-//    public void onLocationChanged(Location location)
-//    {
-//        Log.e(TAG, "onLocationChanged: " + location);
-//        mLastLocation.set(location);
-//    }
-//    @Override
-//    public void onProviderDisabled(String provider)
-//    {
-//        Log.e(TAG, "onProviderDisabled: " + provider);            
-//    }
-//    @Override
-//    public void onProviderEnabled(String provider)
-//    {
-//        Log.e(TAG, "onProviderEnabled: " + provider);
-//    }
-//    @Override
-//    public void onStatusChanged(String provider, int status, Bundle extras)
-//    {
-//        Log.e(TAG, "onStatusChanged: " + provider);
-//    }
-//} 
-//
-//LocationListener[] mLocationListeners = new LocationListener[] {
-//        new LocationListener(LocationManager.GPS_PROVIDER),
-//        new LocationListener(LocationManager.NETWORK_PROVIDER)
-//};
-//@Override
-//public IBinder onBind(Intent arg0)
-//{
-//    return null;
-//}
-//@Override
-//public int onStartCommand(Intent intent, int flags, int startId)
-//{
-//    Log.e(TAG, "onStartCommand");
-//    super.onStartCommand(intent, flags, startId);       
-//    return START_STICKY;
-//}
-//@Override
-//public void onCreate()
-//{
-//    initializeLocationManager();
-//    try {
-//    	
-//    	Log.d(TAG,LocationManager.NETWORK_PROVIDER);
-//    	
-//
-//        mLocationManager.requestLocationUpdates(
-//                LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-//                mLocationListeners[1]);
-//    } catch (java.lang.SecurityException ex) {
-//        Log.i(TAG, "fail to request location update, ignore", ex);
-//    } catch (IllegalArgumentException ex) {
-//        Log.d(TAG, "network provider does not exist, " + ex.getMessage());
-//    }
-//    try {
-//        mLocationManager.requestLocationUpdates(
-//                LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-//                mLocationListeners[0]);
-//    } catch (java.lang.SecurityException ex) {
-//        Log.i(TAG, "fail to request location update, ignore", ex);
-//    } catch (IllegalArgumentException ex) {
-//        Log.d(TAG, "gps provider does not exist " + ex.getMessage());
-//    }
-//}
-//@Override
-//public void onDestroy()
-//{
-//    Log.e(TAG, "onDestroy");
-//    super.onDestroy();
-//    if (mLocationManager != null) {
-//        for (int i = 0; i < mLocationListeners.length; i++) {
-//            try {
-//                mLocationManager.removeUpdates(mLocationListeners[i]);
-//            } catch (Exception ex) {
-//                Log.i(TAG, "fail to remove location listners, ignore", ex);
-//            }
-//        }
-//    }
-//} 
-//private void initializeLocationManager() {
-//    if (mLocationManager == null) {
-//        mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);       
-//        
-//        String fournisseur = LocationManager.NETWORK_PROVIDER;
-//        mLocationManager.getProvider(fournisseur);
-//        
-//        Log.d(TAG,String.valueOf(mLocationManager.getAllProviders()));
-//    }
-//}
+	//
+	// private LocationManager mLocationManager = null;
+	// private static final int LOCATION_INTERVAL = 1000;
+	// private static final float LOCATION_DISTANCE = 10f;
+	//
+	// private class LocationListener implements
+	// android.location.LocationListener{
+	// Location mLastLocation;
+	//
+	//
+	// public LocationListener(String provider)
+	// {
+	// Log.e(TAG, "LocationListener " + provider);
+	// mLastLocation = new Location(provider);
+	// }
+	// @Override
+	// public void onLocationChanged(Location location)
+	// {
+	// Log.e(TAG, "onLocationChanged: " + location);
+	// mLastLocation.set(location);
+	// }
+	// @Override
+	// public void onProviderDisabled(String provider)
+	// {
+	// Log.e(TAG, "onProviderDisabled: " + provider);
+	// }
+	// @Override
+	// public void onProviderEnabled(String provider)
+	// {
+	// Log.e(TAG, "onProviderEnabled: " + provider);
+	// }
+	// @Override
+	// public void onStatusChanged(String provider, int status, Bundle extras)
+	// {
+	// Log.e(TAG, "onStatusChanged: " + provider);
+	// }
+	// }
+	//
+	// LocationListener[] mLocationListeners = new LocationListener[] {
+	// new LocationListener(LocationManager.GPS_PROVIDER),
+	// new LocationListener(LocationManager.NETWORK_PROVIDER)
+	// };
+	// @Override
+	// public IBinder onBind(Intent arg0)
+	// {
+	// return null;
+	// }
+	// @Override
+	// public int onStartCommand(Intent intent, int flags, int startId)
+	// {
+	// Log.e(TAG, "onStartCommand");
+	// super.onStartCommand(intent, flags, startId);
+	// return START_STICKY;
+	// }
+	// @Override
+	// public void onCreate()
+	// {
+	// initializeLocationManager();
+	// try {
+	//
+	// Log.d(TAG,LocationManager.NETWORK_PROVIDER);
+	//
+	//
+	// mLocationManager.requestLocationUpdates(
+	// LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
+	// mLocationListeners[1]);
+	// } catch (java.lang.SecurityException ex) {
+	// Log.i(TAG, "fail to request location update, ignore", ex);
+	// } catch (IllegalArgumentException ex) {
+	// Log.d(TAG, "network provider does not exist, " + ex.getMessage());
+	// }
+	// try {
+	// mLocationManager.requestLocationUpdates(
+	// LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
+	// mLocationListeners[0]);
+	// } catch (java.lang.SecurityException ex) {
+	// Log.i(TAG, "fail to request location update, ignore", ex);
+	// } catch (IllegalArgumentException ex) {
+	// Log.d(TAG, "gps provider does not exist " + ex.getMessage());
+	// }
+	// }
+	// @Override
+	// public void onDestroy()
+	// {
+	// Log.e(TAG, "onDestroy");
+	// super.onDestroy();
+	// if (mLocationManager != null) {
+	// for (int i = 0; i < mLocationListeners.length; i++) {
+	// try {
+	// mLocationManager.removeUpdates(mLocationListeners[i]);
+	// } catch (Exception ex) {
+	// Log.i(TAG, "fail to remove location listners, ignore", ex);
+	// }
+	// }
+	// }
+	// }
+	// private void initializeLocationManager() {
+	// if (mLocationManager == null) {
+	// mLocationManager = (LocationManager)
+	// getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+	//
+	// String fournisseur = LocationManager.NETWORK_PROVIDER;
+	// mLocationManager.getProvider(fournisseur);
+	//
+	// Log.d(TAG,String.valueOf(mLocationManager.getAllProviders()));
+	// }
+	// }
 
-	          }
-	        
+}

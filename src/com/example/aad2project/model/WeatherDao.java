@@ -19,8 +19,7 @@ public class WeatherDao extends DaoBase {
 			w.setId(c.getInt(0));
 			w.setMinTemp(c.getInt(1));
 			w.setMaxTemp(c.getInt(2));
-			w.setMinHumi(c.getInt(3));
-			w.setMaxHumi(c.getInt(4));
+			w.setMinHumi((long) c.getInt(3));
 			w.setMinLightness(c.getInt(5));
 			w.setMaxLightness(c.getInt(6));
 			return w;
@@ -31,20 +30,17 @@ public class WeatherDao extends DaoBase {
 	
 
 	public void add(Weather weather) {
-		double minHumidity,maxHumidity,maxTemperature,minTemperature,minLightness,maxLightness;
+		double minHumidity,maxTemperature,minTemperature,minLightness,maxLightness;
 		minHumidity = weather.getMinHumi();
-		maxHumidity = weather.getMaxHumi();
 		maxTemperature = weather.getMaxTemp();
 		minTemperature = weather.getMinTemp();
 		minLightness = weather.getMinLightness();
 		maxLightness = weather.getMaxLightnesss();
 
 		super.mDb
-				.execSQL("INSERT INTO  Plant (minHumidity,maxHumidity,maxTemperature,minTemperature,minLightness,maxLightness)"
+				.execSQL("INSERT INTO  Weather (HumidityMin,TemperatureMax,TemperatureMin,LightnessMin,LightnessMax)"
 						+ "	VALUES ('"
 						+ minHumidity
-						+ "','"
-						+ maxHumidity
 						+ "',"
 						+ maxTemperature + "," + minTemperature + "," + minLightness + "," + maxLightness + ");");
 	}
