@@ -90,8 +90,7 @@ public class PlantInformationFragment extends Fragment {
 		plantName.setText(p.getName());
 		plantDescription.setText(p.getDescription());
 		
-		plantHumidity.setText(wDao.getWeather(p.getWeatherId()).getMinHumi() + "% - " +
-									wDao.getWeather(p.getWeatherId()).getMaxHumi()+"%");
+		plantHumidity.setText(wDao.getWeather(p.getWeatherId()).getMinHumi() + "% - ");
 		
 		//Setting Kilo Lumens if it's necessary
 		String brMin = wDao.getWeather(p.getWeatherId()).getMinLightness()+" ";

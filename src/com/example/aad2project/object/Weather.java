@@ -2,8 +2,7 @@ package com.example.aad2project.object;
 
 public class Weather {
 
-	private double maxHumidity;
-	private double minHumidity;
+	private Long minHumidity;
 	private double maxTemperature;
 	private double minTemperature;
 	private double minLightness;
@@ -23,23 +22,13 @@ public Weather(){}
 		this.id = id;
 	}
 	
-	
-	public double getMaxHumi() {
-		return maxHumidity;
-	}
 
-
-	public void setMaxHumi(int maxHumidity) {
-		this.maxHumidity = maxHumidity;
-	}
-
-
-	public double getMinHumi() {
+	public Long getMinHumi() {
 		return minHumidity;
 	}
 
 
-	public void setMinHumi(int minHumidity) {
+	public void setMinHumi(Long minHumidity) {
 		this.minHumidity = minHumidity;
 	}
 
@@ -49,7 +38,7 @@ public Weather(){}
 	}
 
 
-	public void setMaxTemp(int maxTemperature) {
+	public void setMaxTemp(double maxTemperature) {
 		this.maxTemperature = maxTemperature;
 	}
 
@@ -59,7 +48,7 @@ public Weather(){}
 	}
 
 
-	public void setMinTemp(int minTemperature) {
+	public void setMinTemp(double minTemperature) {
 		this.minTemperature = minTemperature;
 	}
 
@@ -69,7 +58,7 @@ public Weather(){}
 	}
 
 
-	public void setMinLightness(int minLightness) {
+	public void setMinLightness(double minLightness) {
 		this.minLightness = minLightness;
 	}
 
@@ -79,7 +68,7 @@ public Weather(){}
 	}
 
 
-	public void setMaxLightness(int maxLightnesss) {
+	public void setMaxLightness(double maxLightnesss) {
 		this.maxLightnesss = maxLightnesss;
 	}
 
