@@ -2,8 +2,6 @@ package com.example.aad2project.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -12,27 +10,17 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.example.aad2project.model.PlantDao;
-import com.example.aad2project.model.Weather;
-import com.example.aad2project.model.WeatherDao;
-
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
+
+import com.example.aad2project.model.WeatherDao;
+import com.example.aad2project.object.Weather;
 
 public class WeatherService extends IntentService {
 	private final static String TAG = "TestRequette";
