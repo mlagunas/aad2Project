@@ -372,7 +372,8 @@ public class ManagerActivity extends ActionBarActivity implements
 
 		// Put the boolean inside
 		Bundle bundle = new Bundle();
-		bundle.putInt("eID", plant.getExisitingId());
+		
+		bundle.putInt("eId", plant.getExisitingId());
 		bundle.putBoolean("function", added);
 		bundle.putString("description", plant.getDescription());
 		bundle.putInt("number", 5);

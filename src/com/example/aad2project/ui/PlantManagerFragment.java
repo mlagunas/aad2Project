@@ -19,7 +19,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.Toast;
 
 import com.example.aad2project.R;
 import com.example.aad2project.adapter.PlantManagerAdapter;
@@ -109,8 +108,6 @@ public class PlantManagerFragment extends Fragment implements LoaderManager.Load
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 
-				Toast.makeText(getActivity(), "Short click", Toast.LENGTH_SHORT)
-						.show();
 				// Notify the activity and send the id of the clicked plant
 				int  plantId = ((Plant) mAdapter.getChild(groupPosition,
 						childPosition)).getId();

@@ -82,7 +82,6 @@ public class PlantInformationFragment extends Fragment {
 
 		PlantDao pDao = new PlantDao(getActivity());
 		WeatherDao wDao = new WeatherDao(getActivity());
-		
 		Plant p = pDao.searchPlant(plantId, upperGroup);
 		
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());

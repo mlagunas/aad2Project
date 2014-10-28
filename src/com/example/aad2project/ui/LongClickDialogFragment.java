@@ -68,7 +68,6 @@ public class LongClickDialogFragment extends DialogFragment {
 								Toast.LENGTH_LONG).show();
 					}
 					mListener.onDialogItemClick();
-					// adapter.updatePlantList(plants.getAddedPlants(),plants.getAllPlants());
 					break;
 				case 1:
 
@@ -79,8 +78,9 @@ public class LongClickDialogFragment extends DialogFragment {
 					if (existingId == -1)
 						intent.putExtra("id", plantId);
 					else
-						intent.putExtra("id",existingId);
-					intent.putExtra("upper_group", function);
+						intent.putExtra("id", existingId);
+					
+					intent.putExtra("UPPER_GROUP", function);
 					startActivity(intent);
 					break;
 				}
