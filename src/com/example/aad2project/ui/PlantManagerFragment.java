@@ -1,6 +1,7 @@
 package com.example.aad2project.ui;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class PlantManagerFragment extends Fragment {
 	private EditText mFilter;
 
 	private OnPlantManagerFragmentInteractionListener mListener;
+	
+	private Boolean isFiltered;
 
 	public PlantManagerFragment() {
 		// Required empty public constructor
@@ -48,7 +51,7 @@ public class PlantManagerFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		plants = new PlantDao(getActivity());
-
+		isFiltered = false;
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_plant_manager,
 				container, false);
@@ -88,7 +91,7 @@ public class PlantManagerFragment extends Fragment {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
-				mAdapter.filter(s.toString());
+				isFiltered = mAdapter.filter(s.toString());
 			}
 
 			@Override
@@ -130,21 +133,35 @@ public class PlantManagerFragment extends Fragment {
 				Plant p;
 
 				// Put boolean to show Add or Delete
-				Bundle bundle = new Bundle();
+				//Bundle bundle = new Bundle();
+				if(!isFiltered){
+					if ((Boolean) view.getTag()) {
+						ArrayList<Plant> data = plants.getAddedPlants();
+						p = data.get(position - 1);
+					} else {
+						ArrayList<Plant> data = plants.getAllPlants();
+						p = data.get(position - plants.getAddedPlants().size() - 2);
+					}
 
-				if ((Boolean) view.getTag()) {
-					ArrayList<Plant> data = plants.getAddedPlants();
-					p = data.get(position - 1);
-				} else {
-					ArrayList<Plant> data = plants.getAllPlants();
-					p = data.get(position - plants.getAddedPlants().size() - 2);
+					if (mListener != null) {
+						mListener.onLongClickedPlantFragmentInteraction(p,
+								(Boolean) view.getTag());
+					}
 				}
-
-				if (mListener != null) {
-					mListener.onLongClickedPlantFragmentInteraction(p,
-							(Boolean) view.getTag());
+				else{
+					if ((Boolean) view.getTag()) {
+						List<Plant> data = mAdapter.getFilteredAdded();
+						p = data.get(position - 1);
+					} else {
+						List<Plant> data = mAdapter.getFilteredAll();
+						p = data.get(position - mAdapter.getFilteredAdded().size() - 2);
+					}
+					isFiltered = false;
+					if (mListener != null) {
+						mListener.onLongClickedPlantFragmentInteraction(p,
+								(Boolean) view.getTag());
+					}
 				}
-
 				return true;
 			}
 		});

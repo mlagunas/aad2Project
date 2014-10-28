@@ -39,14 +39,15 @@ public class TaskPlantDao extends DaoBase {
 	private Plant createPlant(Cursor c, int idP){
 		Plant p = new Plant();
 		if(c.moveToFirst()){
-			
 			p.setId(c.getInt(0));
-	        p.setName(c.getString(1));
-	        p.setDescription(c.getString(2));
-	        p.setTimeToGrow(c.getInt(3));
-	        p.setNumber(c.getInt(4));
-	        p.setWeatherId(c.getInt(5));
-
+			p.setDate(new Date(c.getLong(1)));
+			Cursor aux = super.mDb.rawQuery("SELECT * FROM existingPlants WHERE id = " + c.getInt(2), null);
+			if(aux.moveToFirst()){
+				p.setName(aux.getString(1));
+				p.setDescription(aux.getString(2));
+				p.setTimeToGrow(aux.getInt(3));
+				p.setWeatherId(aux.getInt(4));
+			}
 		}
         return p;
 	}

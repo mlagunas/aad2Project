@@ -18,6 +18,7 @@ public class LongClickDialogFragment extends DialogFragment {
 
 	private boolean function;
 	private int plantId;
+	private int existingId;
 
 	// Use this instance of the interface to deliver action events
 	private LongClickDialogListener mListener;
@@ -27,7 +28,7 @@ public class LongClickDialogFragment extends DialogFragment {
 		int arrayId;
 		function = getArguments().getBoolean("function");
 		plantId = getArguments().getInt("id");
-		
+		existingId = getArguments().getInt("eId");
 		if (function) {
 			arrayId = R.array.long_click_delete;
 		} else {
@@ -49,6 +50,8 @@ public class LongClickDialogFragment extends DialogFragment {
 					PlantDao p = new PlantDao(getActivity());
 					if (!function) {
 						Plant plant = new Plant();
+						plant.setId(plantId);
+						plant.setExistingId(-1);
 						plant.setDescription(getArguments().getString(
 								"description"));
 						plant.setName(getArguments().getString("name"));
@@ -74,7 +77,10 @@ public class LongClickDialogFragment extends DialogFragment {
 					// so we can implement one function for both
 					Intent intent = new Intent(getActivity(),
 							PlantInformationActivity.class);
-					intent.putExtra("id", plantId);
+					if (existingId == -1)
+						intent.putExtra("id", plantId);
+					else
+						intent.putExtra("id",existingId);
 					intent.putExtra("upper_group", function);
 					startActivity(intent);
 					break;
