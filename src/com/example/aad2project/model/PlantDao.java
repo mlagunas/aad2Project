@@ -1,15 +1,17 @@
 package com.example.aad2project.model;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.aad2project.object.Plant;
 import com.example.aad2project.object.Task;
-import com.example.aad2project.ui.TaskCalendarFragment;
 
 public class PlantDao extends DaoBase {
 
@@ -117,6 +119,9 @@ public class PlantDao extends DaoBase {
 				+ (1000 * 60 * 60 * 24 * timeToGrow));
 
 		tp.createTaskPlant(plant, t, toGrow.getTime());
+
+		// Notify the Loader
+		notifyLoader();
 	}
 
 	/**
@@ -183,5 +188,13 @@ public class PlantDao extends DaoBase {
 		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = " + id);
 		tp.deleteTaskPlant(id);
 		super.mDb.execSQL("DELETE FROM Plant " + "WHERE id = " + id + ";");
+
+		// Notify the Loader
+		notifyLoader();
+	}
+
+	private void notifyLoader() {
+		Intent intent = new Intent("plant-database-changed");
+		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 }

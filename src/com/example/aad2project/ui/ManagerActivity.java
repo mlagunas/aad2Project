@@ -49,16 +49,14 @@ import com.example.aad2project.ui.TaskCalendarFragment.OnTaskCalendarFragmentInt
 
 @SuppressLint("NewApi")
 public class ManagerActivity extends ActionBarActivity implements
-ActionBar.TabListener, OnPlantManagerFragmentInteractionListener,
-OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
+		ActionBar.TabListener, OnPlantManagerFragmentInteractionListener,
+		OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 
 	public SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager mViewPager;
 	private FrameLayout container;
-	private TaskCalendarAdapter mAdapter;
 	private TaskPlantDao tpDAO;
 	private TaskPlant tp;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,12 +100,12 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
 		mViewPager
-		.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-			@Override
-			public void onPageSelected(int position) {
-				actionBar.setSelectedNavigationItem(position);
-			}
-		});
+				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+					@Override
+					public void onPageSelected(int position) {
+						actionBar.setSelectedNavigationItem(position);
+					}
+				});
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -144,7 +142,7 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 			logout();
 
 			break;
-			// action with ID action_settings was selected
+		// action with ID action_settings was selected
 		case R.id.action_settings:
 			// Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
 			// .show();
@@ -190,8 +188,6 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 	 */
 	public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
-		SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
-
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
@@ -226,28 +222,6 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 				return getString(R.string.title_section1).toUpperCase(l);
 			}
 			return null;
-		}
-
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			Fragment fragment = (Fragment) super.instantiateItem(container,
-					position);
-			registeredFragments.put(position, fragment);
-			return fragment;
-		}
-
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			registeredFragments.remove(position);
-			super.destroyItem(container, position, object);
-		}
-
-		public Fragment getRegisteredFragment(int position) {
-			return registeredFragments.get(position);
-		}
-
-		public SparseArray<Fragment> getRegisteredFragments() {
-			return registeredFragments;
 		}
 	}
 
@@ -380,10 +354,12 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 		public void onReceive(Context context, Intent intent) {
 			tpDAO = new TaskPlantDao(getBaseContext());
 			tp = tpDAO.getCurrentDayTaskPlant();
-			for (int i = 0; i < tp.size(); i++) { 
+			for (int i = 0; i < tp.size(); i++) {
 
-				String plantName = tp.getTaskPlantNumber(i).getPlant().getName(); 
-				String taskName = tp.getTaskPlantNumber(i).getTask().getDescription();
+				String plantName = tp.getTaskPlantNumber(i).getPlant()
+						.getName();
+				String taskName = tp.getTaskPlantNumber(i).getTask()
+						.getDescription();
 				notifications(plantName, taskName, i);
 
 			}
@@ -417,23 +393,7 @@ OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 		dialog.show(getSupportFragmentManager(), "LongClickDialogFragment");
 	}
 
-	// The dialog fragment receives a reference to this Activity through the
-	// Fragment.onAttach() callback, which it uses to call the following methods
-	// defined by the NoticeDialogFragment.NoticeDialogListener interface
 	@Override
 	public void onDialogItemClick() {
-		// Refresh the fragments
-		// mSectionsPagerAdapter.getRegisteredFragment(mViewPager.getCurrentItem());
-		for (Fragment f : getSupportFragmentManager().getFragments()) {
-			if ( f.getClass() == PlantManagerFragment.class){
-				Log.d("REFRESHING MANAGER","REFRESH");
-				((PlantManagerFragment) f).refresh();
-			} else if ( f.getClass() == TaskCalendarFragment.class){
-				((TaskCalendarFragment) f).refresh();
-				Log.d("REFRESHING CALENDAR","REFRESH");
-			}
-		}
-		mSectionsPagerAdapter.notifyDataSetChanged();
 	}
-
 }

@@ -9,31 +9,38 @@ import com.example.aad2project.object.Task;
 import com.example.aad2project.object.TaskPlant;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 public class TaskPlantDao extends DaoBase {
 
 	private TaskPlant taskPlant;
-
+	private Context context;
 	
 	public TaskPlantDao (Context pContext) {
 		super(pContext);
 		super.open();
+		context = pContext;
 	}
 	
 	public void deleteAllTaskPlant(){
 		super.mDb.execSQL("DELETE FROM taskPlant");
+		notifyLoader();
 	}
 	
 	public void createTaskPlant(Plant p, Task t, long d){
 		Log.d("ID PLANTA",p.getId()+" ");
 		super.mDb.execSQL("INSERT INTO taskPlant (taskId,plantId,date,done)" +
 				"VALUES ("+p.getId()+","+t.getId()+","+d+",0);");
+		notifyLoader();
 	}
 		
 	public void deleteTaskPlant(Integer id){
-		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = " + id);		
+		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = " + id);	
+		notifyLoader();
 	}
 	
 	private Plant createPlant(Cursor c, int idP){
@@ -146,5 +153,10 @@ public class TaskPlantDao extends DaoBase {
 		c.close();
 		
 		return true;
+	}
+	
+	private void notifyLoader() {
+		Intent intent = new Intent("taskplant-database-changed");
+		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 }

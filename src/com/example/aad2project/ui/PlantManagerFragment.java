@@ -1,11 +1,14 @@
 package com.example.aad2project.ui;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -22,13 +25,14 @@ import android.widget.Toast;
 import com.example.aad2project.R;
 import com.example.aad2project.adapter.PlantManagerAdapter;
 import com.example.aad2project.model.PlantDao;
+import com.example.aad2project.model.PlantsLoader;
 import com.example.aad2project.object.Plant;
 
 /**
  * A simple {@link Fragment} subclass.
  * 
  */
-public class PlantManagerFragment extends Fragment {
+public class PlantManagerFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<List<Plant>>> {
 
 	private PlantDao plants;
 
@@ -69,7 +73,7 @@ public class PlantManagerFragment extends Fragment {
 	}
 
 	public void refresh() {
-		mAdapter.updatePlantList(plants.getAddedPlants(), plants.getAllPlants());
+		//mAdapter.updatePlantList(plants.getAddedPlants(), plants.getAllPlants());
 	}
 
 	@Override
@@ -150,6 +154,15 @@ public class PlantManagerFragment extends Fragment {
 		});
 		super.onViewCreated(view, savedInstanceState);
 	}
+	
+	
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        getLoaderManager().initLoader(0, null, this);
+
+		super.onActivityCreated(savedInstanceState);
+	}
 
 	public void onItemPressed(int id, boolean upperGroup) {
 		if (mListener != null) {
@@ -180,5 +193,22 @@ public class PlantManagerFragment extends Fragment {
 
 		public void onLongClickedPlantFragmentInteraction(Plant plant,
 				boolean added);
+	}
+
+	@Override
+	public Loader<List<List<Plant>>> onCreateLoader(int arg0, Bundle arg1) {
+		return new PlantsLoader(getActivity());
+	}
+
+	@Override
+	public void onLoadFinished(Loader<List<List<Plant>>> loader,
+			List<List<Plant>> data) {
+		Log.d("LOADER","DATA HAS CHANGED. HABEMUS DATA!");
+		mAdapter.updatePlantList(data.get(0), data.get(1));
+	}
+
+	@Override
+	public void onLoaderReset(Loader<List<List<Plant>>> arg0) {
+		
 	}
 }
