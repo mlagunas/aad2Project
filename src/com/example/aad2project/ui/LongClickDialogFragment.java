@@ -7,17 +7,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Plant;
 import com.example.aad2project.model.PlantDao;
+import com.example.aad2project.object.Plant;
 
 public class LongClickDialogFragment extends DialogFragment {
 
 	private boolean function;
 	private int plantId;
+	private int existingId;
 
 	// Use this instance of the interface to deliver action events
 	private LongClickDialogListener mListener;
@@ -27,7 +27,7 @@ public class LongClickDialogFragment extends DialogFragment {
 		int arrayId;
 		function = getArguments().getBoolean("function");
 		plantId = getArguments().getInt("id");
-		
+		existingId = getArguments().getInt("eId");
 		if (function) {
 			arrayId = R.array.long_click_delete;
 		} else {
@@ -49,6 +49,8 @@ public class LongClickDialogFragment extends DialogFragment {
 					PlantDao p = new PlantDao(getActivity());
 					if (!function) {
 						Plant plant = new Plant();
+						plant.setId(plantId);
+						plant.setExistingId(-1);
 						plant.setDescription(getArguments().getString(
 								"description"));
 						plant.setName(getArguments().getString("name"));
@@ -74,7 +76,10 @@ public class LongClickDialogFragment extends DialogFragment {
 					// so we can implement one function for both
 					Intent intent = new Intent(getActivity(),
 							PlantInformationActivity.class);
-					intent.putExtra("id", plantId);
+					if (existingId == -1)
+						intent.putExtra("id", plantId);
+					else
+						intent.putExtra("id",existingId);
 					intent.putExtra("upper_group", function);
 					startActivity(intent);
 					break;

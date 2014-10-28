@@ -1,12 +1,18 @@
-package com.example.aad2project.model;
+package com.example.aad2project.object;
+
+import java.util.Date;
 
 public class Plant {
 
 	private int id, timeToGrow, number, weather;
+	
+	private Date date;
 
 	private String description, name;
 	
 	private Plant next;
+
+	private int eId;
 
 	public Plant() {
 	}
@@ -16,6 +22,14 @@ public class Plant {
 		this.name        = name;
 	}
 
+	public void setExistingId(int eId){
+		this.eId=eId;
+	}
+	
+	public int getExisitingId(){
+		return eId;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -24,6 +38,14 @@ public class Plant {
 		return id;
 	}
 
+	public Date getDate(){
+		return date;
+	}
+	
+	public void setDate(Date date){
+		this.date=date;
+	}
+	
 	public String getName() {
 		return name;
 	}

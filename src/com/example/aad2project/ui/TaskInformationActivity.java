@@ -1,13 +1,11 @@
 package com.example.aad2project.ui;
 
-import com.example.aad2project.R;
-import com.example.aad2project.R.id;
-import com.example.aad2project.R.layout;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+
+import com.example.aad2project.R;
 
 public class TaskInformationActivity extends ActionBarActivity {
 

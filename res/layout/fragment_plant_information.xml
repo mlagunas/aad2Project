@@ -83,14 +83,14 @@
             <TextView
                 android:id="@+id/lightness_text"
                 android:layout_width="match_parent"
-                android:maxLines="100"
-                android:scrollHorizontally="false"
-                android:ellipsize="none"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/lightness_icon"
-                android:layout_toRightOf="@+id/lightness_icon"
-                android:paddingBottom="4dp"
                 android:layout_below="@id/humidity_text"
+                android:layout_toRightOf="@+id/lightness_icon"
+                android:ellipsize="none"
+                android:maxLines="100"
+                android:paddingBottom="4dp"
+                android:scrollHorizontally="false"
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
@@ -99,8 +99,7 @@
             android:id="@+id/plant_description"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Description" />
+            android:layout_weight="1" />
     </LinearLayout>
 
 </ScrollView>

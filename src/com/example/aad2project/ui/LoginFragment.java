@@ -1,10 +1,6 @@
 package com.example.aad2project.ui;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,8 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.MyContentProvider;
-import com.example.aad2project.model.SharedInformation.Account;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment

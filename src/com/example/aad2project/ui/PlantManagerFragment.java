@@ -1,14 +1,16 @@
 package com.example.aad2project.ui;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +22,16 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Plant;
+import com.example.aad2project.adapter.PlantManagerAdapter;
 import com.example.aad2project.model.PlantDao;
+import com.example.aad2project.model.PlantsLoader;
+import com.example.aad2project.object.Plant;
 
 /**
  * A simple {@link Fragment} subclass.
  * 
  */
-public class PlantManagerFragment extends Fragment {
+public class PlantManagerFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<List<Plant>>> {
 
 	private PlantDao plants;
 
@@ -37,6 +41,8 @@ public class PlantManagerFragment extends Fragment {
 	private EditText mFilter;
 
 	private OnPlantManagerFragmentInteractionListener mListener;
+	
+	private Boolean isFiltered;
 
 	public PlantManagerFragment() {
 		// Required empty public constructor
@@ -47,7 +53,7 @@ public class PlantManagerFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		plants = new PlantDao(getActivity());
-
+		isFiltered = false;
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_plant_manager,
 				container, false);
@@ -59,16 +65,12 @@ public class PlantManagerFragment extends Fragment {
 		// Create mAdapter for the ListView
 		mAdapter = new PlantManagerAdapter(getActivity(),
 				plants.getAddedPlants(), plants.getAllPlants());
-		
-		for (Plant p:plants.getAllPlants()){
-			Log.d("TAG","IDS: "+p.getName()+"  "+p.getId());
-		}
 
 		return view;
 	}
 
 	public void refresh() {
-		mAdapter.updatePlantList(plants.getAddedPlants(), plants.getAllPlants());
+		//mAdapter.updatePlantList(plants.getAddedPlants(), plants.getAllPlants());
 	}
 
 	@Override
@@ -87,7 +89,7 @@ public class PlantManagerFragment extends Fragment {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
-				mAdapter.filter(s.toString());
+				isFiltered = mAdapter.filter(s.toString());
 			}
 
 			@Override
@@ -129,25 +131,48 @@ public class PlantManagerFragment extends Fragment {
 				Plant p;
 
 				// Put boolean to show Add or Delete
-				Bundle bundle = new Bundle();
+				//Bundle bundle = new Bundle();
+				if(!isFiltered){
+					if ((Boolean) view.getTag()) {
+						ArrayList<Plant> data = plants.getAddedPlants();
+						p = data.get(position - 1);
+					} else {
+						ArrayList<Plant> data = plants.getAllPlants();
+						p = data.get(position - plants.getAddedPlants().size() - 2);
+					}
 
-				if ((Boolean) view.getTag()) {
-					ArrayList<Plant> data = plants.getAddedPlants();
-					p = data.get(position - 1);
-				} else {
-					ArrayList<Plant> data = plants.getAllPlants();
-					p = data.get(position - plants.getAddedPlants().size() - 2);
+					if (mListener != null) {
+						mListener.onLongClickedPlantFragmentInteraction(p,
+								(Boolean) view.getTag());
+					}
 				}
-
-				if (mListener != null) {
-					mListener.onLongClickedPlantFragmentInteraction(p,
-							(Boolean) view.getTag());
+				else{
+					if ((Boolean) view.getTag()) {
+						List<Plant> data = mAdapter.getFilteredAdded();
+						p = data.get(position - 1);
+					} else {
+						List<Plant> data = mAdapter.getFilteredAll();
+						p = data.get(position - mAdapter.getFilteredAdded().size() - 2);
+					}
+					isFiltered = false;
+					if (mListener != null) {
+						mListener.onLongClickedPlantFragmentInteraction(p,
+								(Boolean) view.getTag());
+					}
 				}
-
 				return true;
 			}
 		});
 		super.onViewCreated(view, savedInstanceState);
+	}
+	
+	
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        getLoaderManager().initLoader(0, null, this);
+
+		super.onActivityCreated(savedInstanceState);
 	}
 
 	public void onItemPressed(int id, boolean upperGroup) {
@@ -179,5 +204,21 @@ public class PlantManagerFragment extends Fragment {
 
 		public void onLongClickedPlantFragmentInteraction(Plant plant,
 				boolean added);
+	}
+
+	@Override
+	public Loader<List<List<Plant>>> onCreateLoader(int arg0, Bundle arg1) {
+		return new PlantsLoader(getActivity());
+	}
+
+	@Override
+	public void onLoadFinished(Loader<List<List<Plant>>> loader,
+			List<List<Plant>> data) {
+		mAdapter.updatePlantList(data.get(0), data.get(1));
+	}
+
+	@Override
+	public void onLoaderReset(Loader<List<List<Plant>>> arg0) {
+		
 	}
 }

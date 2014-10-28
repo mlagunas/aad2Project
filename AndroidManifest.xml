@@ -38,8 +38,8 @@
         </activity>
 
         <provider
-            android:name=".model.MyContentProvider"
-            android:authorities="com.example.aad2project.model.mycontentprovider" >
+            android:name="com.example.aad2project.provider.MyContentProvider"
+            android:authorities="com.example.aad2project.provider.mycontentprovider" >
         </provider>
 
         <activity
@@ -55,7 +55,7 @@
             android:label="@string/title_activity_task_information" >
         </activity>
 
-        <receiver android:name=".model.MyReceiver" >
+        <receiver android:name="com.example.aad2project.receiver.MyReceiver" >
         </receiver>
 
         <activity

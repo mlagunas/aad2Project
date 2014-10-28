@@ -1,10 +1,13 @@
 package com.example.aad2project.ui;
 
+import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +16,19 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
+import com.example.aad2project.adapter.TaskCalendarAdapter;
 import com.example.aad2project.model.PlantDao;
 import com.example.aad2project.model.TaskDao;
-import com.example.aad2project.model.TaskPlant;
 import com.example.aad2project.model.TaskPlantDao;
+import com.example.aad2project.model.TasksLoader;
+import com.example.aad2project.object.TaskPlant;
 
 /**
  * A simple {@link Fragment} subclass.
  * 
  */
-public class TaskCalendarFragment extends Fragment {
+public class TaskCalendarFragment extends Fragment implements
+		LoaderManager.LoaderCallbacks<List<TaskPlant>> {
 
 	private ExpandableListView mList;
 	private TaskCalendarAdapter mAdapter;
@@ -38,13 +44,13 @@ public class TaskCalendarFragment extends Fragment {
 	}
 
 	public void refresh() {
-		if (mAdapter != null && tp != null) {
-			mAdapter.updateTaskList(tp.getAllTaskPlant());
-		}
-
-		for (int i = 0; i < mAdapter.getGroupCount(); i++) {
-			mList.expandGroup(i);
-		}
+		// if (mAdapter != null && tp != null) {
+		// mAdapter.updateTaskList(tp.getAllTaskPlant());
+		// }
+		//
+		// for (int i = 0; i < mAdapter.getGroupCount(); i++) {
+		// mList.expandGroup(i);
+		// }
 	}
 
 	@Override
@@ -61,7 +67,6 @@ public class TaskCalendarFragment extends Fragment {
 		t = new TaskDao(getActivity());
 
 		noPlants = p.getAddedPlants().isEmpty();
-
 
 		// tp.deleteAllTaskPlant();
 		// t.deleteAllTask();
@@ -94,10 +99,10 @@ public class TaskCalendarFragment extends Fragment {
 				int taskId = tp.getTask().getId();
 
 				// Send ID back to activity
-				//onItemPressed(taskId);
-				
-				Toast.makeText(getActivity(), "Task done. Good job!", Toast.LENGTH_SHORT)
-					.show();
+				// onItemPressed(taskId);
+
+				Toast.makeText(getActivity(), "Task done. Good job!",
+						Toast.LENGTH_SHORT).show();
 
 				return false;
 			}
@@ -110,6 +115,13 @@ public class TaskCalendarFragment extends Fragment {
 		}
 
 		super.onViewCreated(view, savedInstanceState);
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		getLoaderManager().initLoader(0, null, this);
+
+		super.onActivityCreated(savedInstanceState);
 	}
 
 	public void onItemPressed(int id) {
@@ -139,4 +151,28 @@ public class TaskCalendarFragment extends Fragment {
 	public interface OnTaskCalendarFragmentInteractionListener {
 		public void onTaskCalendarFragmentInteraction(int id);
 	}
+
+	@Override
+	public Loader<List<TaskPlant>> onCreateLoader(int arg0, Bundle arg1) {
+		return new TasksLoader(getActivity());
+	}
+
+	@Override
+	public void onLoadFinished(Loader<List<TaskPlant>> loader,
+			List<TaskPlant> data) {
+		if (mAdapter != null && tp != null) {
+			mAdapter.updateTaskList(data);
+		}
+
+		for (int i = 0; i < mAdapter.getGroupCount(); i++) {
+			mList.expandGroup(i);
+		}
+	}
+
+	@Override
+	public void onLoaderReset(Loader<List<TaskPlant>> arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

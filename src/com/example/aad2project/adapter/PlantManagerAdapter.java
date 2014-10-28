@@ -1,4 +1,4 @@
-package com.example.aad2project.ui;
+package com.example.aad2project.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Plant;
+import com.example.aad2project.object.Plant;
 
 public class PlantManagerAdapter extends BaseExpandableListAdapter {
 
@@ -31,7 +31,7 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 		filteredAll = all;
 	}
 
-	public void filter(String s) {
+	public boolean filter(String s) {
 		if (s == "") {
 			filteredAdded = added;
 			filteredAll = all;
@@ -50,8 +50,17 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 			}
 		}
 		notifyDataSetChanged();
+		return true;
 	}
 
+	public List<Plant> getFilteredAdded(){
+		return filteredAdded;
+	}
+	
+	public List<Plant> getFilteredAll(){
+		return filteredAll;
+	}
+	
 	@Override
 	public int getGroupCount() {
 		return 2;
@@ -139,6 +148,8 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 		all.clear();
 		added.addAll(newAdd);
 		all.addAll(newAll);
+		filteredAdded = added;
+		filteredAll = all;
 		this.notifyDataSetChanged();
 	}
 

@@ -1,4 +1,4 @@
-package com.example.aad2project.ui;
+package com.example.aad2project.adapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
-import android.provider.Contacts.GroupsColumns;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.TaskPlant;
+import com.example.aad2project.object.TaskPlant;
 
 public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
@@ -31,28 +29,29 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 	}
 
 	private List<List<TaskPlant>> divideTaskPerDays(List<TaskPlant> mTasks) {
-			List<List<TaskPlant>> mDays = new ArrayList<List<TaskPlant>>();
-			List<TaskPlant> mDayTasks = new ArrayList<TaskPlant>();
-			Calendar lastDate = Calendar.getInstance();
-			Calendar date = Calendar.getInstance();
-			//TaskPlant lastTask = null;
-			for (TaskPlant mTask : mTasks) {
-				date.setTime(mTask.getDate());
-				if (date.get(Calendar.DAY_OF_YEAR) != 
-						lastDate.get(Calendar.DAY_OF_YEAR)) {// TODO - Properly divide the tasks
-					if (mDayTasks.size() > 0) { // into days when the class is fixed
-						mDays.add(mDayTasks);
-					}
-					mDayTasks = new ArrayList<TaskPlant>();
+		List<List<TaskPlant>> mDays = new ArrayList<List<TaskPlant>>();
+		List<TaskPlant> mDayTasks = new ArrayList<TaskPlant>();
+		Calendar lastDate = Calendar.getInstance();
+		Calendar date = Calendar.getInstance();
+		// TaskPlant lastTask = null;
+		for (TaskPlant mTask : mTasks) {
+			date.setTime(mTask.getDate());
+			if (date.get(Calendar.DAY_OF_YEAR) != lastDate
+					.get(Calendar.DAY_OF_YEAR)) {// TODO - Properly divide the
+													// tasks
+				if (mDayTasks.size() > 0) { // into days when the class is fixed
+					mDays.add(mDayTasks);
 				}
-				mDayTasks.add(mTask);
-				//lastTask = mTask;
-				lastDate.setTime(mTask.getDate());
+				mDayTasks = new ArrayList<TaskPlant>();
 			}
-			
-			if(mDayTasks.size()>0)
-				mDays.add(mDayTasks);
-			return mDays;
+			mDayTasks.add(mTask);
+			// lastTask = mTask;
+			lastDate.setTime(mTask.getDate());
+		}
+
+		if (mDayTasks.size() > 0)
+			mDays.add(mDayTasks);
+		return mDays;
 	}
 
 	@Override
@@ -90,13 +89,13 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 		mDays.clear();
 		Collections.sort(newList);
 		mDays = divideTaskPerDays(newList);
-		
+
 		notifyDataSetChanged();
 
 	}
 
 	@Override
-	public boolean hasStableIds() {		
+	public boolean hasStableIds() {
 		return false;
 	}
 
@@ -115,11 +114,10 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM",
 				Locale.ENGLISH);
-		if(!mDays.isEmpty())
-			groupTitle.setText(dateFormat.format(mDays.get(groupPosition).get(0)
-				.getDate())); 
+		if (!mDays.isEmpty())
+			groupTitle.setText(dateFormat.format(mDays.get(groupPosition)
+					.get(0).getDate()));
 
-		
 		// TODO - Change title for
 		// Date
 		// once Task class is fixed

@@ -5,17 +5,17 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.Plant;
 import com.example.aad2project.model.PlantDao;
 import com.example.aad2project.model.WeatherDao;
+import com.example.aad2project.object.Plant;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -33,6 +33,7 @@ public class PlantInformationFragment extends Fragment {
 	private TextView plantName, plantDescription, plantHumidity,
 			plantTemperature, plantLightness;
 	private ImageView plantImage;
+	private Button plantAddButton;
 	
 	public static PlantInformationFragment newInstance(int plantId, boolean upperGroup) {
 		PlantInformationFragment fragment = new PlantInformationFragment();
@@ -86,7 +87,6 @@ public class PlantInformationFragment extends Fragment {
 		
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String temperature = sharedPref.getString("pref_temperature", "");
-		Log.d("TEMPERATURE",":"+temperature);
 		plantImage.setImageResource(getImageResource(p.getName()));
 		plantName.setText(p.getName());
 		plantDescription.setText(p.getDescription());

@@ -1,9 +1,8 @@
 package com.example.aad2project.model;
 
-import java.util.Calendar;
-
 import android.content.Context;
-import android.database.Cursor;
+
+import com.example.aad2project.object.Weather;
 
 public class WeatherDao extends DaoBase {
 
