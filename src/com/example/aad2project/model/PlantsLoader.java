@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.example.aad2project.object.Plant;
 
@@ -171,7 +170,6 @@ public class PlantsLoader extends AsyncTaskLoader<List<List<Plant>>> {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// Extract data included in the Intent
-			Log.d("receiver", "Got message");
 			onContentChanged();
 		}
 	};

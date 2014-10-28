@@ -3,7 +3,6 @@ package com.example.aad2project.ui;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 
 import com.example.aad2project.R;
 
@@ -17,7 +16,6 @@ public class PlantInformationActivity extends ActionBarActivity {
 		// Retrieve the id of the plant that has been pressed
 		int listId = getIntent().getIntExtra("id", 0);
 		boolean upperGroup = getIntent().getBooleanExtra("upper_group", false);
-		Log.d("INTENT", "2. Id: " + listId);
 		// Creation of the first fragment
 		PlantInformationFragment fragment = PlantInformationFragment
 				.newInstance(listId, upperGroup);

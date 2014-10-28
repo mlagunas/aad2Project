@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.example.aad2project.object.Plant;
 import com.example.aad2project.object.Task;
@@ -43,14 +42,12 @@ public class PlantDao extends DaoBase {
 		if (!upperGroup) {
 			for (Plant p : getAllPlants()) {
 				if (p.getId() == id) {
-					Log.d("PLANT", p.getName());
 					return p;
 				}
 			}
 		} else {
 			for (Plant p : getAddedPlants()) {
 				if (p.getId() == id) {
-					Log.d("PLANT", p.getName());
 					return p;
 				}
 			}

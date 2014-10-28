@@ -16,7 +16,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import android.util.Log;
 
 public class MyContentProvider extends ContentProvider {
 
@@ -39,9 +38,10 @@ public class MyContentProvider extends ContentProvider {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL("CREATE TABLE "
 					+ MyContentProvider.CONTENT_PROVIDER_TABLE_NAME + " ("
-					+ Account.ACCOUNT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ Account.ACCOUNT_EMAIL + " VARCHAR(255)," + Account.ACCOUNT_PASSWORD
-					+ " VARCHAR(255)" + ");");
+					+ Account.ACCOUNT_ID
+					+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ Account.ACCOUNT_EMAIL + " VARCHAR(255),"
+					+ Account.ACCOUNT_PASSWORD + " VARCHAR(255)" + ");");
 		}
 
 		@Override
@@ -71,7 +71,6 @@ public class MyContentProvider extends ContentProvider {
 			try {
 				return Long.parseLong(lastPathSegment);
 			} catch (NumberFormatException e) {
-				Log.e("MyContentProvider", "Number Format Exception : " + e);
 			}
 		}
 		return -1;
@@ -85,8 +84,10 @@ public class MyContentProvider extends ContentProvider {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		try {
 			// Create a content with the data we want to add, here "values"
-			long id = db.insertOrThrow(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME, null,
-					values);
+			long id = db
+					.insertOrThrow(
+							MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
+							null, values);
 
 			// Manage of the non existence of the table
 			if (id == -1) {
@@ -136,7 +137,7 @@ public class MyContentProvider extends ContentProvider {
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		long id = getId(uri);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
-		
+
 		// Delete a content at a selected position
 		try {
 			if (id < 0)
@@ -161,15 +162,16 @@ public class MyContentProvider extends ContentProvider {
 			String[] selectionArgs, String sortOrder) {
 		long id = getId(uri);
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
-		
+
 		if (id < 0) {
-			return db.query(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
+			return db
+					.query(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
 							projection, selection, selectionArgs, null, null,
 							sortOrder);
 		} else {
 			return db.query(MyContentProvider.CONTENT_PROVIDER_TABLE_NAME,
-					projection, Account.ACCOUNT_ID + "=" + id, null, null, null,
-					null);
+					projection, Account.ACCOUNT_ID + "=" + id, null, null,
+					null, null);
 		}
 	}
 

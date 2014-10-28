@@ -28,16 +28,12 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
-import com.example.aad2project.adapter.TaskCalendarAdapter;
 import com.example.aad2project.model.TaskPlantDao;
 import com.example.aad2project.object.Plant;
 import com.example.aad2project.object.TaskPlant;
@@ -250,8 +246,6 @@ public class ManagerActivity extends ActionBarActivity implements
 			fragmentTransaction.replace(R.id.fragment_container, loginFragment);
 			fragmentTransaction.commit();
 		} else {
-			Log.d("INTENT", "1. Id: " + id);
-
 			// Phone behavior (Start new activity)
 			Intent intent = new Intent(this, PlantInformationActivity.class);
 			intent.putExtra("id", id);
@@ -314,8 +308,6 @@ public class ManagerActivity extends ActionBarActivity implements
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		// mId allows you to update the notification later on.
 		mNotificationManager.notify(mId, mBuilder.build());
-
-		Log.i("TAG", "notification");
 	}
 
 	/**

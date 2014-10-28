@@ -11,7 +11,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,10 +63,6 @@ public class PlantManagerFragment extends Fragment implements LoaderManager.Load
 		// Create mAdapter for the ListView
 		mAdapter = new PlantManagerAdapter(getActivity(),
 				plants.getAddedPlants(), plants.getAllPlants());
-		
-		for (Plant p:plants.getAllPlants()){
-			Log.d("TAG","IDS: "+p.getName()+"  "+p.getId());
-		}
 
 		return view;
 	}
@@ -203,7 +198,6 @@ public class PlantManagerFragment extends Fragment implements LoaderManager.Load
 	@Override
 	public void onLoadFinished(Loader<List<List<Plant>>> loader,
 			List<List<Plant>> data) {
-		Log.d("LOADER","DATA HAS CHANGED. HABEMUS DATA!");
 		mAdapter.updatePlantList(data.get(0), data.get(1));
 	}
 

@@ -21,7 +21,6 @@ import com.example.aad2project.model.PlantDao;
 import com.example.aad2project.model.TaskDao;
 import com.example.aad2project.model.TaskPlantDao;
 import com.example.aad2project.model.TasksLoader;
-import com.example.aad2project.object.Task;
 import com.example.aad2project.object.TaskPlant;
 
 /**
