@@ -22,12 +22,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"id 		 Integer PRIMARY KEY AUTOINCREMENT, " +
 			"date		 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"	+ 
 			"existingId  Integer NOT NULL,"	+
-			//"name 		 VARCHAR(50) NOT NULL,								  " +
-			//"description VARCHAR(200) NOT NULL,								  " +
-			//"timeToGrow  NUMBER(4) NOT NULL DEFAULT 0,				  " +
-			//"number 	 NUMBER(2) NOT NULL DEFAULT 1,				  " +
-			//"weatherId   NUMBER(2) NOT NULL,							  " +
-			"FOREIGN KEY (existingId) REFERENCES ExistingPlant(id)	" +
+			"name 		 VARCHAR(50) NOT NULL,								  " +
+			"description VARCHAR(200) NOT NULL,								  " +
+			"timeToGrow  NUMBER(4) NOT NULL DEFAULT 0,				  " +
+			"number 	 NUMBER(2) NOT NULL DEFAULT 1,				  " +
+			"weatherId   NUMBER(2) NOT NULL,							  " +
 			");" ;
 	
 	public static final String TASK_CREATE_TABLE = 
