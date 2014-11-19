@@ -75,7 +75,7 @@
     </string-array>
 
     <string name="title_activity_task_information">TaskInformationActivity</string>
-    <string name="title_activity_about">AboutActivity</string>
     <string name="add_plant">Add plant</string>
+    <string name="title_activity_about">About</string>
 
 </resources>
