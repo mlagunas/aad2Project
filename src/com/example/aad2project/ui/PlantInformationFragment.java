@@ -8,14 +8,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.aad2project.R;
 import com.example.aad2project.model.PlantDao;
 import com.example.aad2project.model.WeatherDao;
 import com.example.aad2project.object.Plant;
+import com.example.aad2project.ui.LoginFragment.OnLoginFragmentInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -33,7 +36,7 @@ public class PlantInformationFragment extends Fragment {
 	private TextView plantName, plantDescription, plantHumidity,
 			plantTemperature, plantLightness;
 	private ImageView plantImage;
-	private Button plantAddButton;
+	private Button addPlantButton;
 	
 	public static PlantInformationFragment newInstance(int plantId, boolean upperGroup) {
 		PlantInformationFragment fragment = new PlantInformationFragment();
@@ -73,6 +76,25 @@ public class PlantInformationFragment extends Fragment {
 		plantHumidity = (TextView) view.findViewById(R.id.humidity_text);
 		plantTemperature = (TextView) view.findViewById(R.id.temperature_text);
 		plantLightness = (TextView) view.findViewById(R.id.lightness_text);
+		addPlantButton = (Button) view.findViewById(R.id.addPlantButton);
+		
+		addPlantButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// Set the listener on the button
+				PlantDao p = new PlantDao(getActivity());
+				
+				Plant plant = p.getPlant(plantId);
+				
+				// add the plant
+				p.addPlant(plant);
+				
+				Toast.makeText(getActivity(), "Added",
+						Toast.LENGTH_LONG).show();
+			}
+
+		});
 
 		return view;
 	}

@@ -33,6 +33,7 @@
     <string name="pref_temp_summary">Change the scale of temperature</string>
     <string name="pref_time_summary">Change the time format</string>
     <string name="action_about">About</string>
+    <string name="addPlantButton">Add plant</string>
     
     <string name="about">GreenHub has been possible thanks to:</string>
     <string name="alex">Alejandro Lora</string>

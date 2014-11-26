@@ -16,6 +16,7 @@ public class PlantInformationActivity extends ActionBarActivity {
 		// Retrieve the id of the plant that has been pressed
 		int listId = getIntent().getIntExtra("id", 0);
 		boolean upperGroup = getIntent().getBooleanExtra("upper_group", false);
+		
 		// Creation of the first fragment
 		PlantInformationFragment fragment = PlantInformationFragment
 				.newInstance(listId, upperGroup);
