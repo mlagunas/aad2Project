@@ -1,17 +1,13 @@
 package com.example.aad2project.ui;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
@@ -23,21 +19,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
-import com.example.aad2project.model.TaskPlantDao;
 import com.example.aad2project.object.Plant;
-import com.example.aad2project.object.TaskPlant;
-import com.example.aad2project.receiver.MyReceiver;
+import com.example.aad2project.services.NotificationService;
 import com.example.aad2project.services.WeatherService;
 import com.example.aad2project.ui.LongClickDialogFragment.LongClickDialogListener;
 import com.example.aad2project.ui.PlantManagerFragment.OnPlantManagerFragmentInteractionListener;
@@ -49,10 +42,8 @@ public class ManagerActivity extends ActionBarActivity implements
 		OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
 
 	public SectionsPagerAdapter mSectionsPagerAdapter;
-	ViewPager mViewPager;
+	private ViewPager mViewPager;
 	private FrameLayout container;
-	private TaskPlantDao tpDAO;
-	private TaskPlant tp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +55,7 @@ public class ManagerActivity extends ActionBarActivity implements
 		// Check if there is internet on the phone. Yes-> Download new
 		// information about the weather/ No-> Toast to prevent information are
 		// not updated
-		if (networkInfo.isConnected()) {
+		if (networkInfo != null && networkInfo.isConnected()) {
 			Intent i = new Intent(ManagerActivity.this, WeatherService.class);
 			startService(i);
 
@@ -73,8 +64,6 @@ public class ManagerActivity extends ActionBarActivity implements
 					getApplicationContext(),
 					"There is not internet connection, the data can't be updated.",
 					Toast.LENGTH_LONG).show();
-
-		startAlarm();
 
 		container = (FrameLayout) findViewById(R.id.fragment_container);
 
@@ -113,8 +102,6 @@ public class ManagerActivity extends ActionBarActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
-
-		registerReceiver(broadcastReceiver, new IntentFilter("TEST"));
 	}
 
 	@Override
@@ -132,25 +119,16 @@ public class ManagerActivity extends ActionBarActivity implements
 		switch (item.getItemId()) {
 		// action with ID action_refresh was selected
 		case R.id.log_out:
-			// Toast.makeText(this, "Log out selected",
-			// Toast.LENGTH_SHORT).show();
-
 			logout();
-
 			break;
 		// action with ID action_settings was selected
 		case R.id.action_settings:
-			// Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-			// .show();
-
-			Intent intent = new Intent(ManagerActivity.this,
-					SettingsActivity.class);
+			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 			break;
 
 		case R.id.action_about:
-			Intent intent2 = new Intent(ManagerActivity.this,
-					AboutActivity.class);
+			Intent intent2 = new Intent(this, AboutActivity.class);
 			startActivity(intent2);
 			break;
 
@@ -273,95 +251,8 @@ public class ManagerActivity extends ActionBarActivity implements
 	}
 
 	/**
-	 * Display the notification with the informations provided
-	 * 
-	 * @param title
-	 *            : title of the notification
-	 * @param text
-	 *            : text of the notification
-	 * @param mId
-	 *            : id of the notification (can handle more than one
-	 *            notification)
-	 */
-	public void notifications(String title, String text, int mId) {
-
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				this).setSmallIcon(R.drawable.notification_icon)
-				.setContentTitle(title).setContentText(text);
-		// Creates an explicit intent for an Activity in your app
-		Intent resultIntent = new Intent(this, ManagerActivity.class);
-
-		// The stack builder object will contain an artificial back stack for
-		// the
-		// started Activity.
-		// This ensures that navigating backward from the Activity leads out of
-		// your application to the Home screen.
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-		// Adds the back stack for the Intent (but not the Intent itself)
-		stackBuilder.addParentStack(ManagerActivity.class);
-		// Adds the Intent that starts the Activity to the top of the stack
-		stackBuilder.addNextIntent(resultIntent);
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		// mId allows you to update the notification later on.
-		mNotificationManager.notify(mId, mBuilder.build());
-	}
-
-	/**
 	 * Start the alarm for the daily notifications for the daily tasks
 	 */
-	public void startAlarm() {
-		// Prepare intent to launch notification
-		Intent intent = new Intent(this, MyReceiver.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
-				intent, 0);
-
-		// Sets the date and the hour on today, 18;00
-		Date dat = new Date();// initializes to now
-		Calendar cal_alarm = Calendar.getInstance();
-		Calendar cal_now = Calendar.getInstance();
-		cal_now.setTime(dat);
-		cal_alarm.setTime(dat);
-		cal_alarm.set(Calendar.HOUR_OF_DAY, 17);// set the alarm time
-		cal_alarm.set(Calendar.MINUTE, 30);
-		cal_alarm.set(Calendar.SECOND, 0);
-		if (cal_alarm.before(cal_now)) {// if its in the past increment
-			cal_alarm.add(Calendar.DATE, 1);
-		}
-
-		// The alarm manager is an android system service
-		AlarmManager am = (AlarmManager) this
-				.getSystemService(Context.ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(),
-				pendingIntent);
-	}
-
-	// BroadcastReceiver of the ManagerActivity, to receive the intent from the
-	// MyReceiver class
-	BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			tpDAO = new TaskPlantDao(getBaseContext());
-			tp = tpDAO.getCurrentDayTaskPlant();
-			for (int i = 0; i < tp.size(); i++) {
-
-				String plantName = tp.getTaskPlantNumber(i).getPlant()
-						.getName();
-				String taskName = tp.getTaskPlantNumber(i).getTask()
-						.getDescription();
-				notifications(plantName, taskName, i);
-
-			}
-		}
-	};
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		unregisterReceiver(broadcastReceiver);
-	}
 
 	@Override
 	public void onLongClickedPlantFragmentInteraction(Plant plant, boolean added) {
@@ -371,7 +262,7 @@ public class ManagerActivity extends ActionBarActivity implements
 
 		// Put the boolean inside
 		Bundle bundle = new Bundle();
-		
+
 		bundle.putInt("eId", plant.getExisitingId());
 		bundle.putBoolean("function", added);
 		bundle.putString("description", plant.getDescription());

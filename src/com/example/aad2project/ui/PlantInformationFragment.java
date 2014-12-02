@@ -126,12 +126,12 @@ public class PlantInformationFragment extends Fragment {
 		plantLightness.setText(brMin + "Lm - "+ brMax + "Lm");
 		
 		// Difference between Celsius and Fahrenheit
-		if(temperature.equals("0"))
-			plantTemperature.setText(wDao.getWeather(p.getWeatherId()).getMinTemp()+ "ºC - "+
-									wDao.getWeather(p.getWeatherId()).getMaxTemp()+"ºC");
-		else
+		if(temperature.equals("1"))
 			plantTemperature.setText((wDao.getWeather(p.getWeatherId()).getMinTemp()*9/5+32)+ "ºF - "+
 					(wDao.getWeather(p.getWeatherId()).getMaxTemp()*9/5+32)+"ºF");
+		else
+			plantTemperature.setText(wDao.getWeather(p.getWeatherId()).getMinTemp()+ "ºC - "+
+					wDao.getWeather(p.getWeatherId()).getMaxTemp()+"ºC");
 		
 		
 		super.onViewCreated(view, savedInstanceState);
