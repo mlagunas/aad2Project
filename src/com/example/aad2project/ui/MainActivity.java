@@ -1,22 +1,24 @@
 package com.example.aad2project.ui;
 
-import android.content.ContentValues;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.aad2project.R;
-import com.example.aad2project.provider.MyContentProvider;
-import com.example.aad2project.provider.SharedInformation.Account;
+import com.example.aad2project.server.SendToServer;
 
 public class MainActivity extends ActionBarActivity implements
 		LoginFragment.OnLoginFragmentInteractionListener,
@@ -152,29 +154,54 @@ public class MainActivity extends ActionBarActivity implements
 	 * @return login : if it succeed or not
 	 */
 	public int login(String email, String password) {
-		String columns[] = new String[] { Account.ACCOUNT_ID,
-				Account.ACCOUNT_EMAIL, Account.ACCOUNT_PASSWORD };
-		Uri mContacts = MyContentProvider.CONTENT_URI;
-		// Creation of the cursor
-		Cursor cur = managedQuery(mContacts, columns, null, null, null);
-		// Boolean to see if the login succeed or not
+		
+		SendToServer sts;
+		String result = null;
+		JSONObject windJSON = null;
+		String emailReceived;
+		String passwordReceived;
 		int login = 0;
 
-		// Search trough the database to see if there is an account already
-		// created
-		if (cur.moveToFirst()) {
-			do {
-				if (cur.getString(cur.getColumnIndex(Account.ACCOUNT_EMAIL))
-						.equals(email)) {
-					if (cur.getString(
-							cur.getColumnIndex(Account.ACCOUNT_PASSWORD))
-							.equals(password)) {
+		sts = new SendToServer(email, password, "selectUser");
+		sts.execute();
+		while (result == null){
+			result = sts.getReturn();
+		}
+		
+		Log.d("TAGERT",result);
+		if (!result.equals(false)){
+
+			JSONArray myJSON = null;
+	    	try {
+				myJSON = new JSONArray(result);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+			for (int i = 0; i < myJSON.length(); i++) {
+				
+				try {
+					windJSON = myJSON.getJSONObject(i);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				try {
+					emailReceived = windJSON.getString("email");
+					passwordReceived = windJSON.getString("password");
+					if (emailReceived.equals(email) && passwordReceived.equals(password)){
 						login = 1;
 					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} while (cur.moveToNext());
+				// Display in the LogCat
+			
+			}
 		}
-		// Return the success, or not, of the login (1 == success, 0 == fail)
 		return login;
 
 	}
@@ -188,13 +215,9 @@ public class MainActivity extends ActionBarActivity implements
 	 *            : provided by the user
 	 */
 	public void addAccount(String email, String password) {
-		ContentValues account = new ContentValues();
-		// Add the values
-		account.put(Account.ACCOUNT_EMAIL, email);
-		account.put(Account.ACCOUNT_PASSWORD, password);
-		// Insert them into the database
-		getContentResolver().insert(MyContentProvider.CONTENT_URI, account);
 
+		new SendToServer(email, password, "insert").execute();
+		
 		// Toast to inform the user that the account has been created
 		Toast.makeText(getApplicationContext(),
 				getResources().getString(R.string.creation_account),
