@@ -96,6 +96,7 @@ public class AccountCreationFragment extends Fragment {
 				if (passwordView.getText().toString().equals(passwordConfirmView.getText().toString())){
 					// Use the addAccount(String, String) method from MainActivity
 					((MainActivity)getActivity()).addAccount(usernameView.getText().toString(), passwordView.getText().toString());
+					
 				}
 			}
 		});
