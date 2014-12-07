@@ -4,55 +4,53 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
+import com.example.aad2project.adapter.PlantManagerAdapter;
+import com.example.aad2project.object.ExistingPlant;
+import com.example.aad2project.object.Green;
 import com.example.aad2project.object.Plant;
 import com.example.aad2project.object.Task;
+import com.microsoft.windowsazure.mobileservices.MobileServiceTable;
+import com.microsoft.windowsazure.mobileservices.ServiceFilterResponse;
+import com.microsoft.windowsazure.mobileservices.TableDeleteCallback;
+import com.microsoft.windowsazure.mobileservices.TableOperationCallback;
 
 public class PlantDao extends DaoBase {
 
 	private Context context;
-
+	private PlantManagerAdapter pma;
+	
+	/**
+	 * Mobile Service Table used to access data
+	 */
+	private MobileServiceTable<ExistingPlant> tableEp;
+	private MobileServiceTable<Plant> tableP;
+	private ProgressDialog progressDialog;  
+	private ArrayList<Plant> array;
+	
 	public PlantDao(Context pContext) {
 		super(pContext);
-		this.context = pContext;
 		super.open();
+		this.context = pContext;
+		this.array = new ArrayList<Plant>();
+		tableP = mClient.getTable(Plant.class);
+		
 	}
-
-	public Plant getPlant(int id) {
-		Plant p = new Plant();
-		c = super.mDb.rawQuery("SELECT * FROM existingPlants " + "WHERE id = "
-				+ id, null);
-		if (c.moveToFirst()) {
-			p.setId(id);
-			p.setName(c.getString(1));
-			p.setDescription(c.getString(2));
-			p.setTimeToGrow(c.getInt(3));
-			p.setWeatherId(c.getInt(4));
-			return p;
-		} else {
-			return null;
-		}
-	}
-
-	public Plant searchPlant(int id, boolean upperGroup) {
-		/*if (!upperGroup) {
-			for (Plant p : getAllPlants()) {
-				if (p.getId() == id) {
-					return p;
-				}
-			}
-		} else {
-			for (Plant p : getAddedPlants()) {
-				if (p.getId() == id) {
-					return p;
-				}
-			}
-		}*/
-		Plant p = new Plant();
+	
+	/**
+	 * Search a plant in the two list that the user can find in the plant manager
+	 * @param id
+	 * @param upperGroup
+	 * @return
+	 */
+	public Green searchPlant(int id, boolean upperGroup) {
+		Green p = new Green();
 
 		if(!upperGroup){
 			c = super.mDb.rawQuery("SELECT * FROM ExistingPlants WHERE id = " + id, null);
@@ -86,8 +84,13 @@ public class PlantDao extends DaoBase {
 		}
 	}
 
-	public Plant getPlant(String name) {
-		Plant p = new Plant();
+	/**
+	 * Return a plant from the database from the name
+	 * @param name
+	 * @return
+	 */
+	public Green getPlant(String name) {
+		Green p = new Green();
 		c = super.mDb.rawQuery("SELECT * FROM existingPlants "
 				+ "WHERE name = " + name, null);
 		if (c.moveToFirst()) {
@@ -103,46 +106,112 @@ public class PlantDao extends DaoBase {
 	}
 
 	/**
+	 * Search a plant to delete from the cloud from the id 
+	 * @param id
+	 * @return
+	 */
+	public Plant searchDeletePlant (int id){
+		Plant p = new Plant();
+		c = super.mDb.rawQuery("SELECT * FROM Plant "
+				+ "WHERE id = " + id, null);
+		if (c.moveToFirst()) {
+			p.setPlantid(c.getInt(0));
+			p.setExistingId(c.getInt(2));
+			p.setDate(new Date(c.getLong(1)));
+			p.setNumber(0);
+			p.setId(c.getString(4));
+			Log.d("TEST",p.getId());
+			return p;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * returns a Green object from the id of a plant
+	 * @param id
+	 * @return
+	 */
+	public Green getPlant(int id) {
+		Green p = new Green();
+		c = super.mDb.rawQuery("SELECT * FROM existingPlants " + "WHERE id = "
+				+ id, null);
+		if (c.moveToFirst()) {
+			p.setId(id);
+			p.setName(c.getString(1));
+			p.setDescription(c.getString(2));
+			p.setTimeToGrow(c.getInt(3));
+			p.setWeatherId(c.getInt(4));
+			p.setExistingId(c.getInt(0));
+			return p;
+		} else {
+			return null;
+		}
+	}
+	
+
+	
+	/**
 	 * This method add a plant into the Database
 	 * 
 	 * @param plant
 	 */
-	public void addPlant(Plant plant) {
+	public void addPlant(Green plant,boolean cloud) {
 
-		String name, description;
-		int timeToGrow, number, id;
+		String name, description, code;
+		int timeToGrow, number, id, eId;
 		Date tday;
 
 		name = plant.getName();
 		description = plant.getDescription();
 		timeToGrow = plant.getTimeToGrow();
 		number = plant.getNumber();
-		id = plant.getId();
+		if(plant.getExistingId() == -1)
+			id = plant.getId();
+		else
+			id = plant.getExistingId();
 		tday = new Date();
-		
+		code = plant.getCode();
+		Log.d("TAGTAG",name+" "+description+" "+plant.getExistingId()+" "+code+"|| plantDao");
 		super.mDb
-				.execSQL("INSERT INTO  Plant (existingId,date)"
+				.execSQL("INSERT INTO  Plant (existingId,date,code)"
 						+ "	VALUES ("
 						+ id
 						+ ", "
 						+ tday.getTime()
+						+ ","
+						+"'"+code+"'"
 						+ ");");
-
+		
+		if(cloud){
+			Plant i = new Plant();
+			i.setDate(tday);
+			i.setExistingId(id);
+			c = mDb.rawQuery("SELECT id FROM Plant",null);
+			c.moveToLast();
+			i.setPlantid(c.getInt(0));
+			tableP.insert(i, new TableOperationCallback<Plant>(){
+				@Override
+				public void onCompleted(
+						Plant arg0,
+						Exception arg1, ServiceFilterResponse arg2) {
+					// TODO Auto-generated method stub
+					if(arg1 == null){
+						Log.d("TAG","plant inserted");
+					}
+					else{
+						Log.d("TAG",arg1.getCause().toString());
+					}
+				}
+				
+			});
+		}
+		
 		Task t = new Task();
 		t.setDescription("Collect " + name);
 
 		TaskDao td = new TaskDao(context);
 		td.addTask(t);
-
-		Plant insert = new Plant();
-		
-		c = super.mDb.rawQuery("SELECT id FROM Plant", null);
-		c.moveToLast();
-		insert.setId(c.getInt(0));
-		insert.setName(name);
-		insert.setDescription(description);
-		insert.setTimeToGrow(timeToGrow);
-		insert.setExistingId(id);
 		
 		c = super.mDb.rawQuery("SELECT id FROM Task", null);
 		c.moveToLast();
@@ -160,18 +229,43 @@ public class PlantDao extends DaoBase {
 	}
 
 	/**
+	 * Converts a object plant into a green object searching the missing fields in the 
+	 * database 
+	 * @param p
+	 * @return
+	 */
+	public Green plantToGreen(Plant p){
+		Green g = new Green();
+		g.setDate(p.getDate());
+		g.setExistingId(p.getExisitingId());
+		g.setNumber(p.getNumber());
+		g.setId(p.getPlantid());
+		g.setCode(p.getId());
+		c = mDb.rawQuery("SELECT * FROM " +
+						"existingPlants " +
+						"where id = "+ p.getExisitingId(),null);
+			c.moveToFirst();
+			g.setName(c.getString(1));
+			g.setDescription(c.getString(2));
+			g.setTimeToGrow(c.getInt(3));
+			g.setWeatherId(c.getInt(4));
+		
+		return g;
+	}
+	
+	/**
 	 * This method return an ArrayList which contains all the plants added in
 	 * the database
 	 * 
 	 * @return
 	 */
-	public ArrayList<Plant> getAllPlants() {
-		ArrayList<Plant> plants = new ArrayList<Plant>();
+	public ArrayList<Green> getAllPlants() {
+		ArrayList<Green> plants = new ArrayList<Green>();
 		Cursor c = super.mDb.rawQuery("SELECT * FROM ExistingPlants", null);
 		// Read the result of the Query and Add the objects to the ArrayList
 		if (c.moveToFirst()) {
 			do {
-				Plant p = new Plant();
+				Green p = new Green();
 				p.setName(c.getString(1));
 				p.setId(c.getInt(0));
 				p.setDescription(c.getString(2));
@@ -191,14 +285,14 @@ public class PlantDao extends DaoBase {
 	 * 
 	 * @return
 	 */
-	public ArrayList<Plant> getAddedPlants() {
-		ArrayList<Plant> plants = new ArrayList<Plant>();
+	public ArrayList<Green> getAddedPlants() {
+		ArrayList<Green> plants = new ArrayList<Green>();
 
 		c = super.mDb.rawQuery("SELECT * FROM Plant", null);
 		// Read the result of the Query and Add the objects to the ArrayList
 		if (c.moveToFirst()) {
 			do {
-					Plant p = new Plant();
+					Green p = new Green();
 					p.setId(c.getInt(0));
 					p.setDate(new Date(c.getLong(1)));
 					p.setExistingId(c.getInt(2));
@@ -208,6 +302,7 @@ public class PlantDao extends DaoBase {
 						p.setDescription(aux.getString(2));
 						p.setTimeToGrow(aux.getInt(3));
 						p.setWeatherId(aux.getInt(4));
+						Log.d("TAG",p.getName()+" "+p.getDescription());
 					}
 					plants.add(p);
 			} while (c.moveToNext());
@@ -222,12 +317,28 @@ public class PlantDao extends DaoBase {
 		return true;
 	}
 
+	/**
+	 * Deletes a plant from the local database and from the cloud
+	 * @param id
+	 */
 	public void deletePlant(int id) {
+		tableP.delete(searchDeletePlant(id), new TableDeleteCallback(){
+			@Override
+			public void onCompleted(Exception arg0, ServiceFilterResponse arg1) {
+				// TODO Auto-generated method stub
+				if(arg0 == null){
+					Log.d("TAG", "deleted");
+				}
+				else{
+					Log.d("TAG",arg0.getMessage());
+				}
+			}
+		});
 		TaskPlantDao tp = new TaskPlantDao(context);
 		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = " + id);
 		tp.deleteTaskPlant(id);
-		super.mDb.execSQL("DELETE FROM Plant " + "WHERE id = " + id + ";");
-
+		super.mDb.execSQL("DELETE FROM Plant " + "WHERE id = " + id);
+		
 		// Notify the Loader
 		notifyLoader();
 	}

@@ -62,20 +62,11 @@ public class TaskCalendarFragment extends Fragment implements
 
 		mList = (ExpandableListView) view.findViewById(R.id.list);
 
-		p = new PlantDao(getActivity());
+		//p = new PlantDao(getActivity());
 		tp = new TaskPlantDao(getActivity());
 		t = new TaskDao(getActivity());
 
-		noPlants = p.getAddedPlants().isEmpty();
-
-		// tp.deleteAllTaskPlant();
-		// t.deleteAllTask();
-
-		// if(!noPlants){
-		// t.addTask("Water "+p.getAddedPlants().get(0).getName());
-		// tp.createTaskPlant(p.getAddedPlants().get(0),
-		// t.getAllTask().get(0), new Date(System.currentTimeMillis()));
-		// }
+		//noPlants = p.getAddedPlants().isEmpty();
 
 		return view;
 

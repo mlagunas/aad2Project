@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,8 +18,7 @@ import android.widget.Toast;
 import com.example.aad2project.R;
 import com.example.aad2project.model.PlantDao;
 import com.example.aad2project.model.WeatherDao;
-import com.example.aad2project.object.Plant;
-import com.example.aad2project.ui.LoginFragment.OnLoginFragmentInteractionListener;
+import com.example.aad2project.object.Green;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -77,6 +77,7 @@ public class PlantInformationFragment extends Fragment {
 		plantTemperature = (TextView) view.findViewById(R.id.temperature_text);
 		plantLightness = (TextView) view.findViewById(R.id.lightness_text);
 		addPlantButton = (Button) view.findViewById(R.id.addPlantButton);
+		addPlantButton.setClickable(false);
 		
 		addPlantButton.setOnClickListener(new OnClickListener() {
 
@@ -85,10 +86,10 @@ public class PlantInformationFragment extends Fragment {
 				// Set the listener on the button
 				PlantDao p = new PlantDao(getActivity());
 				
-				Plant plant = p.getPlant(plantId);
-				
+				Green plant = p.getPlant(plantId);
+				Log.d("TAG",plantId+" ");
 				// add the plant
-				p.addPlant(plant);
+				p.addPlant(plant,true);
 				
 				Toast.makeText(getActivity(), "Added",
 						Toast.LENGTH_LONG).show();
@@ -104,7 +105,7 @@ public class PlantInformationFragment extends Fragment {
 
 		PlantDao pDao = new PlantDao(getActivity());
 		WeatherDao wDao = new WeatherDao(getActivity());
-		Plant p = pDao.searchPlant(plantId, upperGroup);
+		Green p = pDao.searchPlant(plantId, upperGroup);
 		
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String temperature = sharedPref.getString("pref_temperature", "");
@@ -126,12 +127,12 @@ public class PlantInformationFragment extends Fragment {
 		plantLightness.setText(brMin + "Lm - "+ brMax + "Lm");
 		
 		// Difference between Celsius and Fahrenheit
-		if(temperature.equals("1"))
+		if(temperature.equals("0"))
+			plantTemperature.setText(wDao.getWeather(p.getWeatherId()).getMinTemp()+ "ºC - "+
+									wDao.getWeather(p.getWeatherId()).getMaxTemp()+"ºC");
+		else
 			plantTemperature.setText((wDao.getWeather(p.getWeatherId()).getMinTemp()*9/5+32)+ "ºF - "+
 					(wDao.getWeather(p.getWeatherId()).getMaxTemp()*9/5+32)+"ºF");
-		else
-			plantTemperature.setText(wDao.getWeather(p.getWeatherId()).getMinTemp()+ "ºC - "+
-					wDao.getWeather(p.getWeatherId()).getMaxTemp()+"ºC");
 		
 		
 		super.onViewCreated(view, savedInstanceState);

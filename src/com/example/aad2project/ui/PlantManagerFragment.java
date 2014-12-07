@@ -24,13 +24,14 @@ import com.example.aad2project.R;
 import com.example.aad2project.adapter.PlantManagerAdapter;
 import com.example.aad2project.model.PlantDao;
 import com.example.aad2project.model.PlantsLoader;
+import com.example.aad2project.object.Green;
 import com.example.aad2project.object.Plant;
 
 /**
  * A simple {@link Fragment} subclass.
  * 
  */
-public class PlantManagerFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<List<Plant>>> {
+public class PlantManagerFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<List<Green>>> {
 
 	private PlantDao plants;
 
@@ -64,12 +65,7 @@ public class PlantManagerFragment extends Fragment implements LoaderManager.Load
 		// Create mAdapter for the ListView
 		mAdapter = new PlantManagerAdapter(getActivity(),
 				plants.getAddedPlants(), plants.getAllPlants());
-
 		return view;
-	}
-
-	public void refresh() {
-		//mAdapter.updatePlantList(plants.getAddedPlants(), plants.getAllPlants());
 	}
 
 	@Override
@@ -109,7 +105,7 @@ public class PlantManagerFragment extends Fragment implements LoaderManager.Load
 					int groupPosition, int childPosition, long id) {
 
 				// Notify the activity and send the id of the clicked plant
-				int  plantId = ((Plant) mAdapter.getChild(groupPosition,
+				int  plantId = ((Green) mAdapter.getChild(groupPosition,
 						childPosition)).getId();
 				boolean upperGroup = groupPosition == 0;
 				onItemPressed(plantId, upperGroup);
@@ -125,16 +121,16 @@ public class PlantManagerFragment extends Fragment implements LoaderManager.Load
 					int position, long id) {
 				// Create dialog
 
-				Plant p;
+				Green p;
 
 				// Put boolean to show Add or Delete
 				//Bundle bundle = new Bundle();
 				if(!isFiltered){
 					if ((Boolean) view.getTag()) {
-						ArrayList<Plant> data = plants.getAddedPlants();
+						ArrayList<Green> data = plants.getAddedPlants();
 						p = data.get(position - 1);
 					} else {
-						ArrayList<Plant> data = plants.getAllPlants();
+						ArrayList<Green> data = plants.getAllPlants();
 						p = data.get(position - plants.getAddedPlants().size() - 2);
 					}
 
@@ -145,10 +141,10 @@ public class PlantManagerFragment extends Fragment implements LoaderManager.Load
 				}
 				else{
 					if ((Boolean) view.getTag()) {
-						List<Plant> data = mAdapter.getFilteredAdded();
+						List<Green> data = mAdapter.getFilteredAdded();
 						p = data.get(position - 1);
 					} else {
-						List<Plant> data = mAdapter.getFilteredAll();
+						List<Green> data = mAdapter.getFilteredAll();
 						p = data.get(position - mAdapter.getFilteredAdded().size() - 2);
 					}
 					isFiltered = false;
@@ -199,23 +195,23 @@ public class PlantManagerFragment extends Fragment implements LoaderManager.Load
 	public interface OnPlantManagerFragmentInteractionListener {
 		public void onPlantManagerFragmentInteraction(int id, boolean upperGroup);
 
-		public void onLongClickedPlantFragmentInteraction(Plant plant,
+		public void onLongClickedPlantFragmentInteraction(Green plant,
 				boolean added);
 	}
 
 	@Override
-	public Loader<List<List<Plant>>> onCreateLoader(int arg0, Bundle arg1) {
-		return new PlantsLoader(getActivity());
+	public Loader<List<List<Green>>> onCreateLoader(int arg0, Bundle arg1) {
+		return new PlantsLoader(getActivity(),mAdapter);
 	}
 
 	@Override
-	public void onLoadFinished(Loader<List<List<Plant>>> loader,
-			List<List<Plant>> data) {
+	public void onLoadFinished(Loader<List<List<Green>>> loader,
+			List<List<Green>> data) {
 		mAdapter.updatePlantList(data.get(0), data.get(1));
 	}
 
 	@Override
-	public void onLoaderReset(Loader<List<List<Plant>>> arg0) {
+	public void onLoaderReset(Loader<List<List<Green>>> arg0) {
 		
 	}
 }

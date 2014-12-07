@@ -2,78 +2,101 @@ package com.example.aad2project.object;
 
 public class Weather {
 
-	private Long minHumidity;
-	private double maxTemperature;
-	private double minTemperature;
-	private double minLightness;
-	private double maxLightnesss;
-	private Weather next;
+	@com.google.gson.annotations.SerializedName("id")
+	private String Id;
 	
-	private int id;
+	@com.google.gson.annotations.SerializedName("weatherid")
+	private int weatherid;
+	
+	@com.google.gson.annotations.SerializedName("humiditymax")
+	private int humiditymax;
+	
+	@com.google.gson.annotations.SerializedName("humiditymin")
+	private int humiditymin;
+	
+	@com.google.gson.annotations.SerializedName("temperaturemax")
+	private double temperaturemax;
+	
+	@com.google.gson.annotations.SerializedName("temperaturemin")
+	private double temperaturemin;
+	
+	@com.google.gson.annotations.SerializedName("lightnessmin")
+	private double lightnessmin;
+	
+	@com.google.gson.annotations.SerializedName("lightnessmax")
+	private double lightnessmax;
+	
+	//private Weather next;
 
 public Weather(){}
- 
 	
-	public int getId() {
-		return id;
+	public int getWeatherId() {
+		return weatherid;
 	}
  
-	public void setId(int id) {
-		this.id = id;
+	public void setWeatherId(int id) {
+		this.weatherid = id;
 	}
 	
+	public int getMaxHumi() {
+		return humiditymax;
+	}
 
-	public Long getMinHumi() {
-		return minHumidity;
+	public void setMaxHumi(int i) {
+		this.humiditymax = i;
+	}
+	
+	public int getMinHumi() {
+		return humiditymin;
 	}
 
 
-	public void setMinHumi(Long minHumidity) {
-		this.minHumidity = minHumidity;
+	public void setMinHumi(int i) {
+		this.humiditymin = i;
 	}
 
 
 	public double getMaxTemp() {
-		return maxTemperature;
+		return temperaturemax;
 	}
 
 
 	public void setMaxTemp(double maxTemperature) {
-		this.maxTemperature = maxTemperature;
+		this.temperaturemax = maxTemperature;
 	}
 
 
 	public double getMinTemp() {
-		return minTemperature;
+		return temperaturemin;
 	}
 
 
 	public void setMinTemp(double minTemperature) {
-		this.minTemperature = minTemperature;
+		this.temperaturemin = minTemperature;
 	}
 
 
 	public double getMinLightness() {
-		return minLightness;
+		return lightnessmin;
 	}
 
 
 	public void setMinLightness(double minLightness) {
-		this.minLightness = minLightness;
+		this.lightnessmin = minLightness;
 	}
 
 
 	public double getMaxLightnesss() {
-		return maxLightnesss;
+		return lightnessmax;
 	}
 
 
 	public void setMaxLightness(double maxLightnesss) {
-		this.maxLightnesss = maxLightnesss;
+		this.lightnessmax = maxLightnesss;
 	}
 
 
-	public void addWeaterToQueue(Weather newWeather) {
+	/*public void addWeaterToQueue(Weather newWeather) {
 		if (this.next == null) {
 			this.next = newWeather;
 		} else {
@@ -98,7 +121,7 @@ public Weather(){}
 			j++;
 		} while(weater.next != null);
 		return j;
-	}	
+	}	*/
  
 	
 

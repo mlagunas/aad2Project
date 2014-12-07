@@ -14,7 +14,7 @@ public class SendToServer extends AsyncTask<String, String, String> {
 	JSONParser jsonParser = new JSONParser();
 
 	
-	private static String URL = "http://10.192.25.21/greenhub/index.php";
+	private static String URL = "http://84.238.21.213/greenhub/index.php";
 	
 	private String json;
     private String Email;

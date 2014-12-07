@@ -2,27 +2,23 @@ package com.example.aad2project.model;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
-import com.example.aad2project.object.Plant;
+import com.example.aad2project.object.Green;
 import com.example.aad2project.object.Task;
 import com.example.aad2project.object.TaskPlant;
-import com.example.aad2project.services.NotificationService;
 
 public class TaskPlantDao extends DaoBase {
 
 	private TaskPlant taskPlant;
 	private Context context;
 
+	
 	public TaskPlantDao(Context pContext) {
 		super(pContext);
 		super.open();
@@ -34,10 +30,9 @@ public class TaskPlantDao extends DaoBase {
 		notifyLoader();
 	}
 
-	public void createTaskPlant(Plant p, Task t, long d) {
+	public void createTaskPlant(Green p, Task t, long d) {
 		super.mDb.execSQL("INSERT INTO taskPlant (taskId,plantId,date,done)"
 				+ "VALUES (" + p.getId() + "," + t.getId() + "," + d + ",0);");
-		createAlarm(p.getTimeToGrow());
 		notifyLoader();
 	}
 
@@ -46,48 +41,21 @@ public class TaskPlantDao extends DaoBase {
 		notifyLoader();
 	}
 
-	private Plant createPlant(Cursor c, int idP) {
-		Plant p = new Plant();
+	private Green createPlant(Cursor c, int idP) {
+		Green p = new Green();
 
-		if (c.moveToFirst()) {
+		if(c.moveToFirst()){
 			p.setId(c.getInt(0));
 			p.setDate(new Date(c.getLong(1)));
-			Cursor aux = super.mDb.rawQuery(
-					"SELECT * FROM existingPlants WHERE id = " + c.getInt(2),
-					null);
-			if (aux.moveToFirst()) {
+			Cursor aux = super.mDb.rawQuery("SELECT * FROM existingPlants WHERE id = " + c.getInt(2), null);
+			if(aux.moveToFirst()){
 				p.setName(aux.getString(1));
 				p.setDescription(aux.getString(2));
 				p.setTimeToGrow(aux.getInt(3));
 				p.setWeatherId(aux.getInt(4));
 			}
 		}
-
 		return p;
-	}
-
-	private void createAlarm(int timeToGrow) {
-		// Prepare intent to launch notification
-		Intent intent = new Intent(context, NotificationService.class);
-		intent.putExtra(NotificationService.INTENT_NOTIFY, true);
-		PendingIntent pendingIntent = PendingIntent.getService(context, 0,
-				intent, 0);
-
-		// Intent intent = new Intent(this, MyReceiver.class);
-		// PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
-		// intent, 0);
-
-		// Sets the date and the hour on today, 18;00
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(System.currentTimeMillis());
-
-		// The alarm manager is an android system service
-		AlarmManager am = (AlarmManager) context
-				.getSystemService(Context.ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (timeToGrow*24*60*60*1000),
-				pendingIntent);
-		Log.d("NOTIF", "Alarm set for " + (cal.getTimeInMillis() + (timeToGrow*24*60*60*1000)));
-
 	}
 
 	private Task createTask(Cursor c, int idT) {
@@ -130,7 +98,24 @@ public class TaskPlantDao extends DaoBase {
 		return aux;
 	}
 
-	protected boolean convertResultToObject() {
+	public TaskPlant getCurrentDayTaskPlant() {
+
+		query = "SELECT t.id, t.description, p.id, p.name, "
+				+ "tp.date, tp.done "
+				+ "FROM Task t INNER JOIN TaskPlant tp ON tp.taskId = t.id "
+				+ "INNER JOIN PLANT p ON p.id = tp.plantId "
+				+ "WHERE date(tp.date) = date('now') AND done = 0;";
+
+		c = mDb.rawQuery(query, null);
+
+		if (convertResultToObject()) {
+			return taskPlant;
+		} else {
+			return null;
+		}
+	}
+
+	/*protected boolean convertResultToObject() {
 
 		if (!c.moveToFirst()) {
 			return false;
@@ -145,8 +130,9 @@ public class TaskPlantDao extends DaoBase {
 		// get Plant Info
 		int plantId = c.getInt(2);
 		String plantName = c.getString(3);
-		Plant plant = new Plant(plantId, plantName);
-
+		Plant plant = new Plant();
+		plant.setId(plantId);
+		plant.setName(plantName);
 		taskPlant = new TaskPlant(plant, task);
 
 		c.moveToNext();
@@ -160,8 +146,9 @@ public class TaskPlantDao extends DaoBase {
 			task = new Task();
 			task.setId(taskId);
 			task.setDescription(taskDescription);
-			plant = new Plant(plantId, plantName);
-
+			plant = new Plant();
+			plant.setId(plantId);
+			plant.setName(plantName);
 			taskPlant.addTaskPlantToQueue(new TaskPlant(plant, task));
 
 		} while (c.moveToNext());
@@ -169,10 +156,16 @@ public class TaskPlantDao extends DaoBase {
 		c.close();
 
 		return true;
-	}
+	}*/
 
 	private void notifyLoader() {
 		Intent intent = new Intent("taskplant-database-changed");
 		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+	}
+
+	@Override
+	protected boolean convertResultToObject() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -7,7 +7,7 @@ public class TaskPlant implements Comparable<TaskPlant> {
 	private int done;
 	private Date date;
 	private Task task;
-	private Plant plant;
+	private Green plant;
 	private TaskPlant next;
 	private int idPlant;
 	private int idTask;
@@ -16,7 +16,7 @@ public class TaskPlant implements Comparable<TaskPlant> {
 	public TaskPlant() {
 	}
 
-	public TaskPlant(Plant plant, Task task) {
+	public TaskPlant(Green plant, Task task) {
 		this.plant = plant;
 		this.task = task;
 	}
@@ -70,11 +70,11 @@ public class TaskPlant implements Comparable<TaskPlant> {
 		this.task = task;
 	}
 
-	public Plant getPlant() {
+	public Green getPlant() {
 		return plant;
 	}
 
-	public void setPlant(Plant plant) {
+	public void setPlant(Green plant) {
 		this.plant = plant;
 	}
 
@@ -115,11 +115,11 @@ public class TaskPlant implements Comparable<TaskPlant> {
 		return j;
 	}
 
-	public String toString() {
+	/*public String toString() {
 		return plant.getId() + " " + plant.getName() + " " + task.getId()
 				+ task.getDescription() + " " + date.toString() + " " + done
 				+ '\n';
-	}
+	}*/
 
 	@Override
 	public int compareTo(TaskPlant o) {

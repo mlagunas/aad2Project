@@ -15,10 +15,10 @@ public class WeatherDao extends DaoBase {
 		c = super.mDb.rawQuery("SELECT * FROM Weather WHERE id = " + id, null);
 		if(c.moveToFirst()){
 			Weather w = new Weather();
-			w.setId(c.getInt(0));
+			w.setWeatherId(c.getInt(0));
 			w.setMinTemp(c.getInt(1));
 			w.setMaxTemp(c.getInt(2));
-			w.setMinHumi((long) c.getInt(3));
+			w.setMinHumi(c.getInt(3));
 			w.setMinLightness(c.getInt(5));
 			w.setMaxLightness(c.getInt(6));
 			return w;

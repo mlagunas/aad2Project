@@ -119,7 +119,7 @@ public class WeatherService extends IntentService {
 			weather.setMinTemp((Double) info.get("temp_min"));
 			Log.d("Yo", "ok3");
 
-			weather.setMinHumi((Long) info.get("humidity"));
+			//weather.setMinHumi((int) info.get("humidity"));
 			Log.d("Yo", "ok4");
 
 

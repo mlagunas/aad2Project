@@ -10,22 +10,25 @@ import android.content.IntentFilter;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.example.aad2project.adapter.PlantManagerAdapter;
+import com.example.aad2project.object.Green;
 import com.example.aad2project.object.Plant;
 
-public class PlantsLoader extends AsyncTaskLoader<List<List<Plant>>> {
+public class PlantsLoader extends AsyncTaskLoader<List<List<Green>>> {
 
 	// We hold a reference to the Loader’s data here.
-	private List<List<Plant>> mData;
+	private List<List<Green>> mData;
+	private PlantManagerAdapter pma;
 
-	public PlantsLoader(Context ctx) {
+	public PlantsLoader(Context ctx,PlantManagerAdapter pma) {
 		// Loaders may be used across multiple Activitys (assuming they aren't
 		// bound to the LoaderManager), so NEVER hold a reference to the context
 		// directly. Doing so will cause you to leak an entire Activity's
 		// context.
 		// The superclass constructor will store a reference to the Application
 		// Context instead, and can be retrieved with a call to getContext().
-
 		super(ctx);
+		this.pma = pma;
 
 	}
 
@@ -34,10 +37,10 @@ public class PlantsLoader extends AsyncTaskLoader<List<List<Plant>>> {
 	/****************************************************/
 
 	@Override
-	public List<List<Plant>> loadInBackground() {
+	public List<List<Green>> loadInBackground() {
 		// This method is called on a background thread and should generate a
 		// new set of data to be delivered back to the client.
-		List<List<Plant>> data = new ArrayList<List<Plant>>();
+		List<List<Green>> data = new ArrayList<List<Green>>();
 
 		// Perform the query here and add the results to 'data'.
 		PlantDao pd = new PlantDao(getContext());
@@ -52,7 +55,7 @@ public class PlantsLoader extends AsyncTaskLoader<List<List<Plant>>> {
 	/********************************************************/
 
 	@Override
-	public void deliverResult(List<List<Plant>> data) {
+	public void deliverResult(List<List<Green>> data) {
 		if (isReset()) {
 			// The Loader has been reset; ignore the result and invalidate the
 			// data.
@@ -62,7 +65,7 @@ public class PlantsLoader extends AsyncTaskLoader<List<List<Plant>>> {
 
 		// Hold a reference to the old data so it doesn't get garbage collected.
 		// We must protect it until the new data has been delivered.
-		List<List<Plant>> oldData = mData;
+		List<List<Green>> oldData = mData;
 		mData = data;
 
 		if (isStarted()) {
@@ -130,7 +133,7 @@ public class PlantsLoader extends AsyncTaskLoader<List<List<Plant>>> {
 	}
 
 	@Override
-	public void onCanceled(List<List<Plant>> data) {
+	public void onCanceled(List<List<Green>> data) {
 		// Attempt to cancel the current asynchronous load.
 		super.onCanceled(data);
 
@@ -139,7 +142,7 @@ public class PlantsLoader extends AsyncTaskLoader<List<List<Plant>>> {
 		releaseResources(data);
 	}
 
-	private void releaseResources(List<List<Plant>> data) {
+	private void releaseResources(List<List<Green>> data) {
 		// For a simple List, there is nothing to do. For something like a
 		// Cursor, we
 		// would close it in this method. All resources associated with the

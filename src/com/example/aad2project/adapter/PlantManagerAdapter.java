@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aad2project.R;
-import com.example.aad2project.object.Plant;
+import com.example.aad2project.object.Green;
 
 public class PlantManagerAdapter extends BaseExpandableListAdapter {
 
-	private List<Plant> added;
-	private List<Plant> filteredAdded;
-	private List<Plant> all;
-	private List<Plant> filteredAll;
+	private List<Green> added;
+	private List<Green> filteredAdded;
+	private List<Green> all;
+	private List<Green> filteredAll;
 	private Context context;
 
-	public PlantManagerAdapter(Context context, List<Plant> added,
-			List<Plant> all) {
+	public PlantManagerAdapter(Context context, List<Green> added,
+			List<Green> all) {
 		this.context = context;
 		this.added = added;
 		this.all = all;
@@ -36,14 +37,14 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 			filteredAdded = added;
 			filteredAll = all;
 		} else {
-			filteredAdded = new ArrayList<Plant>();
-			filteredAll = new ArrayList<Plant>();
-			for (Plant p : added) {
+			filteredAdded = new ArrayList<Green>();
+			filteredAll = new ArrayList<Green>();
+			for (Green p : added) {
 				if (p.getName().toLowerCase().startsWith(s.toLowerCase())) {
 					filteredAdded.add(p);
 				}
 			}
-			for (Plant p : all) {
+			for (Green p : all) {
 				if (p.getName().toLowerCase().startsWith(s.toLowerCase())) {
 					filteredAll.add(p);
 				}
@@ -53,11 +54,11 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 
-	public List<Plant> getFilteredAdded(){
+	public List<Green> getFilteredAdded(){
 		return filteredAdded;
 	}
 	
-	public List<Plant> getFilteredAll(){
+	public List<Green> getFilteredAll(){
 		return filteredAll;
 	}
 	
@@ -143,7 +144,7 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
-	public void updatePlantList(List<Plant> newAdd, List<Plant> newAll) {
+	public void updatePlantList(List<Green> newAdd, List<Green> newAll) {
 		added.clear();
 		all.clear();
 		added.addAll(newAdd);
@@ -170,7 +171,7 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.plant_remaining_time);
 		ImageView plantImage = (ImageView) convertView
 				.findViewById(R.id.plant_image);
-		Plant plant = null;
+		Green plant = null;
 		switch (groupPosition) {
 		case 0:
 			plant = filteredAdded.get(childPosition);
@@ -186,6 +187,7 @@ public class PlantManagerAdapter extends BaseExpandableListAdapter {
 		plantReminingTime.setText(R.string.app_name); // TODO - Change text
 													// according to remaining
 													// time
+		Log.d("TAG",plant.getExistingId()+" "+plant.getId());
 		plantImage.setImageResource(getImageResource(plant.getName()));
 		return convertView;
 	}

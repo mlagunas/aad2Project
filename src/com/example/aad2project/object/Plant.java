@@ -3,25 +3,24 @@ package com.example.aad2project.object;
 import java.util.Date;
 
 public class Plant {
-
-	private int id, timeToGrow, number, weather;
 	
+	@com.google.gson.annotations.SerializedName("id")
+	private String id;
+	
+	@com.google.gson.annotations.SerializedName("number")
+	private int number;
+	
+	@com.google.gson.annotations.SerializedName("time")
 	private Date date;
-
-	private String description, name;
 	
-	private Plant next;
-
+	@com.google.gson.annotations.SerializedName("existingid")
 	private int eId;
-
-	public Plant() {
-	}
 	
-	public Plant(int id, String name) {
-		this.id 		 = id;
-		this.name        = name;
-	}
-
+	@com.google.gson.annotations.SerializedName("plantid")
+	private int plantId;
+	
+	public Plant() {}
+	
 	public void setExistingId(int eId){
 		this.eId=eId;
 	}
@@ -30,14 +29,22 @@ public class Plant {
 		return eId;
 	}
 	
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
+	public int getPlantid(){
+		return plantId;
+	}
+	
+	public void setPlantid(int id){
+		this.plantId=id;
+	}
+	
 	public Date getDate(){
 		return date;
 	}
@@ -45,81 +52,12 @@ public class Plant {
 	public void setDate(Date date){
 		this.date=date;
 	}
-	
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-
-	public String getDescription() {
-		return description;
-	}
-
-	public int getTimeToGrow() {
-		return timeToGrow;
-	}
-
-	public void setTimeToGrow(int timeToGrow) {
-		this.timeToGrow = timeToGrow;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public int getWeatherId() {
-		return weather;
-	}
-
-	public void setWeatherId(int weather) {
-		this.weather = weather;
-	}
-
-	public Plant getNext() {
-		return next;
-	}
-	
-	public void setNext(Plant next) {
-		this.next = next;
-	}
-	
-	public void addPlantToQueue(Plant newPlant) {
-		if (this.next == null) {
-			this.next = newPlant;
-		} else {
-			this.next.addPlantToQueue(newPlant);
-		}
-	}
-	
-	public Plant getPlantNumber(int i) {
-		Plant plant = this;
-		
-		for (int j = 0; j < i; j++) {
-			plant = plant.next;
-		}
-		
-		return plant;
-	}
-	
 	public void setNumber(int number){
 		this.number=number;
 	}
 	
 	public int getNumber(){
 		return number;
-	}
-	
-	public int size() {
-		int j = 0;
-		Plant plant = this;
-		do {
-			j++;
-		} while(plant.next != null);
-		return j;
 	}
 }

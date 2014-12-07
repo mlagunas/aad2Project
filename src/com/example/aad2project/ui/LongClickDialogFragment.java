@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.aad2project.R;
 import com.example.aad2project.model.PlantDao;
-import com.example.aad2project.object.Plant;
+import com.example.aad2project.object.Green;
 
 public class LongClickDialogFragment extends DialogFragment {
 
@@ -48,7 +48,7 @@ public class LongClickDialogFragment extends DialogFragment {
 
 					PlantDao p = new PlantDao(getActivity());
 					if (!function) {
-						Plant plant = new Plant();
+						Green plant = new Green();
 						plant.setId(plantId);
 						plant.setExistingId(-1);
 						plant.setDescription(getArguments().getString(
@@ -57,7 +57,7 @@ public class LongClickDialogFragment extends DialogFragment {
 						plant.setTimeToGrow(getArguments().getInt("timeToGrow"));
 						plant.setNumber(getArguments().getInt("number"));
 						
-						p.addPlant(plant);
+						p.addPlant(plant,true);
 						
 						Toast.makeText(getActivity(), "Added",
 								Toast.LENGTH_LONG).show();

@@ -146,7 +146,6 @@ public class TaskCalendarAdapter extends BaseExpandableListAdapter {
 
 		TaskPlant task = (TaskPlant) getChild(groupPosition, childPosition);
 		taskDescription.setText(task.getTask().getDescription());
-		taskTarget.setText(task.getPlant().getName());
 
 		return convertView;
 	}
