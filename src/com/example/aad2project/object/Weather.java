@@ -26,9 +26,7 @@ public class Weather {
 	@com.google.gson.annotations.SerializedName("lightnessmax")
 	private double lightnessmax;
 	
-	//private Weather next;
-
-public Weather(){}
+	public Weather(){}
 	
 	public int getWeatherId() {
 		return weatherid;

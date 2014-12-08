@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.example.aad2project.object.Green;
 import com.example.aad2project.object.Task;

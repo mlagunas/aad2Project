@@ -37,8 +37,9 @@ public class PlantInformationFragment extends Fragment {
 			plantTemperature, plantLightness;
 	private ImageView plantImage;
 	private Button addPlantButton;
-	
-	public static PlantInformationFragment newInstance(int plantId, boolean upperGroup) {
+
+	public static PlantInformationFragment newInstance(int plantId,
+			boolean upperGroup) {
 		PlantInformationFragment fragment = new PlantInformationFragment();
 		Bundle args = new Bundle();
 		args.putInt("PLANT_ID", plantId);
@@ -69,7 +70,7 @@ public class PlantInformationFragment extends Fragment {
 
 		View view = inflater.inflate(R.layout.fragment_plant_information,
 				container, false);
-		
+
 		plantImage = (ImageView) view.findViewById(R.id.plant_image);
 		plantName = (TextView) view.findViewById(R.id.plant_name);
 		plantDescription = (TextView) view.findViewById(R.id.plant_description);
@@ -78,21 +79,21 @@ public class PlantInformationFragment extends Fragment {
 		plantLightness = (TextView) view.findViewById(R.id.lightness_text);
 		addPlantButton = (Button) view.findViewById(R.id.addPlantButton);
 		addPlantButton.setClickable(false);
-		
+
 		addPlantButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// Set the listener on the button
 				PlantDao p = new PlantDao(getActivity());
-				
+
 				Green plant = p.getPlant(plantId);
-				Log.d("TAG",plantId+" ");
+				Log.d("TAG", plantId + " ");
 				// add the plant
-				p.addPlant(plant,true);
-				
-				Toast.makeText(getActivity(), "Added",
-						Toast.LENGTH_LONG).show();
+				p.addPlant(plant, true);
+
+				Toast.makeText(getActivity(), "Added", Toast.LENGTH_LONG)
+						.show();
 			}
 
 		});
@@ -106,49 +107,58 @@ public class PlantInformationFragment extends Fragment {
 		PlantDao pDao = new PlantDao(getActivity());
 		WeatherDao wDao = new WeatherDao(getActivity());
 		Green p = pDao.searchPlant(plantId, upperGroup);
-		
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+
 		String temperature = sharedPref.getString("pref_temperature", "");
 		plantImage.setImageResource(getImageResource(p.getName()));
 		plantName.setText(p.getName());
 		plantDescription.setText(p.getDescription());
-		
-		plantHumidity.setText(wDao.getWeather(p.getWeatherId()).getMinHumi() + "% - ");
-		
-		//Setting Kilo Lumens if it's necessary
-		String brMin = wDao.getWeather(p.getWeatherId()).getMinLightness()+" ";
-		if(brMin.length() > 5){
-			brMin = (String) brMin.subSequence(0, brMin.length()-4)+" k";
+
+		plantHumidity.setText(wDao.getWeather(p.getWeatherId()).getMinHumi()
+				+ "% - " + wDao.getWeather(p.getWeatherId()).getMaxHumi()+" %");
+
+		// Setting Kilo Lumens if it's necessary
+		String brMin = wDao.getWeather(p.getWeatherId()).getMinLightness()
+				+ " ";
+		if (brMin.length() > 5) {
+			brMin = (String) brMin.subSequence(0, brMin.length() - 4) + " k";
 		}
-		String brMax = wDao.getWeather(p.getWeatherId()).getMaxLightnesss()+" ";
-		if(brMax.length() > 5){
-			brMax = (String) brMax.subSequence(0, brMax.length()-4)+" k";
+		String brMax = wDao.getWeather(p.getWeatherId()).getMaxLightnesss()
+				+ " ";
+		if (brMax.length() > 5) {
+			brMax = (String) brMax.subSequence(0, brMax.length() - 4) + " k";
 		}
-		plantLightness.setText(brMin + "Lm - "+ brMax + "Lm");
-		
+		plantLightness.setText(brMin + "Lm - " + brMax + "Lm");
+
 		// Difference between Celsius and Fahrenheit
-		if(temperature.equals("0"))
-			plantTemperature.setText(wDao.getWeather(p.getWeatherId()).getMinTemp()+ "ºC - "+
-									wDao.getWeather(p.getWeatherId()).getMaxTemp()+"ºC");
+		if (temperature.equals("0"))
+			plantTemperature.setText(wDao.getWeather(p.getWeatherId())
+					.getMinTemp()
+					+ "ºC - "
+					+ wDao.getWeather(p.getWeatherId()).getMaxTemp() + "ºC");
 		else
-			plantTemperature.setText((wDao.getWeather(p.getWeatherId()).getMinTemp()*9/5+32)+ "ºF - "+
-					(wDao.getWeather(p.getWeatherId()).getMaxTemp()*9/5+32)+"ºF");
-		
-		
+			plantTemperature
+					.setText((wDao.getWeather(p.getWeatherId()).getMinTemp() * 9 / 5 + 32)
+							+ "ºF - "
+							+ (wDao.getWeather(p.getWeatherId()).getMaxTemp() * 9 / 5 + 32)
+							+ "ºF");
+
 		super.onViewCreated(view, savedInstanceState);
 	}
-	
-	private int getImageResource(String name){
-		
-		if (name.equalsIgnoreCase("potatoes")){
+
+	private int getImageResource(String name) {
+
+		if (name.equalsIgnoreCase("potatoes")) {
 			return R.drawable.ic_potatoes_big;
-		} else if (name.equalsIgnoreCase("carrots")){
+		} else if (name.equalsIgnoreCase("carrots")) {
 			return R.drawable.ic_carrot_big;
-		} else if (name.equalsIgnoreCase("tomatoes")){
+		} else if (name.equalsIgnoreCase("tomatoes")) {
 			return R.drawable.ic_tomatoes_big;
-		} else if (name.equalsIgnoreCase("lettuces")){
+		} else if (name.equalsIgnoreCase("lettuces")) {
 			return R.drawable.ic_lettuce_big;
-		} else if (name.equalsIgnoreCase("sweet peas")){
+		} else if (name.equalsIgnoreCase("sweet peas")) {
 			return R.drawable.ic_sweat_pea_big;
 		} else {
 			return R.drawable.ic_lillies_big;

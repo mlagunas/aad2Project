@@ -17,8 +17,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -37,8 +35,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.aad2project.R;
 import com.example.aad2project.model.ExistingPlantDao;
@@ -51,7 +47,7 @@ import com.example.aad2project.object.Plant;
 import com.example.aad2project.object.TaskPlant;
 import com.example.aad2project.object.Weather;
 import com.example.aad2project.receiver.MyReceiver;
-import com.example.aad2project.services.WeatherService;
+import com.example.aad2project.services.SensorService;
 import com.example.aad2project.ui.LongClickDialogFragment.LongClickDialogListener;
 import com.example.aad2project.ui.PlantManagerFragment.OnPlantManagerFragmentInteractionListener;
 import com.example.aad2project.ui.TaskCalendarFragment.OnTaskCalendarFragmentInteractionListener;
@@ -64,22 +60,38 @@ import com.microsoft.windowsazure.mobileservices.TableQueryCallback;
 public class ManagerActivity extends ActionBarActivity implements
 		ActionBar.TabListener, OnPlantManagerFragmentInteractionListener,
 		OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
-
+	
+	private AlarmManager alarmMgr;
+	private PendingIntent alarmIntent;
+	
 	public SectionsPagerAdapter mSectionsPagerAdapter;
 	public ViewPager mViewPager;
 	private FrameLayout container;
 	private TaskPlantDao tpDAO;
 	private TaskPlant tp;
+	
+
+	private ProgressDialog progressDialog;
+	private Context context;
+	private Plant aux;
+	private int waiter;
+	
 	private MobileServiceTable<ExistingPlant> tableEp;
 	private MobileServiceTable<Weather> tableW;
 	private MobileServiceTable<Plant> tableP;
-
-	private ProgressDialog progressDialog;
+	
 	private ProgressBar progressBar; 
-	private Context context;
+
+	/**
+	 * Mobile Service Client reference
+	 */
 	private MobileServiceClient mClient;
-	private Plant aux;
-	private int waiter;
+
+	/**
+	 * Mobile Service Table used to access data
+	 */
+	private MobileServiceTable<ExistingPlant> tableExistingPlant;
+	private MobileServiceTable<Weather> tableWeather;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,29 +101,14 @@ public class ManagerActivity extends ActionBarActivity implements
         progressDialog = new ProgressDialog(this);
         waiter = 0;
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        
-		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-		// Check if there is internet on the phone. Yes-> Download new
-		// information about the weather/ No-> Toast to prevent information are
-		// not updated
-		if (networkInfo.isConnected()) {
-			Intent i = new Intent(ManagerActivity.this, WeatherService.class);
-			startService(i);
 
-		} else
-			Toast.makeText(
-					getApplicationContext(),
-					"There is not internet connection, the data can't be updated.",
-					Toast.LENGTH_LONG).show();
-
-		startAlarm();
         try {
 			mClient = new MobileServiceClient(
 					"https://greenhub.azure-mobile.net/",
 					"TnxUiYgqqbPovNDQHROYaqrALQQUMw32",
 					this);
 			
+			progressBar = (ProgressBar) findViewById(R.id.progressBar);
 			progressBar.setVisibility(View.VISIBLE);
 	        
 	        tableEp = mClient.getTable(ExistingPlant.class);
@@ -171,7 +168,6 @@ public class ManagerActivity extends ActionBarActivity implements
 				// TODO Auto-generated method stub
 				if (exception == null) {
 					for (Plant p : result) {
-						aux = p;
 						Log.d("ID"," "+p.getExisitingId());
                     	PlantDao pd = new PlantDao(context);
                     	Green g = pd.plantToGreen(p);
@@ -186,44 +182,7 @@ public class ManagerActivity extends ActionBarActivity implements
 		});
 	}
 	
-	/**
-	 * Initialize the fragments and the application when the database is downloaded
-	 */
-	private void start(){
-
-		progressBar.setVisibility(View.INVISIBLE);
-        container = (FrameLayout) findViewById(R.id.fragment_container);
-
-		// Set up the action bar.
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
-
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-		// mViewPager.setOffscreenPageLimit(1);
-
-		// When swiping between different sections, select the corresponding
-		// tab. We can also use ActionBar.Tab#select() to do this if we have
-		// a reference to the Tab.
-		mViewPager
-				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-					@Override
-					public void onPageSelected(int position) {
-						actionBar.setSelectedNavigationItem(position);
-					}
-				});               		
-		initActionBar(actionBar);
-		
-		// For each of the sections in the app, add a tab to the action bar.
-		
-		registerReceiver(broadcastReceiver, new IntentFilter("TEST"));
-	}
+	
 	
 	/**
 	 * Inicialize the action bar
@@ -297,6 +256,47 @@ public class ManagerActivity extends ActionBarActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
+	/**
+	 * Initialize the fragments and the application when the database is downloaded
+	 */
+	private void start(){
+
+        container = (FrameLayout) findViewById(R.id.fragment_container);
+        progressBar.setVisibility(View.GONE);
+        
+		// Set up the action bar.
+		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		// Create the adapter that will return a fragment for each of the three
+		// primary sections of the activity.
+		mSectionsPagerAdapter = new SectionsPagerAdapter(
+				getSupportFragmentManager());
+
+		// Set up the ViewPager with the sections adapter.
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+		// mViewPager.setOffscreenPageLimit(1);
+
+		// When swiping between different sections, select the corresponding
+		// tab. We can also use ActionBar.Tab#select() to do this if we have
+		// a reference to the Tab.
+		mViewPager
+				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+					@Override
+					public void onPageSelected(int position) {
+						actionBar.setSelectedNavigationItem(position);
+					}
+				});               		
+		initActionBar(actionBar);
+		
+		// For each of the sections in the app, add a tab to the action bar.
+		
+		registerReceiver(broadcastReceiver, new IntentFilter("TEST"));
+		scheduleSensorDataChecks();
+
+	}
+	
 	@Override
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
@@ -364,6 +364,16 @@ public class ManagerActivity extends ActionBarActivity implements
         Intent i = new Intent(this, MainActivity.class);
 		startActivity(i);
 		finish();
+	}
+	
+	public void scheduleSensorDataChecks(){
+		Log.d("TAG","AlarmManager set");
+		alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+		Intent intent = new Intent(this, SensorService.class);
+		alarmIntent = PendingIntent.getService(this, 0, intent, 0);
+
+		alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+		        60*1000, alarmIntent);
 	}
 
 	@Override

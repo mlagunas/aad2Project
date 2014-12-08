@@ -6,7 +6,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -31,6 +30,8 @@
         <activity
             android:name=".ui.ManagerActivity"
             android:label="@string/title_activity_manager" >
+            
+            
         </activity>
         <activity
             android:name=".ui.PlantInformationActivity"
@@ -64,6 +65,9 @@
         </activity>
 
         <service android:name="com.example.aad2project.services.WeatherService" >
+        </service>
+        
+        <service android:name="com.example.aad2project.services.SensorService">
         </service>
     </application>
 

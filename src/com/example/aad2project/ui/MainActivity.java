@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,8 +22,6 @@ import android.widget.Toast;
 import com.example.aad2project.R;
 import com.example.aad2project.object.ExistingPlant;
 import com.example.aad2project.object.Weather;
-import com.example.aad2project.provider.MyContentProvider;
-import com.example.aad2project.provider.SharedInformation.Account;
 import com.example.aad2project.server.SendToServer;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceTable;
@@ -40,17 +37,14 @@ public class MainActivity extends ActionBarActivity implements
 	public static final String name = "nameKey";
 	public static final String pass = "passwordKey";
 	private SharedPreferences sharedPreferences;
+	
+	private MobileServiceTable<ExistingPlant> tableExistingPlant;
+	private MobileServiceTable<Weather> tableWeather;
+	
 	/**
 	 * Mobile Service Client reference
 	 */
 	private MobileServiceClient mClient;
-
-	/**
-	 * Mobile Service Table used to access data
-	 */
-	private MobileServiceTable<ExistingPlant> tableExistingPlant;
-	private MobileServiceTable<Weather> tableWeather;
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +62,7 @@ public class MainActivity extends ActionBarActivity implements
 		fragmentTransaction.replace(R.id.frame_content, loginFragment);
 
 		// Actions displayed
-		fragmentTransaction.commit();
-		
-		
+		fragmentTransaction.commit();	
 	}
 
 	/**
@@ -378,12 +370,13 @@ public class MainActivity extends ActionBarActivity implements
 				Intent i = new Intent(this,
 						com.example.aad2project.ui.ManagerActivity.class);
 				startActivity(i);
-				finish();
+				finish();    
+				
 			}
 		}
 		super.onResume();
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -492,7 +485,7 @@ public class MainActivity extends ActionBarActivity implements
 		
 		Log.d("TAGERT",result);
 		if (!result.equals(false)){
-
+ 
 			JSONArray myJSON = null;
 	    	try {
 				myJSON = new JSONArray(result);

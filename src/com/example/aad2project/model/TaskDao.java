@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.example.aad2project.object.Task;
 
@@ -88,6 +89,28 @@ public class TaskDao extends DaoBase {
 		}
 
 		return null;
+	}
+
+	public int getLastId() {
+		c = super.mDb.rawQuery("SELECT id FROM Task", null);
+		c.moveToLast();
+		return c.getInt(0);
+	}
+	
+	public Task searchTask( String description){
+		c = mDb.rawQuery("SELECT * FROM TASK WHERE description = '"+description+"'", null);
+		if(c.moveToFirst()){
+			Task t = new Task();
+			{
+				t.setId(c.getInt(0));
+				t.setDescription(description);
+			}while(c.moveToNext());
+			return t;
+		}
+		else{
+			return null;
+		}
+		
 	}
 
 	protected boolean convertResultToObject() {

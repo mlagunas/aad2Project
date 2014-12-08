@@ -15,7 +15,7 @@ public abstract class DaoBase {
 	// Update this attribute if version change
 	protected final static int VERSION = 1;
 	// database name
-	protected final static String NAME = "test_conn_2.db";
+	protected final static String NAME = "test_conn_3.db";
 
 	private ProgressBar mProgressBar;
 	

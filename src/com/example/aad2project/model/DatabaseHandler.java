@@ -30,7 +30,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			//"timeToGrow  NUMBER(4) NOT NULL DEFAULT 0,				  " +
 			"number 	 NUMBER(2) NOT NULL DEFAULT 1,				  " +
 			"code		 VARCHAR(500) NOT NULL " +
-			//"weatherId   NUMBER(2) NOT NULL,							  " +
+			//"weatherId   NUMBER(2) NOT NULL							  " +
 			");" ;
 	
 	public static final String TASK_CREATE_TABLE = 
