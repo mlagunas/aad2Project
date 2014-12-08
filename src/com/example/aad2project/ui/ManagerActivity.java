@@ -1,6 +1,5 @@
 package com.example.aad2project.ui;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
@@ -22,7 +21,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -30,7 +28,7 @@ import android.widget.Toast;
 
 import com.example.aad2project.R;
 import com.example.aad2project.object.Plant;
-import com.example.aad2project.services.NotificationService;
+import com.example.aad2project.services.SensorService;
 import com.example.aad2project.services.WeatherService;
 import com.example.aad2project.ui.LongClickDialogFragment.LongClickDialogListener;
 import com.example.aad2project.ui.PlantManagerFragment.OnPlantManagerFragmentInteractionListener;
@@ -40,7 +38,10 @@ import com.example.aad2project.ui.TaskCalendarFragment.OnTaskCalendarFragmentInt
 public class ManagerActivity extends ActionBarActivity implements
 		ActionBar.TabListener, OnPlantManagerFragmentInteractionListener,
 		OnTaskCalendarFragmentInteractionListener, LongClickDialogListener {
-
+	
+	private AlarmManager alarmMgr;
+	private PendingIntent alarmIntent;
+	
 	public SectionsPagerAdapter mSectionsPagerAdapter;
 	private ViewPager mViewPager;
 	private FrameLayout container;
@@ -209,6 +210,16 @@ public class ManagerActivity extends ActionBarActivity implements
 		Intent i = new Intent(this, MainActivity.class);
 		startActivity(i);
 		finish();
+	}
+	
+	public void scheduleSensorDataChecks(){
+		
+		alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+		Intent intent = new Intent(this, SensorService.class);
+		alarmIntent = PendingIntent.getService(this, 0, intent, 0);
+
+		alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+		        AlarmManager.INTERVAL_HOUR, alarmIntent);
 	}
 
 	@Override

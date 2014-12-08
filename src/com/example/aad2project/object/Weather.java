@@ -7,6 +7,7 @@ public class Weather {
 	private double minTemperature;
 	private double minLightness;
 	private double maxLightnesss;
+	private Long maxHumidity;
 	private Weather next;
 	
 	private int id;
@@ -70,6 +71,17 @@ public Weather(){}
 
 	public void setMaxLightness(double maxLightnesss) {
 		this.maxLightnesss = maxLightnesss;
+	}
+	
+	
+
+	public Long getMaxHumi() {
+		return maxHumidity;
+	}
+
+
+	public void setMaxHumi(Long maxHumidity) {
+		this.maxHumidity = maxHumidity;
 	}
 
 
