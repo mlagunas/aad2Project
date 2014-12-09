@@ -56,19 +56,23 @@ public class LoginFragment extends Fragment {
 			public void onClick(View arg0) {
 				// Check is the account provided already exist in the database
 				// (using the MainActivity method Login(String, String)
-				if (mListener != null) {
-					if (mListener.login(usernameView.getText().toString(),
-							passwordView.getText().toString()) == 1) {
-						mListener.successfulAuthentication(usernameView
-								.getText().toString(), passwordView.getText()
-								.toString());
-					} else {
-						// If the credentials were wrong, the wrongCredentials
-						// method from MainActivity is called
-						passwordView.setError(getResources().getString(
-								R.string.wrong_credentials));
-					}
-				}
+				
+				  if (mListener != null) { 
+					  if(mListener.login(usernameView.getText().toString(),
+							  	passwordView.getText().toString()) == 1) {
+						  mListener.successfulAuthentication(usernameView
+								  .getText().toString(), passwordView.getText() .toString()); }
+					  else { // If the credentials were wrong, the wrongCredentials
+						  // method from MainActivity is called
+						  passwordView.setError(getResources().getString(
+								  R.string.wrong_credentials)); } }
+				 
+
+				/*if (mListener != null) {
+					mListener.login(usernameView.getText().toString(),
+							passwordView.getText().toString());
+				}*/
+
 			}
 
 		});
@@ -120,6 +124,11 @@ public class LoginFragment extends Fragment {
 		public int login(String email, String password);
 
 		public void newAccount();
+	}
+
+	public void wrongCredentials() {
+		passwordView.setError(getResources().getString(
+				R.string.wrong_credentials));
 	}
 
 }

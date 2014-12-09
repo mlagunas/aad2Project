@@ -9,13 +9,9 @@ import com.example.aad2project.object.ExistingPlant;
 
 public class ExistingPlantDao extends DaoBase{
 
-	
-	private Context context;
-
 	public ExistingPlantDao(Context pContext){
 		super(pContext);
 		super.open();
-		this.context = pContext;
 	}
 
 	@Override
@@ -42,28 +38,6 @@ public class ExistingPlantDao extends DaoBase{
 	 * @return
 	 */
 	public ExistingPlant getPlant(final int id) {
-		//p=null;
-		/*tableEp.execute(new TableQueryCallback<ExistingPlant>() {
-            @Override
-			public void onCompleted(List<ExistingPlant> result, int count,
-                    Exception exception, ServiceFilterResponse response) {
-                    if (exception == null) {
-                        for (ExistingPlant item : result) {
-                            if(item.getPlantId() == id){
-                            	p.setDescription(item.getDescription());
-                        		p.setName(item.getName());
-                        		p.setExistingId(item.getPlantId());
-                        		p.setTimeToGrow(item.getTimeToGrow());
-                        		p.setWeatherId(item.getWeatherId());
-                        		
-                            }
-                        }
-                        
-                    }
-                }
-            });
-		return p;*/
-		
 		ExistingPlant p = new ExistingPlant();
 		c = super.mDb.rawQuery("SELECT * FROM existingPlants " + "WHERE id = "
 				+ id, null);

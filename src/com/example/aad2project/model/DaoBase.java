@@ -5,19 +5,17 @@ import java.net.MalformedURLException;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.ProgressBar;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 
-
 public abstract class DaoBase {
+	
 	// First base version
 	// Update this attribute if version change
 	protected final static int VERSION = 1;
+	
 	// database name
-	protected final static String NAME = "test_conn_2.db";
-
-	private ProgressBar mProgressBar;
+	protected final static String NAME = "test_conn_3.db";
 	
 	protected SQLiteDatabase mDb = null;
 	protected DatabaseHandler mHandler = null;
@@ -25,12 +23,11 @@ public abstract class DaoBase {
 	protected String query;
 	protected String[] args;
 	protected Cursor c;
-	private Context pContext;
+	
 	protected MobileServiceClient mClient;
   
 	  public DaoBase(Context pContext) {
 	    this.mHandler = new DatabaseHandler(pContext, NAME, null, VERSION);
-	    this.pContext = pContext;
 	    try {
 			mClient = new MobileServiceClient(
 					"https://greenhub.azure-mobile.net/",
@@ -41,20 +38,33 @@ public abstract class DaoBase {
 			e.printStackTrace();
 		}
 	  }
-		    
+	  
+	  /**
+	   * Open the database to read and write   
+	   * @return
+	   */
 	  public SQLiteDatabase open() {
 	    mDb = mHandler.getWritableDatabase();
 	    return mDb;
 	  }
-	    
+	  
+	  /**
+	   * Close the database
+	   */
 	  public void close() {
 	    mDb.close();
 	  }
-	    
+	   /**
+	    * This method returns the database
+	    * @return
+	    */
 	  public SQLiteDatabase getDb() {
 	    return mDb;
 	  }
  	  
+	  /**
+	   * Clean all the tables in the database
+	   */
 	  public void clean(){
 		mDb.execSQL("DROP TABLE existingplants");
 		mDb.execSQL("DROP TABLE weather");

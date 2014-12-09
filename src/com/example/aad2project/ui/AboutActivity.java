@@ -1,14 +1,11 @@
 package com.example.aad2project.ui;
 
-import com.example.aad2project.R;
-import com.example.aad2project.R.id;
-import com.example.aad2project.R.layout;
-import com.example.aad2project.R.menu;
-
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.aad2project.R;
 
 public class AboutActivity extends ActionBarActivity {
 
