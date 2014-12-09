@@ -6,9 +6,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
-	
-	private Context context;
-	
+		
 	public static final String WEATHER_CREATE_TABLE = 
 			"CREATE TABLE Weather (                   			        " +
 			"id             Integer PRIMARY KEY AUTOINCREMENT," +
@@ -25,12 +23,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"id 		 Integer PRIMARY KEY AUTOINCREMENT, " +
 			"date		 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"	+ 
 			"existingId  Integer NOT NULL,"	+
-			//"name 		 VARCHAR(50) NOT NULL,								  " +
-			//"description VARCHAR(200) NOT NULL,								  " +
-			//"timeToGrow  NUMBER(4) NOT NULL DEFAULT 0,				  " +
 			"number 	 NUMBER(2) NOT NULL DEFAULT 1,				  " +
 			"code		 VARCHAR(500) NOT NULL " +
-			//"weatherId   NUMBER(2) NOT NULL							  " +
 			");" ;
 	
 	public static final String TASK_CREATE_TABLE = 
@@ -45,9 +39,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			"plantId NUMBER(4) NOT NULL, 							   " +
 			"date    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
 			"done    NUMBER(1) NOT NULL DEFAULT 0," +
-			//"FOREIGN KEY (taskId) REFERENCES Task(id) ON DELETE CASCADE, " +
-			//"FOREIGN KEY (plantId) REFERENCES Plant(id) ON DELETE CASCADE " +
-			"PRIMARY KEY (plantId,taskId)"+
+			"PRIMARY KEY (plantId,taskId) "+
 			");";
 	
 	public static final String WEATHER_CALENDAR_CREATE_TABLE =
@@ -130,7 +122,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			
 	public DatabaseHandler(Context context, String name, CursorFactory factory, int version) {
 		super(context, name, factory, version);
-		this.context = context;
 	}
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -140,20 +131,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(TASK_PLANT_CREATE_TABLE);
 		db.execSQL(WEATHER_CALENDAR_CREATE_TABLE);
 		db.execSQL(ALL_EXISTING_PLANTS);
-		//db.execSQL(INSERT_WEATHER_Potatoes);
-		//db.execSQL(INSERT_WEATHER_CARROTS);
-		//db.execSQL(INSERT_WEATHER_TOMATOES);
-		//db.execSQL(INSERT_WEATHER_LETTUCE);
-		//db.execSQL(INSERT_WEATHER_SWEETPEAS);
-		//db.execSQL(INSERT_WEATHER_LILIES);
-		//db.execSQL(INSERT_POTATOES);
-		//db.execSQL(INSERT_CARROTS);
-		//db.execSQL(INSERT_TOMATOES);
-		//db.execSQL(INSERT_LETTUCE);
-		//db.execSQL(INSERT_SweetPea);
-		//db.execSQL(INSERT_LILIES);
-		//db.execSQL(START_100);
-		//db.execSQL(DELETE_100);
 	}
 
 	

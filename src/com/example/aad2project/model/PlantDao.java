@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.example.aad2project.adapter.PlantManagerAdapter;
-import com.example.aad2project.object.ExistingPlant;
 import com.example.aad2project.object.Green;
 import com.example.aad2project.object.Plant;
 import com.example.aad2project.object.Task;
+import com.example.aad2project.object.TaskPlant;
 import com.microsoft.windowsazure.mobileservices.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.ServiceFilterResponse;
 import com.microsoft.windowsazure.mobileservices.TableDeleteCallback;
@@ -24,21 +22,16 @@ import com.microsoft.windowsazure.mobileservices.TableOperationCallback;
 public class PlantDao extends DaoBase {
 
 	private Context context;
-	private PlantManagerAdapter pma;
 	
 	/**
 	 * Mobile Service Table used to access data
 	 */
-	private MobileServiceTable<ExistingPlant> tableEp;
 	private MobileServiceTable<Plant> tableP;
-	private ProgressDialog progressDialog;  
-	private ArrayList<Plant> array;
 	
 	public PlantDao(Context pContext) {
 		super(pContext);
 		super.open();
 		this.context = pContext;
-		this.array = new ArrayList<Plant>();
 		tableP = mClient.getTable(Plant.class);
 		
 	}
@@ -51,7 +44,7 @@ public class PlantDao extends DaoBase {
 	 */
 	public Green searchPlant(int id, boolean upperGroup) {
 		Green p = new Green();
-
+		
 		if(!upperGroup){
 			c = super.mDb.rawQuery("SELECT * FROM ExistingPlants WHERE id = " + id, null);
 			if(c.moveToFirst()){
@@ -158,21 +151,23 @@ public class PlantDao extends DaoBase {
 	 */
 	public void addPlant(Green plant,boolean cloud) {
 
-		String name, description, code;
-		int timeToGrow, number, id, eId;
+		/*
+		 * Different attributes that the plant needs
+		 */
+		String name, code;
+		int timeToGrow, id;
 		Date tday;
 
 		name = plant.getName();
-		description = plant.getDescription();
 		timeToGrow = plant.getTimeToGrow();
-		number = plant.getNumber();
+		tday = new Date();
+		code = plant.getCode();
+		
 		if(plant.getExistingId() == -1)
 			id = plant.getId();
 		else
 			id = plant.getExistingId();
-		tday = new Date();
-		code = plant.getCode();
-		Log.d("TAGTAG",name+" "+description+" "+plant.getExistingId()+" "+code+"|| plantDao");
+		
 		super.mDb
 				.execSQL("INSERT INTO  Plant (existingId,date,code)"
 						+ "	VALUES ("
@@ -183,6 +178,7 @@ public class PlantDao extends DaoBase {
 						+"'"+code+"'"
 						+ ");");
 		
+		//Insert the plant also in the Cloud database
 		if(cloud){
 			Plant i = new Plant();
 			i.setDate(tday);
@@ -196,10 +192,7 @@ public class PlantDao extends DaoBase {
 						Plant arg0,
 						Exception arg1, ServiceFilterResponse arg2) {
 					// TODO Auto-generated method stub
-					if(arg1 == null){
-						Log.d("TAG","plant inserted");
-					}
-					else{
+					if(arg1 != null){
 						Log.d("TAG",arg1.getCause().toString());
 					}
 				}
@@ -207,6 +200,7 @@ public class PlantDao extends DaoBase {
 			});
 		}
 		
+		//Create a new Task to, afterwards, bind it with the Plant
 		Task t = new Task();
 		t.setDescription("Collect " + name);
 
@@ -216,7 +210,8 @@ public class PlantDao extends DaoBase {
 		c = super.mDb.rawQuery("SELECT id FROM Task", null);
 		c.moveToLast();
 		t.setId(c.getInt(0));
-
+		
+		//Create new object TaskPlant and introduce it to the database
 		TaskPlantDao tp = new TaskPlantDao(context);
 
 		Calendar today = Calendar.getInstance();
@@ -241,6 +236,7 @@ public class PlantDao extends DaoBase {
 		g.setNumber(p.getNumber());
 		g.setId(p.getPlantid());
 		g.setCode(p.getId());
+		//retrieve the rest of the attributes
 		c = mDb.rawQuery("SELECT * FROM " +
 						"existingPlants " +
 						"where id = "+ p.getExisitingId(),null);
@@ -275,7 +271,6 @@ public class PlantDao extends DaoBase {
 				plants.add(p);
 			} while (c.moveToNext());
 		}
-
 		return plants;
 	}
 
@@ -335,6 +330,10 @@ public class PlantDao extends DaoBase {
 			}
 		});
 		TaskPlantDao tp = new TaskPlantDao(context);
+		for(TaskPlant t: tp.getAllTaskPlant()){
+			Log.d("DELETE",t.getId()+"    "+t.getIdTask());
+
+		}
 		super.mDb.execSQL("DELETE FROM TaskPlant WHERE plantId = " + id);
 		tp.deleteTaskPlant(id);
 		super.mDb.execSQL("DELETE FROM Plant " + "WHERE id = " + id);

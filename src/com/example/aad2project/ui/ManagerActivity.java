@@ -10,7 +10,6 @@ import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -64,23 +63,21 @@ public class ManagerActivity extends ActionBarActivity implements
 	private AlarmManager alarmMgr;
 	private PendingIntent alarmIntent;
 	
+
+	/**
+	 * Android UI objects
+	 */
 	public SectionsPagerAdapter mSectionsPagerAdapter;
 	public ViewPager mViewPager;
 	private FrameLayout container;
+	private Context context;
+	private ProgressBar progressBar; 
+
+	/**
+	 * Model objects, they let us to manage the different database tables
+	 */
 	private TaskPlantDao tpDAO;
 	private TaskPlant tp;
-	
-
-	private ProgressDialog progressDialog;
-	private Context context;
-	private Plant aux;
-	private int waiter;
-	
-	private MobileServiceTable<ExistingPlant> tableEp;
-	private MobileServiceTable<Weather> tableW;
-	private MobileServiceTable<Plant> tableP;
-	
-	private ProgressBar progressBar; 
 
 	/**
 	 * Mobile Service Client reference
@@ -88,18 +85,18 @@ public class ManagerActivity extends ActionBarActivity implements
 	private MobileServiceClient mClient;
 
 	/**
-	 * Mobile Service Table used to access data
+	 * Objects to connect with the Windows Azure backend
 	 */
-	private MobileServiceTable<ExistingPlant> tableExistingPlant;
-	private MobileServiceTable<Weather> tableWeather;
+	private MobileServiceTable<ExistingPlant> tableEp;
+	private MobileServiceTable<Weather> tableW;
+	private MobileServiceTable<Plant> tableP;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manager);
 		context = this;
-        progressDialog = new ProgressDialog(this);
-        waiter = 0;
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         try {
@@ -125,12 +122,11 @@ public class ManagerActivity extends ActionBarActivity implements
 	                    	for (ExistingPlant item : result) {
 	                        	p.addExistingPlant(item);
 	                        }
-	                        Log.d("TAG","downloading plants");
 	                    	downloadPlant();
-	                        
 	                    }
-                        Log.d("TAG","downloading plants");
-
+	                    else{
+	                    	Log.d("TAG",exception.getMessage());
+	                    }
 	                }
 	            });
         } catch (MalformedURLException e) {
@@ -160,6 +156,10 @@ public class ManagerActivity extends ActionBarActivity implements
                 }
 		});
 	}
+	
+	/**
+	 * Download from the cloud all the plants the user have on his garden
+	 */
 	private void downloadPlant(){
 		tableP.execute(new TableQueryCallback<Plant>(){
 			@Override
@@ -346,7 +346,7 @@ public class ManagerActivity extends ActionBarActivity implements
 	}
 
 	/**
-	 * Stop the users session and shows the login screen
+	 * Stop the users session and displays the login screen
 	 */
 	public void logout() {
 		SharedPreferences sharedPreferences = getSharedPreferences(
@@ -355,11 +355,6 @@ public class ManagerActivity extends ActionBarActivity implements
 		editor.clear();
 		editor.commit();
 		moveTaskToBack(true);
-		
-		//progressDialog.setMessage("Saving changes...");
-        //progressDialog.setIndeterminate(true);
-        //progressDialog.show();
-		
 		
         Intent i = new Intent(this, MainActivity.class);
 		startActivity(i);
